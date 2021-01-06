@@ -32,6 +32,42 @@ kde2_library(libmimelib
         token.cpp
         uuencode.cpp
         binhex.cpp
+    HEADERS
+        mimelib/address.h
+        mimelib/addrlist.h
+        mimelib/body.h
+        mimelib/bodypart.h
+        mimelib/boyermor.h
+        mimelib/config.h
+        mimelib/datetime.h
+        mimelib/debug.h
+        mimelib/disptype.h
+        mimelib/entity.h
+        mimelib/enum.h
+        mimelib/field.h
+        mimelib/fieldbdy.h
+        mimelib/group.h
+        mimelib/headers.h
+        mimelib/mailbox.h
+        mimelib/mboxlist.h
+        mimelib/mechansm.h
+        mimelib/mediatyp.h
+        mimelib/message.h
+        mimelib/mimepp.h
+        mimelib/msgcmp.h
+        mimelib/msgid.h
+        mimelib/nntp.h
+        mimelib/param.h
+        mimelib/pop.h
+        mimelib/protocol.h
+        mimelib/smtp.h
+        mimelib/string.h
+        mimelib/text.h
+        mimelib/token.h
+        mimelib/utility.h
+        mimelib/uuencode.h
+        mimelib/binhex.h
+    COMPILE_DEFINITIONS
+         -DDW_DEVELOPMENT_VERSION
     )
-target_compile_definitions(libmimelib PRIVATE -DDW_DEVELOPMENT_VERSION)
 

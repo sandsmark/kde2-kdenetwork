@@ -1,0 +1,23 @@
+qt2_wrap_cpp(libkdenetwork_MOC
+    SOURCES
+        kmimetypevalidator.h
+        kpgp.h
+        kscoringeditor.h
+        kscoring.h
+        kwidgetlister.h
+    )
+kde2_library(libkdenetwork
+    SOURCES
+        kscoring.cpp
+        kscoringeditor.cpp
+        qregexp3.cpp
+        kregexp3.cpp
+        kmimetypevalidator.cpp
+        kpgp.cpp
+        kpgpbase.cpp
+        kwidgetlister.cpp
+        ${libkdenetwork_MOC}
+    LIBS
+        kde2::kdeui
+    )
+

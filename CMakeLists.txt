@@ -31,7 +31,7 @@ find_package(PNG REQUIRED)
 create_kde2_config_header()
 
 add_subdirectory(mimelib)
-#add_subdirectory(libkdenetwork)
+add_subdirectory(libkdenetwork)
 #
 #add_subdirectory(kdict)
 #add_subdirectory(kit)
