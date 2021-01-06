@@ -1,0 +1,53 @@
+#! /bin/sh
+# /etc/init.d/klisa: start and stop the LISa daemon
+
+set -e
+ 
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON=/usr/sbin/klisa
+PIDFILE=/var/run/klisa.pid
+HOME=/root
+
+test -x $DAEMON || exit 0
+
+# Configurable options:
+
+case "$1" in
+  start)
+        echo -n "Starting LISa server: "
+	if [ "`pidof $DAEMON`" ] ; then
+          echo "already running."
+        else
+	  start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- -c /etc/kde2/lisarc
+          echo "klisa."
+        fi
+	;;
+  stop)
+        if [ "`pidof $DAEMON`" ] ; then
+          echo -n "Stopping LISa server: klisa"
+	  kill -KILL `pidof $DAEMON`
+          echo "."
+        else 
+          echo "LISa server not running"
+        fi
+	;;
+
+  reload|force-reload)
+        echo -n "Reloading LISa server's configuration"
+	start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile $PIDFILE --exec $DAEMON
+	echo "."
+	;;
+
+  restart)
+        echo -n "Restarting LISa server: klisa"
+	DPID=`pidof $DAEMON` && ( kill -KILL "$DPID"; sleep 10 )
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- -c /etc/kde2/lisarc
+	echo "."
+	;;
+
+  *)
+	echo "Usage: /etc/init.d/klisa {start|stop|reload|force-reload|restart}"
+	exit 1
+esac
+
+exit 0

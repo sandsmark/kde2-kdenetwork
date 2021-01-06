@@ -1,0 +1,7 @@
+usr/bin/korn
+usr/share/lintian/overrides/korn
+usr/share/man/man1/korn*
+usr/share/icons/*/*/apps/korn.*
+usr/share/applnk/Internet/KOrn.desktop
+usr/share/doc/kdenetwork/korn/*
+usr/share/doc/kde/HTML/en/korn/*                                            

@@ -1,0 +1,10 @@
+usr/share/apps/kppp/*
+usr/share/icons/*/*/apps/kppp.*
+usr/share/applnk/Internet/kppplogview.desktop
+usr/share/applnk/Internet/Kppp.desktop
+usr/bin/kppplogview
+usr/bin/kppp
+usr/share/lintian/overrides/kppp
+usr/share/man/man1/kppp*
+usr/share/doc/kdenetwork/kppp/*
+usr/share/doc/kde/HTML/en/kppp/*                                            

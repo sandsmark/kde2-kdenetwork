@@ -1,0 +1,8 @@
+?package(ksirc):\
+	needs=x11\
+	section=Apps/Net\
+	hints="KDE,IRC"\
+	kderemove="y"\
+	title="Ksirc"\
+	command="/usr/bin/ksirc"
+

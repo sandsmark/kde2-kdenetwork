@@ -1,0 +1,58 @@
+# You might want to modify the next 2 lines; the rest should be ok
+%define qtdir /usr/lib/qt-2.1.0
+Prefix: /opt/kde2
+
+Name: kdenetwork
+Icon: kde-icon.xpm
+Summary: K Desktop Environment - Network Applications
+Version: @VERSION@
+Release: 1
+Epoch: 1
+Source: ftp://ftp.kde.org/pub/kde/stable/%{version}/distribution/tar/generic/source/%{name}-%{version}.tar.bz2
+Group: Applications/Networking
+BuildRoot: /var/tmp/%{name}-buildroot
+Copyright: GPL
+Requires: kdesupport
+
+%description
+Networking applications for the K Desktop Environment.
+
+%prep
+rm -rf $RPM_BUILD_ROOT
+
+%setup -q
+make -f Makefile.cvs
+
+%build
+export KDEDIR=%{prefix} QTDIR=%{qtdir}
+./configure  \
+	--prefix=%{prefix}
+make CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS -DNO_DEBUG"
+
+%install
+make install DESTDIR=$RPM_BUILD_ROOT
+for i in $RPM_BUILD_ROOT/%{prefix}/bin/*; do
+  strip -r .comment $i || :
+done
+
+cd $RPM_BUILD_ROOT
+find . -type d | sed '1,2d;s,^\.,\%attr(-\,root\,root) \%dir ,' > \
+	$RPM_BUILD_DIR/file.list.%{name}
+
+find . -type f | sed -e 's,^\.,\%attr(-\,root\,root) ,' \
+	-e '/\/config\//s|^|%config|' >> \
+	$RPM_BUILD_DIR/file.list.%{name}
+
+find . -type l | sed 's,^\.,\%attr(-\,root\,root) ,' >> \
+	$RPM_BUILD_DIR/file.list.%{name}
+
+echo "%docdir %{prefix}/doc/kde" >> $RPM_BUILD_DIR/file.list.%{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/file.list.%{name}
+
+%files -f ../file.list.%{name}
+
+%changelog
+* Thu May 11 2000 Bernhard Rosenkraenzer <bero@redhat.com>
+- initial

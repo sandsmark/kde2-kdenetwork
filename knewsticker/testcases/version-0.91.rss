@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"
+            "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+
+<rss version="0.91">
+
+<channel>
+<title>WebReference News</title>
+<link>http://www.webreference.com</link>
+<description>Daily news, views, and how-tos on all aspects of web design and development. Features free web-based tools, open source scripts, and in-depth tutorials on DHTML, HTML, JavaScript, 3D, Graphics, XML, and Design for webmasters.</description>
+<language>en-us</language>
+
+<image>
+<title>WebReference.com</title>
+<url>http://webreference.com/art/wr.gif</url>
+<link>http://www.WebReference.com</link>
+</image>
+
+<item>
+<title>The Evolution of RSS</title>
+<link>http://www.webreference.com/authoring/languages/xml/rss/1/</link>
+<description>We look at how RSS has evolved from its humble beginnings through present day and beyond. We survey all versions of RSS, including a feature comparison, a new RSS survey, plus format and validation info. Learn how the newest versions of RSS will move us towards a more Semantic Web. By Andrew King. 0504 </description>
+</item>
+
+<item>
+<title>Weblog 2.0 Released</title>
+<link>http://www.webreference.com/perl/tutorial/22/</link>
+<description>Completely rewritten, Weblog 2.0 makes it easy to manage multiple RSS channels and Yahoo-like directories. Highlights include a revamped interface, multi-user support, one-step posts to multiple channels, Xhoo directory integration, and more. This new version makes use of two RSS 1.0 modules, the Dublin Core, and the Taxonomy module. By Jonathan Eisenzopf. 0504</description>
+</item>
+
+<item>
+<title>Professional Perl: Attribute Lists</title>
+<link>http://www.webreference.com/programming/perl/professional/chap7/6/</link>
+<description>Want to know what&#39;s happening at the cutting edge of Perl development? Learn how to change the behavior of subroutines with attributes. From Wrox Press. 0503</description>
+</item>
+
+<item>
+<title>Professional XML Databases</title>
+<link>http://www.webreference.com/authoring/languages/xml/databases/</link>
+<description>Hoping to make your B2B transactions more efficient and portable?  Migrating to XML from a database could be just the answer. From Wrox Press. 0502</description>
+</item>
+
+<item>
+<title>DHTML Hierarchical Menus: Version 4.0.9</title>
+<link>http://www.webreference.com/dhtml/column52/</link>
+<description>Version 4.0.9 of our cascading menus concentrates on menu positioning. By Peter Belesis. 0501 </description>
+</item>
+
+<item>
+<title>Look Ma ... No Pixels: Paint Shop Pro Paths and Vectors</title>
+<link>http://www.webreference.com/graphics/column46/</link>
+<description>Learn how to create and edit vector shapes, and all about paths and nodes in this comprehensive PSP vector primer. Armed with these techniques, there is no shape that is beyond your reach. By Wendy Peck. 0430</description>
+</item>
+
+<item>
+<title>The Art of Cross-Browser Table Building</title>
+<link>http://www.webreference.com/authoring/languages/html/tables/resize/</link>
+<description>Having trouble getting your tables to resize themselves? Free your tables from the tyranny of a fixed width fate. By Dan Ball. 0427</description>
+</item>
+
+<item>
+<title>XSL to XSLT Converter</title>
+<link>http://www.webreference.com/xml/column31/</link>
+<description>Microsoft recently released an XSLT style sheet that updates Internet Explorer 5 XSL style sheets to XSLT-compliant style sheets. Learn how to transform your old XSL style sheets to take advantage of the new XSLT features included in Microsoft&#39;s latest MSXML release. By Michael Classen. 0426</description>
+</item>
+
+<item>
+<title>Professional JavaScript: Browser Compatibility</title>
+<link>http://www.webreference.com/programming/javascript/professional/chap4/6/</link>
+<description>Writing different code for different browsers? Learn browser and object detection techniques and then watch your code shrink. From Wrox Press. 0425</description>
+</item>
+
+<item>
+<title>WebDeveloper.com Channel News</title>
+<link>http://www.webreference.com/services/news/</link>
+<description>Announcing our newest RSS newsfeed, the WebDeveloper.com channel. An aggregate of all things Web Dev on internet.com, this newest feed changes frequently; it&#39;s a great way to add developer-related news to your site. 0424</description>
+</item>
+
+<item>
+<title>Welding Vertices in Max 4 </title>
+<link>http://www.webreference.com/3d/lesson117/</link>
+<description>We finish our series on MAX 4&#39;s Editable Poly  with a look at welding vertices. By Robert Polevoi. 0424 </description>
+</item>
+
+<item>
+<title>Embedding Sound with Flash, Part II: Playing Variations</title>
+<link>http://www.webreference.com/js/column82/</link>
+<description>Sonify your site with our continuing series on the FlashSound JavaScript API. Learn how to  control sound tracks and how to play a round. By Yehuda Shiran. 0423</description>
+</item>
+
+<item>
+<title>Begin with the Blurb</title>
+<link>http://www.webreference.com/internet/writing/headlines/blurbs/</link>
+<description>Want to drive more traffic to your site? Having trouble writing catchy blurbs?  Bill Cook is here to to help. 0420</description>
+</item>
+
+<item>
+<title>Beginning XHTML: Printing and Paginated Media</title>
+<link>http://www.webreference.com/authoring/languages/xhtml/beginning/chap13/3/</link>
+<description>Having trouble getting your Web Pages to print properly... Well, here&#39;s some cutting-edge XHTML. From Wrox Press. 0419</description>
+</item>
+
+<item>
+<title>Professional Perl: Returning Values from Subroutines</title>
+<link>http://www.webreference.com/programming/perl/professional/chap7/5/</link>
+<description>Explore the labyrinths of Perl subroutines and discover the way to coding Nirvana. From Wrox Press. 0418</description>
+</item>
+
+<textinput>
+<title>Search</title>
+<description>Search WebReference.com</description>
+<name>query</name>
+<link>http://www.webreference.com/cgi-bin/search.cgi</link>
+</textinput>
+
+</channel>
+</rss>

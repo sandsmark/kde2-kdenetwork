@@ -1,0 +1,40 @@
+This package was updated by Ivan E. Moore II <rkrusty@debian.org>.
+This package was debianized by Andreas Jellinghaus <aj@debian.org>.
+Thanks to Brandon Mitchell <bhmit1@mail.wm.edu> for his work on the
+libc5 version.
+
+It was downloaded via CVS from the KDE CVS repository.
+
+Copyright: GPL'd
+
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+
+---
+Kit is an AOL Instant Messenger client, using the TOC protocol.
+ 
+Except for files specifically marked otherwise (such as COPYING.GPL,
+COPYING.LGPL, and PROTOCOL) all files in this package are copyrighted by Neil
+Stevens.
+ 
+You are authorised to distribute Kit by the terms of the GNU Library General
+Public License, version 2.  At your option, though, you may choose to use the
+GNU General Public License, version 2.  Ask if you'd like to use a different
+license, or a later version of a GNU license.
+ 
+Contact Neil Stevens (multivac@fcmail.com by email, PresJPolk on AIM) if you
+have any questions or complaints about this package, or look at
+http://kitclient.sourceforge.net/ for what you need.
+
+--
+
+Please see /usr/share/common-licenses/GPL for full license

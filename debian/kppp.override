@@ -1,0 +1,2 @@
+kppp: non-standard-executable-perm usr/bin/kppplogview 0754 != 0755
+kppp: setuid-binary usr/bin/kppp 4754 root/dip

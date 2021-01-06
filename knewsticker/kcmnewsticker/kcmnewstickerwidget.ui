@@ -1,0 +1,1482 @@
+<!DOCTYPE UI><UI>
+<class>KCMNewsTickerWidget</class>
+<comment>The core widget of the KCMNewsTicker KControl module.</comment>
+<author>Frerich Raabe &lt;raabe@kde.org&gt;</author>
+<include location="global">kcolorbtn.h</include>
+<include location="global">kcombobox.h</include>
+<include location="global">klineedit.h</include>
+<include location="global">klistview.h</include>
+<include location="global">knuminput.h</include>
+<widget>
+    <class>QWidget</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>KCMNewsTickerWidget</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>597</width>
+            <height>519</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>sizePolicy</name>
+        <sizepolicy>
+            <hsizetype>3</hsizetype>
+            <vsizetype>5</vsizetype>
+        </sizepolicy>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>KCMNewsTickerWidget</string>
+    </property>
+    <property>
+        <name>layoutMargin</name>
+    </property>
+    <property>
+        <name>layoutSpacing</name>
+    </property>
+    <vbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>4</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>4</number>
+        </property>
+        <widget>
+            <class>QTabWidget</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>tabScrollerPreferences</cstring>
+            </property>
+            <property>
+                <name>layoutMargin</name>
+            </property>
+            <property>
+                <name>layoutSpacing</name>
+            </property>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>tabGeneral</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>General</string>
+                </attribute>
+                <vbox>
+                    <property stdset="1">
+                        <name>margin</name>
+                        <number>4</number>
+                    </property>
+                    <property stdset="1">
+                        <name>spacing</name>
+                        <number>4</number>
+                    </property>
+                    <widget>
+                        <class>QGroupBox</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>gbGeneral</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>title</name>
+                            <string>General</string>
+                        </property>
+                        <property>
+                            <name>layoutMargin</name>
+                        </property>
+                        <property>
+                            <name>layoutSpacing</name>
+                        </property>
+                        <grid>
+                            <property stdset="1">
+                                <name>margin</name>
+                                <number>11</number>
+                            </property>
+                            <property stdset="1">
+                                <name>spacing</name>
+                                <number>6</number>
+                            </property>
+                            <widget row="2"  column="0"  rowspan="1"  colspan="2" >
+                                <class>KIntNumInput</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>niInterval</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>enabled</name>
+                                    <bool>true</bool>
+                                </property>
+                                <property stdset="1">
+                                    <name>value</name>
+                                    <number>30</number>
+                                </property>
+                                <property stdset="1">
+                                    <name>suffix</name>
+                                    <string> minutes</string>
+                                </property>
+                                <property stdset="1">
+                                    <name>specialValueText</name>
+                                    <string>Never</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Interval of news queries</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Here you can define in what intervals KNewsTicker queries the configured news sources for new headlines. This depends generally on how fast you'd like to hear about news and how much load you want to put on the network:&lt;ul&gt;
+&lt;li&gt;A lower value (lower than &lt;b&gt;15 minutes&lt;/b&gt;) enables you to get notified about news very fast if you want or need to. Please note, that it increases the network traffic significantly, though. Therefore, such low values shouldn't be used if you query popular news sites (such as &lt;a href=http://slashdot.org&gt;Slashdot&lt;/a&gt; or &lt;a href=http://freshmeat.net&gt;Freshmeat&lt;/a&gt;) as they have generally already enough work with processing the incoming queries.&lt;/li&gt;
+&lt;li&gt;A higher value (higher than &lt;b&gt;45 minutes&lt;/b&gt;) won't make you hear about news that fast. For non-timecritical applications, it should be suitable, though. The positive aspect of longer intervals is that only very little load is put on the network; this saves resources and nerves, for you and the system administrators of the news sites you query.&lt;/li&gt;&lt;/ul&gt;
+The default value (30 minutes) should be appropriate and reasonable in most cases.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="0"  rowspan="1"  colspan="2" >
+                                <class>QLayoutWidget</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>Layout5</cstring>
+                                </property>
+                                <hbox>
+                                    <property stdset="1">
+                                        <name>margin</name>
+                                        <number>0</number>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>spacing</name>
+                                        <number>6</number>
+                                    </property>
+                                    <widget>
+                                        <class>QLabel</class>
+                                        <property stdset="1">
+                                            <name>name</name>
+                                            <cstring>lNonSensitive</cstring>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>text</name>
+                                            <string>Nonsensitive</string>
+                                        </property>
+                                        <property>
+                                            <name>toolTip</name>
+                                            <string>Mousewheel sensitivity</string>
+                                        </property>
+                                        <property>
+                                            <name>whatsThis</name>
+                                            <string>This slider allows you to define how fast/slow the text should be scrolled when using the mousewheel.</string>
+                                        </property>
+                                    </widget>
+                                    <widget>
+                                        <class>QSlider</class>
+                                        <property stdset="1">
+                                            <name>name</name>
+                                            <cstring>sliderMouseWheelSpeed</cstring>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>minValue</name>
+                                            <number>1</number>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>maxValue</name>
+                                            <number>10</number>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>orientation</name>
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>tickInterval</name>
+                                            <number>150</number>
+                                        </property>
+                                        <property>
+                                            <name>toolTip</name>
+                                            <string>Mousewheel sensitivity</string>
+                                        </property>
+                                        <property>
+                                            <name>whatsThis</name>
+                                            <string>This slider allows you to define how fast/slow the text should be scrolled when using the mousewheel.</string>
+                                        </property>
+                                    </widget>
+                                    <widget>
+                                        <class>QLabel</class>
+                                        <property stdset="1">
+                                            <name>name</name>
+                                            <cstring>lSensitive</cstring>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>text</name>
+                                            <string>Sensitive</string>
+                                        </property>
+                                        <property>
+                                            <name>toolTip</name>
+                                            <string>Mousewheel sensitivity</string>
+                                        </property>
+                                        <property>
+                                            <name>whatsThis</name>
+                                            <string>This slider allows you to define how fast/slow the text should be scrolled when using the mousewheel.</string>
+                                        </property>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                            <widget row="0"  column="0"  rowspan="1"  colspan="2" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lMouseWheelSensitivity</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Mousewheel sensitivity:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>sliderMouseWheelSpeed</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Mousewheel sensitivity</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>This slider allows you to define how fast/slow the text should be scrolled when using the mousewheel.</string>
+                                </property>
+                            </widget>
+                            <widget row="3"  column="1" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbSlowedScrolling</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Temporarily slowed scrolling</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Slow the scrolling down when mouse points at the scroller</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Check this box to make KNewsTicker slow the scrolling down when you move the mouse cursor over the scrolling text. This makes clicking on items and dragging the icons (if enabled) away a lot easier.</string>
+                                </property>
+                            </widget>
+                            <widget row="3"  column="0" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbCustomNames</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Use custom names for news sites</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Use the names defined in the list of news sources</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Check this box to make the news ticker use the names you specified in the list of news sources (available on the tab labelled &lt;i&gt;News sources&lt;/i&gt;) instead of the ones the news sites themselves report.&lt;br&gt;This can be handy for news sites which report a very long or useless name.</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <spacer>
+                        <property>
+                            <name>name</name>
+                            <cstring>Spacer5_2</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>orientation</name>
+                            <enum>Vertical</enum>
+                        </property>
+                        <property stdset="1">
+                            <name>sizeType</name>
+                            <enum>Expanding</enum>
+                        </property>
+                        <property>
+                            <name>sizeHint</name>
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </vbox>
+            </widget>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>tabNewsSources</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>News sources</string>
+                </attribute>
+                <grid>
+                    <property stdset="1">
+                        <name>margin</name>
+                        <number>4</number>
+                    </property>
+                    <property stdset="1">
+                        <name>spacing</name>
+                        <number>4</number>
+                    </property>
+                    <widget row="0"  column="0"  rowspan="1"  colspan="4" >
+                        <class>KListView</class>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>Name of site</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>true</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>Source file</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>true</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>Max. articles</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>true</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>lvNewsSources</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>allColumnsShowFocus</name>
+                            <bool>true</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>rootIsDecorated</name>
+                            <bool>true</bool>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>News sources to be queried</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>This list lets you manage the list of news sites the news ticker will query for headlines. The news sources are arranged in a tree-like hierarchy and sorted by topic.&lt;br&gt;The column labelled "Max. articles" shows how many articles will be cached for the news sites (read: how many articles will be accessible through the context menu).&lt;ul&gt;
+&lt;li&gt;To add a site, you can either drag the URL of the RDF or RSS file to this list from Konqueror or any other application, or use the &lt;i&gt;Add...&lt;/i&gt; button in the bottom right corner.&lt;/li&gt;
+&lt;li&gt;To modify a site, just double-click on the particular news source you'd like to edit and an input field will pop up which lets you edit the respective property.&lt;/li&gt;
+&lt;li&gt;To remove a site, simply select a news source in the list and click on the &lt;i&gt;Remove&lt;/i&gt; button in the lower right corner.&lt;/li&gt;&lt;/ul&gt;
+Note that you can also right-click on the list to open a menu which lets you add and remove news sources. You can also dis-/enable certain news sources temporarily by (un-)checking the box next to it; those news sources whose box is checked are considered activated and will be processed by KNewsTicker.</string>
+                        </property>
+                    </widget>
+                    <widget row="1"  column="3" >
+                        <class>QPushButton</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>bRemoveNewsSource</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>enabled</name>
+                            <bool>false</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>text</name>
+                            <string>R&amp;emove</string>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Remove selected site</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Click this button to remove the currently selected news site from the list.</string>
+                        </property>
+                    </widget>
+                    <spacer row="1"  column="0" >
+                        <property>
+                            <name>name</name>
+                            <cstring>Spacer3</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>orientation</name>
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property stdset="1">
+                            <name>sizeType</name>
+                            <enum>Expanding</enum>
+                        </property>
+                        <property>
+                            <name>sizeHint</name>
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget row="1"  column="1" >
+                        <class>QPushButton</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>bAddNewsSource</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>text</name>
+                            <string>A&amp;dd...</string>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Add a new site</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Click this button to add a new site to the list. Note that you can also drag a RDF or RSS file to this list (i.e. from Konqueror) to add it to the list.</string>
+                        </property>
+                    </widget>
+                    <widget row="1"  column="2" >
+                        <class>QPushButton</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>bModifyNewsSource</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>enabled</name>
+                            <bool>false</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>text</name>
+                            <string>&amp;Modify...</string>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Modify selected news source</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Click this button to open a dialog which lets you edit the properties (such as the name, the source file, or the icon) of the currently selected news source.</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>tabFilters</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>Filters</string>
+                </attribute>
+                <grid>
+                    <property stdset="1">
+                        <name>margin</name>
+                        <number>4</number>
+                    </property>
+                    <property stdset="1">
+                        <name>spacing</name>
+                        <number>4</number>
+                    </property>
+                    <widget row="0"  column="0"  rowspan="1"  colspan="3" >
+                        <class>KListView</class>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>Action</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string></string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>affects</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string></string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>condition</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property>
+                                <name>text</name>
+                                <string>expression</string>
+                            </property>
+                            <property>
+                                <name>clickable</name>
+                                <bool>false</bool>
+                            </property>
+                            <property>
+                                <name>resizeable</name>
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>lvFilters</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>allColumnsShowFocus</name>
+                            <bool>true</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>rootIsDecorated</name>
+                            <bool>true</bool>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Currently configured filters</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Here you can see the list of currently configured filters and manage them as well as add new filters. Managing them is fairly easy:&lt;ul&gt;
+&lt;li&gt;To &lt;b&gt;add&lt;/b&gt; a new filter, specify it's properties in the box below labelled &lt;i&gt;Filter properties&lt;/i&gt; and press the &lt;i&gt;Add&lt;/i&gt; button in the lower right corner.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Modifying&lt;/b&gt; an existing filter is done in a similar manner: simply select the filter you'd like to edit in the list and change it's properties in the box below.&lt;/li&gt;
+&lt;li&gt;Finally, to &lt;b&gt;remove&lt;/b&gt; a filter, select it in the list and press the button labelled &lt;i&gt;Remove&lt;/i&gt; in the lower right corner.&lt;/li&gt;&lt;/ul&gt;
+You can also dis-/enable certain filters temporarily by (un-)checking the box next to them; those filters whose box is checked are considered enabled and will be honoured by KNewsTicker.&lt;br&gt;
+Note that the filters are processed from the top to the bottom so that of two filters which might nullify each other (like "Show....doesn't contain KDE" and "Show...contains KDE") only the one which is lower in the list will take effect.</string>
+                        </property>
+                    </widget>
+                    <spacer row="2"  column="0" >
+                        <property>
+                            <name>name</name>
+                            <cstring>Spacer9</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>orientation</name>
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property stdset="1">
+                            <name>sizeType</name>
+                            <enum>Expanding</enum>
+                        </property>
+                        <property>
+                            <name>sizeHint</name>
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget row="2"  column="2" >
+                        <class>QPushButton</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>bRemoveFilter</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>enabled</name>
+                            <bool>false</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>text</name>
+                            <string>R&amp;emove</string>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Remove selected filter</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Press this button to remove the selected filter from the list.</string>
+                        </property>
+                    </widget>
+                    <widget row="2"  column="1" >
+                        <class>QPushButton</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>bAddFilter</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>text</name>
+                            <string>A&amp;dd</string>
+                        </property>
+                        <property>
+                            <name>toolTip</name>
+                            <string>Add configured filter</string>
+                        </property>
+                        <property>
+                            <name>whatsThis</name>
+                            <string>Press this button to add the configred filter to the list.</string>
+                        </property>
+                    </widget>
+                    <widget row="1"  column="0"  rowspan="1"  colspan="3" >
+                        <class>QGroupBox</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>gbFilterProperties</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>title</name>
+                            <string>&amp;Filter properties</string>
+                        </property>
+                        <grid>
+                            <property stdset="1">
+                                <name>margin</name>
+                                <number>11</number>
+                            </property>
+                            <property stdset="1">
+                                <name>spacing</name>
+                                <number>6</number>
+                            </property>
+                            <widget row="0"  column="0"  rowspan="1"  colspan="3" >
+                                <class>KComboBox</class>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Hide</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Show</string>
+                                    </property>
+                                </item>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>comboFilterAction</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Action for this filter</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Here you can define what should happen if this filter matches (e.g. whether the matching articles should be shown or hidden).</string>
+                                </property>
+                            </widget>
+                            <spacer row="1"  column="0" >
+                                <property>
+                                    <name>name</name>
+                                    <cstring>Spacer5</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>orientation</name>
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property stdset="1">
+                                    <name>sizeType</name>
+                                    <enum>Fixed</enum>
+                                </property>
+                                <property>
+                                    <name>sizeHint</name>
+                                    <size>
+                                        <width>20</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget row="0"  column="3" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lArticles</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>articles from</string>
+                                </property>
+                            </widget>
+                            <widget row="0"  column="4"  rowspan="1"  colspan="2" >
+                                <class>KComboBox</class>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>all news sources</string>
+                                    </property>
+                                </item>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>comboFilterNewsSource</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Affected news sources</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Here you can specify which news sources (or all of them) are affected. Note that only the news sources which have been activated on the &lt;i&gt;News sources&lt;/i&gt; tab are shown in this combo box.</string>
+                                </property>
+                            </widget>
+                            <widget row="0"  column="6" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lwhose</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>whose</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="5"  rowspan="1"  colspan="3" >
+                                <class>KLineEdit</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>leFilterExpression</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Keyword/Expression</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Here you can type a keyword or expression which should be used for this filter which depends on what condition you selected in the combo box at the right:&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;contain&lt;/b&gt;, &lt;b&gt;doesn't contain&lt;/b&gt; - you should probably enter a keyword here, like "KDE", "Baseball" or "Business". The keyword isn't case-sensitive so it doesn't matter whether you type "kde", "KDE" or "kDe".&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;equals&lt;/b&gt;, &lt;b&gt;doesn't equal&lt;/b&gt; - enter a phrase or expression here to have the filter match only those articles whose headlines match &lt;b&gt;exactly&lt;/b&gt; the text you typed. The phrase you type will be considered case-sensitive, so it's a difference whether you show articles which contain "Boeing" or "BOEING".&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;matches&lt;/b&gt; - a regular expression is expected. Recommended only if you are familiar with regular expressions, should be used by advanced users only.&lt;/li&gt;&lt;/ul&gt;</string>
+                                </property>
+                            </widget>
+                            <spacer row="0"  column="7" >
+                                <property>
+                                    <name>name</name>
+                                    <cstring>Spacer15</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>orientation</name>
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property stdset="1">
+                                    <name>sizeType</name>
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property>
+                                    <name>sizeHint</name>
+                                    <size>
+                                        <width>20</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget row="1"  column="1" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lHeadlines</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>headlines</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="2"  rowspan="1"  colspan="3" >
+                                <class>KComboBox</class>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>contain</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>don't contain</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>equal</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>don't equal</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>match</string>
+                                    </property>
+                                </item>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>comboFilterCondition</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Condition for this filter</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>This combo box lets you specify the condition under which the keyword/expression you entered in the input field at the right will match. You can select one of the following values:&lt;ul&gt;
+&lt;li&gt;contain - the filter matches if the headline contains the keyword.&lt;/li&gt;
+&lt;li&gt;doesn't contain - the filter matches if the headline does not contain the keyword.&lt;/li&gt;
+&lt;li&gt;equals - the filter matches if the headline equals the expression.&lt;/li&gt;
+&lt;li&gt;doesn't equal - the filter matches if the headliend does not equal the expression.&lt;/li&gt;
+&lt;li&gt;matches - the filter matches if the expression matches the headline. The expression you typed at the right will be considered a regular expression in this mode.&lt;/li&gt;</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>tabScrollerPreferences</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>Scroller Preferences</string>
+                </attribute>
+                <vbox>
+                    <property stdset="1">
+                        <name>margin</name>
+                        <number>4</number>
+                    </property>
+                    <property stdset="1">
+                        <name>spacing</name>
+                        <number>4</number>
+                    </property>
+                    <widget>
+                        <class>QGroupBox</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>gbScrollerBehaviour</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>title</name>
+                            <string>Behavior</string>
+                        </property>
+                        <grid>
+                            <property stdset="1">
+                                <name>margin</name>
+                                <number>11</number>
+                            </property>
+                            <property stdset="1">
+                                <name>spacing</name>
+                                <number>6</number>
+                            </property>
+                            <widget row="0"  column="0"  rowspan="1"  colspan="2" >
+                                <class>QLayoutWidget</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>Layout5</cstring>
+                                </property>
+                                <vbox>
+                                    <property stdset="1">
+                                        <name>margin</name>
+                                        <number>0</number>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>spacing</name>
+                                        <number>6</number>
+                                    </property>
+                                    <widget>
+                                        <class>QLabel</class>
+                                        <property stdset="1">
+                                            <name>name</name>
+                                            <cstring>lScrollingSpeed</cstring>
+                                        </property>
+                                        <property stdset="1">
+                                            <name>text</name>
+                                            <string>&amp;Scrolling speed:</string>
+                                        </property>
+                                        <property>
+                                            <name>buddy</name>
+                                            <cstring>sliderScrollSpeed</cstring>
+                                        </property>
+                                        <property>
+                                            <name>toolTip</name>
+                                            <string>Scrolling speed</string>
+                                        </property>
+                                        <property>
+                                            <name>whatsThis</name>
+                                            <string>Here you can define how fast the scrolltext should be scrolling. If you have rather little space on your taskbar (and therefore a rather small news ticker), you should probably set this to a lower value so that you have a chance to read the headlines. For wider news tickers (and better eyes), a faster text is probably appropriate so that you have to wait for the next headline only as little as possible.&lt;br&gt;&lt;br&gt; This value defines, after which period of time the text shall be scrolled a little bit further; this value is antiproportional, e.g. lower values result in a faster scrolling text.</string>
+                                        </property>
+                                    </widget>
+                                    <widget>
+                                        <class>QLayoutWidget</class>
+                                        <property stdset="1">
+                                            <name>name</name>
+                                            <cstring>Layout6_2</cstring>
+                                        </property>
+                                        <hbox>
+                                            <property stdset="1">
+                                                <name>margin</name>
+                                                <number>0</number>
+                                            </property>
+                                            <property stdset="1">
+                                                <name>spacing</name>
+                                                <number>6</number>
+                                            </property>
+                                            <widget>
+                                                <class>QLabel</class>
+                                                <property stdset="1">
+                                                    <name>name</name>
+                                                    <cstring>lFast</cstring>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>text</name>
+                                                    <string>Fast</string>
+                                                </property>
+                                                <property>
+                                                    <name>toolTip</name>
+                                                    <string>Scrolling speed</string>
+                                                </property>
+                                                <property>
+                                                    <name>whatsThis</name>
+                                                    <string>Here you can define how fast the scrolltext should be scrolling. If you have rather little space on your taskbar (and therefore a rather small news ticker), you should probably set this to a lower value so that you have a chance to read the headlines. For wider news tickers (and better eyes), a faster text is probably appropriate so that you have to wait for the next headline only as little as possible.&lt;br&gt;&lt;br&gt; This value defines, after which period of time the text shall be scrolled a little bit further; this value is antiproportional, e.g. lower values result in a faster scrolling text.</string>
+                                                </property>
+                                            </widget>
+                                            <widget>
+                                                <class>QSlider</class>
+                                                <property stdset="1">
+                                                    <name>name</name>
+                                                    <cstring>sliderScrollSpeed</cstring>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>minValue</name>
+                                                    <number>1</number>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>maxValue</name>
+                                                    <number>500</number>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>orientation</name>
+                                                    <enum>Horizontal</enum>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>tickInterval</name>
+                                                    <number>150</number>
+                                                </property>
+                                                <property>
+                                                    <name>toolTip</name>
+                                                    <string>Scrolling speed</string>
+                                                </property>
+                                                <property>
+                                                    <name>whatsThis</name>
+                                                    <string>Here you can define how fast the scrolltext should be scrolling. If you have rather little space on your taskbar (and therefore a rather small news ticker), you should probably set this to a lower value so that you have a chance to read the headlines. For wider news tickers (and better eyes), a faster text is probably appropriate so that you have to wait for the next headline only as little as possible.&lt;br&gt;&lt;br&gt; This value defines, after which period of time the text shall be scrolled a little bit further; this value is antiproportional, e.g. lower values result in a faster scrolling text.</string>
+                                                </property>
+                                            </widget>
+                                            <widget>
+                                                <class>QLabel</class>
+                                                <property stdset="1">
+                                                    <name>name</name>
+                                                    <cstring>lSlow</cstring>
+                                                </property>
+                                                <property stdset="1">
+                                                    <name>text</name>
+                                                    <string>Slow</string>
+                                                </property>
+                                                <property>
+                                                    <name>toolTip</name>
+                                                    <string>Scrolling speed</string>
+                                                </property>
+                                                <property>
+                                                    <name>whatsThis</name>
+                                                    <string>Here you can define how fast the scrolltext should be scrolling. If you have rather little space on your taskbar (and therefore a rather small news ticker), you should probably set this to a lower value so that you have a chance to read the headlines. For wider news tickers (and better eyes), a faster text is probably appropriate so that you have to wait for the next headline only as little as possible.&lt;br&gt;&lt;br&gt; This value defines, after which period of time the text shall be scrolled a little bit further; this value is antiproportional, e.g. lower values result in a faster scrolling text.</string>
+                                                </property>
+                                            </widget>
+                                        </hbox>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                            <widget row="1"  column="0" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lDirectionOfScrolling_2</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>Di&amp;rection of scrolling:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>comboDirection</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Direction of scrolling</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>These options allow you to define in what direction the text should be scrolled, e.g. to the left or to the right, upwards or downwards.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="1" >
+                                <class>KComboBox</class>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>To the left</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>To the right</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Upwards</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Downwards</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Upwards, rotated</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property>
+                                        <name>text</name>
+                                        <string>Downwards, rotated</string>
+                                    </property>
+                                </item>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>comboDirection</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Direction of scrolling</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>These options allow you to define in what direction the text should be scrolled, e.g. to the left or to the right, upwards or downwards. Rotated means the text is rotated 90 degrees.</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget>
+                        <class>QGroupBox</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>gbScrollerAppearance</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>enabled</name>
+                            <bool>true</bool>
+                        </property>
+                        <property stdset="1">
+                            <name>title</name>
+                            <string>Appearance</string>
+                        </property>
+                        <grid>
+                            <property stdset="1">
+                                <name>margin</name>
+                                <number>11</number>
+                            </property>
+                            <property stdset="1">
+                                <name>spacing</name>
+                                <number>6</number>
+                            </property>
+                            <widget row="3"  column="0" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lHighlightedColor_2</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>H&amp;ighlighted color:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>colorHighlighted</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Highlighted color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click the button at the right to open a convenient color-selection dialog which lets you choose the color which will be used for the color of the headlines when they are highlighted (when you move the mouse over them).</string>
+                                </property>
+                            </widget>
+                            <widget row="3"  column="1" >
+                                <class>KColorButton</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>colorHighlighted</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Highlighted color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click this button to open a convenient color-selection dialog which lets you choose the color which will be used for the color of the headlines when they are highlighted (when you move the mouse over them).</string>
+                                </property>
+                            </widget>
+                            <widget row="2"  column="0" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lBackgroundColor_2</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Background color:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>colorBackground</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Background color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click the button at the right to open a convenient color-selection dialog which lets you choose the color which will be used for the background of the scrolling text.</string>
+                                </property>
+                            </widget>
+                            <widget row="2"  column="1" >
+                                <class>KColorButton</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>colorBackground</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Background color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click this button to open a convenient color-selection dialog which lets you choose the color which will be used for the background of the scrolling text.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="0" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lForegroundColor_2</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Foreground color:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>colorForeground</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Foreground color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click the button at the right open a convenient color-selection dialog which lets you choose the color which will be used for the foreground of the scrolling text.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="1" >
+                                <class>KColorButton</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>colorForeground</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Foreground color</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click this button open a convenient color-selection dialog which lets you choose the color which will be used for the foreground of the scrolling text.</string>
+                                </property>
+                            </widget>
+                            <widget row="0"  column="0" >
+                                <class>QLabel</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>lFont_2</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>F&amp;ont:</string>
+                                </property>
+                                <property>
+                                    <name>buddy</name>
+                                    <cstring>bChooseFont</cstring>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Scrolltext font</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click on the button at the right labelled &lt;i&gt;Choose font...&lt;/i&gt; to choose the font which will be used for the scrolling text. Please note that certain fonts are harder to read that others, especially when they're used as a scrolltext, so you should probably choose a font which can even easily be read if it's moving.</string>
+                                </property>
+                            </widget>
+                            <widget row="0"  column="1" >
+                                <class>QPushButton</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>bChooseFont</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>Choose font...</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Scrolltext font</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click here to choose the font which will be used for the scrolling text. Please note that certain fonts are harder to read that others, especially when they're used as a scrolltext, so you should probably choose a font which can even easily be read if it's moving.</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget>
+                        <class>QGroupBox</class>
+                        <property stdset="1">
+                            <name>name</name>
+                            <cstring>gbMiscScrollingOptions</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>title</name>
+                            <string>Miscellaneous</string>
+                        </property>
+                        <grid>
+                            <property stdset="1">
+                                <name>margin</name>
+                                <number>11</number>
+                            </property>
+                            <property stdset="1">
+                                <name>spacing</name>
+                                <number>6</number>
+                            </property>
+                            <widget row="0"  column="0" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbScrollMostRecentOnly</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>Scroll the most recent headlines onl&amp;y</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Show just the most recent headline for each news site in the scroller</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Check this button to show just the most recent headline for each news site. </string>
+                                </property>
+                            </widget>
+                            <widget row="0"  column="1" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbShowIcons</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>Show icons</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Show icons in the scrolltext</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Click this button to make KNewsTicker show the icons of the news site to which each headline belongs. This makes associating a headline to a news site very easy but eats a little space.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="0" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbEndlessScrolling</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Endless scrolling</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Make the scroller scroll the headlines continuously ("endless"), instead of scrolling all of the headlines and then starting all over.</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Check this box to avoid that ugly break and the end of the scrolling (when all the headlines have appeared once). If endless scrolling is enabled and the last headline has been shown, KNewsTicker will attach the first headline to the end of the scrolling text.</string>
+                                </property>
+                            </widget>
+                            <widget row="1"  column="1" >
+                                <class>QCheckBox</class>
+                                <property stdset="1">
+                                    <name>name</name>
+                                    <cstring>cbUnderlineHighlighted</cstring>
+                                </property>
+                                <property stdset="1">
+                                    <name>text</name>
+                                    <string>&amp;Underline highlighted headline</string>
+                                </property>
+                                <property>
+                                    <name>toolTip</name>
+                                    <string>Underline the currently highlighted headline</string>
+                                </property>
+                                <property>
+                                    <name>whatsThis</name>
+                                    <string>Check this box to have the currently highlighted headline (e.g. the headline which is currently under the mouse cursor) underlined.</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <spacer>
+                        <property>
+                            <name>name</name>
+                            <cstring>Spacer6</cstring>
+                        </property>
+                        <property stdset="1">
+                            <name>orientation</name>
+                            <enum>Vertical</enum>
+                        </property>
+                        <property stdset="1">
+                            <name>sizeType</name>
+                            <enum>Expanding</enum>
+                        </property>
+                        <property>
+                            <name>sizeHint</name>
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </vbox>
+            </widget>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>KColorButton</class>
+        <header location="global">kcolorbtn.h</header>
+        <sizehint>
+            <width>40</width>
+            <height>25</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>7</hordata>
+            <verdata>1</verdata>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+</customwidgets>
+<images>
+    <image>
+        <name>image0</name>
+        <data format="XPM.GZ" length="45">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523250004143a55a6b2e0026630c4f</data>
+    </image>
+</images>
+<tabstops>
+    <tabstop>sliderMouseWheelSpeed</tabstop>
+    <tabstop>niInterval</tabstop>
+    <tabstop>cbCustomNames</tabstop>
+    <tabstop>cbEndlessScrolling</tabstop>
+    <tabstop>cbUnderlineHighlighted</tabstop>
+    <tabstop>cbScrollMostRecentOnly</tabstop>
+    <tabstop>lvNewsSources</tabstop>
+    <tabstop>tabScrollerPreferences</tabstop>
+    <tabstop>bAddNewsSource</tabstop>
+    <tabstop>bRemoveNewsSource</tabstop>
+    <tabstop>lvFilters</tabstop>
+    <tabstop>comboFilterAction</tabstop>
+    <tabstop>comboFilterNewsSource</tabstop>
+    <tabstop>comboFilterCondition</tabstop>
+    <tabstop>leFilterExpression</tabstop>
+    <tabstop>bAddFilter</tabstop>
+    <tabstop>bRemoveFilter</tabstop>
+</tabstops>
+</UI>

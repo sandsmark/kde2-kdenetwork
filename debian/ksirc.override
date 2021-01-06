@@ -1,0 +1,3 @@
+ksirc: no-shlibs-control-file usr/lib/ksirc.so
+ksirc: postinst-must-call-ldconfig usr/lib/ksirc.so
+

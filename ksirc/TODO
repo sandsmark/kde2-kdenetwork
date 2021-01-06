@@ -1,0 +1,4 @@
+- Warn via knotify one certain custom keywords
+- Convert chars to QString (if possible at all ;)
+- Fix some focus issues in MDI mode
+- rework property dialog(s)

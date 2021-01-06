@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+
+<channel>
+<title>WebReference News</title>
+<link>http://www.webreference.com</link>
+<description>Daily news, views, and how-tos on all aspects of web design and development. Features free web-based tools, open source scripts, and in-depth tutorials on DHTML, HTML, JavaScript, 3D, Graphics, XML, and Design for webmasters.</description>
+</channel>
+
+<image>
+<title>WebReference.com</title>
+<url>http://webreference.com/art/wr.gif</url>
+<link>http://www.WebReference.com</link>
+</image>
+
+<item>
+<title>The Evolution of RSS</title>
+<link>http://www.webreference.com/authoring/languages/xml/rss/1/</link>
+</item>
+
+<item>
+<title>Weblog 2.0 Released</title>
+<link>http://www.webreference.com/perl/tutorial/22/</link>
+</item>
+
+<item>
+<title>Professional Perl: Attribute Lists</title>
+<link>http://www.webreference.com/programming/perl/professional/chap7/6/</link>
+</item>
+
+<item>
+<title>Professional XML Databases</title>
+<link>http://www.webreference.com/authoring/languages/xml/databases/</link>
+</item>
+
+<item>
+<title>DHTML Hierarchical Menus: Version 4.0.9</title>
+<link>http://www.webreference.com/dhtml/column52/</link>
+</item>
+
+<item>
+<title>Look Ma ... No Pixels: Paint Shop Pro Paths and Vectors</title>
+<link>http://www.webreference.com/graphics/column46/</link>
+</item>
+
+<item>
+<title>The Art of Cross-Browser Table Building</title>
+<link>http://www.webreference.com/authoring/languages/html/tables/resize/</link>
+</item>
+
+<item>
+<title>XSL to XSLT Converter</title>
+<link>http://www.webreference.com/xml/column31/</link>
+</item>
+
+<item>
+<title>Professional JavaScript: Browser Compatibility</title>
+<link>http://www.webreference.com/programming/javascript/professional/chap4/6/</link>
+</item>
+
+<item>
+<title>WebDeveloper.com Channel News</title>
+<link>http://www.webreference.com/services/news/</link>
+</item>
+
+<item>
+<title>Welding Vertices in Max 4 </title>
+<link>http://www.webreference.com/3d/lesson117/</link>
+</item>
+
+<item>
+<title>Embedding Sound with Flash, Part II: Playing Variations</title>
+<link>http://www.webreference.com/js/column82/</link>
+</item>
+
+<item>
+<title>Begin with the Blurb</title>
+<link>http://www.webreference.com/internet/writing/headlines/blurbs/</link>
+</item>
+
+<item>
+<title>Beginning XHTML: Printing and Paginated Media</title>
+<link>http://www.webreference.com/authoring/languages/xhtml/beginning/chap13/3/</link>
+</item>
+
+<item>
+<title>Professional Perl: Returning Values from Subroutines</title>
+<link>http://www.webreference.com/programming/perl/professional/chap7/5/</link>
+</item>
+
+<textinput>
+<title>Search</title>
+<description>Search WebReference.com</description>
+<name>query</name>
+<link>http://www.webreference.com/cgi-bin/search.cgi</link>
+</textinput>
+
+</rdf:RDF>

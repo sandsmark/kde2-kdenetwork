@@ -1,0 +1,125 @@
+Source: kdenetwork
+Build-Depends: automake (>= 1:1.4-p4-1.1), autoconf, libtool, debhelper (>> 3.0.0), kdelibs-dev (>= 4:2.2.2-1), binutils (>= 2.11.92.0.5-3), docbook-to-man
+Section: net
+Priority: optional
+Maintainer: Daniel Stone <daniel@sfarc.net> 
+Standards-Version: 3.5.6
+
+Package: kdict
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}
+Recommends: kdebase-libs
+Description: dict client based on KDE/Qt
+ kdict is an advanced kde graphical client for the DICT Protocol,
+ with full unicode support.
+
+Package: libmimelib1
+Architecture: any
+Section: libs
+Replaces: kdesupport0g (<< 4:1.1.2-final-0), libmime1
+Depends: ${shlibs:Depends}
+Description: mime libraries needed for some KDE applications
+ These libraries are used by several KDE applications
+ 
+Package: libmimelib-dev
+Architecture: any
+Section: devel
+Replaces: kdesupport0g-dev (<< 4:1.1.2-final-0)
+Depends: libmimelib1 (=${Source-Version})
+Description: mime library - development version
+ These libraries are used by kde to handle mime types.
+
+Package: libkdenetwork1
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: Common libraries needed for KDE network applications
+ This package contains libraries needed for network based KDE applications.
+ This is mainly any common code that could be shared between apps.
+
+Package: kit
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}
+Recommends: kdebase-libs
+Description: AOL Instant Messenger frontend for KDE
+ AOL Instant Messenger frontend for KDE 
+ 
+Package: klisa
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}, debconf, sysvinit (>= 2.80-1)
+Suggests: samba-common
+Description: LAN information service similar to "Network Neighbourhood" 
+ LISa is intended to provide a kind of "Network Neighborhood" but using
+ only the TCP/IP protocol stack, without the SMB protocol.
+
+Package: kmail
+Architecture: any
+Section: mail
+Depends: ${shlibs:Depends}, procmail
+Recommends: kdebase-libs
+Suggests: gnupg, kmailplugin
+Provides: mail-reader
+Description: Mail Client based on Qt and KDE
+ Mail Client based on Qt and KDE
+ .
+ Supports pop3, pop3s, GPG/PGP
+ 
+Package: knode
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}
+Recommends: kdebase-libs
+Provides: news-reader
+Conflicts: keystone
+Replaces: keystone
+Description: News reader for KDE
+ News reader for KDE 
+ 
+Package: korn
+Architecture: any
+Section: mail
+Depends: ${shlibs:Depends}
+Recommends: kdebase-libs
+Description: Mail notifier for KDE
+ Mail notifier for KDE 
+ 
+Package: kppp
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}, ppp
+Recommends: kdebase-libs
+Conflicts: suidmanager (<< 0.50)
+Description: PPP dialer for KDE
+ This is a PPP GUI based on Qt and KDE
+ 
+Package: ksirc
+Architecture: any
+Section: net
+Depends: ${shlibs:Depends}, ${perl:Depends}
+Recommends: kdebase-libs
+Description: IRC Client based on Qt and KDE
+ IRC Client based on Qt and KDE
+ 
+Package: knewsticker
+Architecture: any
+Section: web
+Depends: ${shlibs:Depends}, kdebase
+Suggests: knewsticker-scripts
+Description: A News ticker for KDE
+ This is a News ticker for the KDE panel.  It can scroll news from your 
+ favorite news sites like /. and freshmeat.
+
+Package: ktalkd
+Architecture: any
+Section: net
+Priority: extra
+Replaces: talkd
+Depends: ${shlibs:Depends}, talk | ytalk
+Conflicts: talkd
+Recommends: kdebase-libs
+Provides: talkd
+Description: Talk daemon for KDE
+ Talk daemon for KDE 

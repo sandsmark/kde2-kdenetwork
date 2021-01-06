@@ -1,0 +1,966 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
+<!ENTITY kappname "&knewsticker;">
+<!ENTITY % addindex "IGNORE">
+<!ENTITY % English "INCLUDE">
+
+
+]>
+
+<book lang="&language;">
+
+<bookinfo>
+<title>The &knewsticker; Handbook</title>
+
+<authorgroup>
+<author>
+<firstname>Frerich</firstname>
+<surname>Raabe</surname>
+<affiliation>
+<address><email>raabe@kde.org</email></address>
+</affiliation>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2001</year>
+<holder>Frerich Raabe</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2001-01-24</date>
+<releaseinfo>1.00.00</releaseinfo>
+
+<abstract>
+<para>
+&knewsticker; is a news ticker applet for the &kde; 2.x panel (also known as
+&kicker;).
+</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>KNewsTicker</keyword>
+<keyword>kdenetwork</keyword>
+<keyword>news ticker</keyword>
+<keyword>applet</keyword>
+</keywordset>
+</bookinfo>
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>
+&knewsticker; is an applet for the &kde; panel (also known as &kicker;) which
+provides an easy and convenient way to access the news as reported by many news
+sites (such as <ulink url="http://slashdot.org">Slashdot</ulink>,
+<ulink url="http://lwn.net">Linux Weekly News</ulink> or
+<ulink url="http://freshmeat.net">Freshmeat</ulink>).
+</para>
+
+<para>
+To archieve this, &knewsticker; requires the news sites to provide a special
+<acronym>RDF</acronym> or <acronym>RSS</acronym> file, which contains the
+headlines as well as pointers to the corresponding full articles. Such files
+are very common these days, and &knewsticker; already comes with a selection
+of good news sources which provide such files.
+</para>
+
+<sect1 id="rdffiles">
+<title>Brief Info On <acronym>RDF</acronym> Files</title>
+
+<para>
+<acronym>RDF</acronym> files are becoming more and more popular these days, and
+this applet is not the first application which takes advantage of them. But
+what are <acronym>RDF</acronym> files? This section tries to give a brief
+answer to this questions, as well as pointers to other sources for further
+reference.
+</para>
+
+<para>
+<acronym>RDF</acronym> is an acronym for <quote>Resource Definition Framework
+</quote>. It has been invented by the <ulink url="http://www.w3c.org">World
+Wide Web Consortium</ulink> and is one of the first applications of the
+<ulink url="http://www.w3.org/TR/REC-xml">Extended Markup Language (<acronym>
+XML</acronym>)</ulink>). <acronym>RDF</acronym> files (as well as the very
+similiar <acronym>RSS</acronym> files) define and describe so-called Metadata,
+&eg; information about information.
+</para>
+
+<para>
+<acronym>RDF</acronym> files can be used for all kinds of Metadata, not just
+news. Nevertheless, they have become very popular among the news sites as they
+provide a clean, simple and portable way to distribute news. The news sites
+provide a <acronym>RDF</acronym> file which basically contains a set of records,
+and each record consists of a headline and an <acronym>URL</acronym> which
+points to the complete
+article. Besides that, the <acronym>RDF</acronym> file contains also the
+official name of the news site as well as other general informations which are
+parsed and evaluated by &knewsticker;.
+</para>
+
+<para>
+Of course, this is only a short and highly incomplete attempt at explaining the
+basic ideas behind <acronym>RDF</acronym> files and Metadata. If you're
+interested in this topic, you might want to visit any of the following links
+which point to further and more complete sources on this:</para>
+
+<variablelist>
+<varlistentry>
+<term><ulink url="http://www.oasis-open.org/cover/rdf.html">
+http://www.oasis-open.org/cover/rdf.html</ulink></term>
+<listitem><para>This page is a fairly well explanation of the Resource
+Definition Framework and provides a great list of links to more sites which deal
+with this topic. No special knowledge is needed to understand this page, and
+it's highly up to date. </para></listitem>
+</varlistentry>
+<varlistentry>
+<term><ulink url="http://www.ccil.org/~cowan/XML/RDF-made-easy.html">
+http://www.ccil.org/~cowan/XML/RDF-made-easy.html</ulink></term>
+<listitem><para>Here you can find a more pratical point of view on the Resource
+Definition Framework. This page demonstrates the usage of <acronym>RDF</acronym>
+files and shows why and when they are appropriate. The reader should be familiar
+with the <ulink url="http://www.w3.org/TR/REC-xml">XML 1.0</ulink> standard as
+defined by the <ulink url="http://www.w3.org">World Wide Web Consortium</ulink>
+before reading this text.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><ulink url="http://www.andrew.cmu.edu/user/mingfai/rdf/">
+http://www.andrew.cmu.edu/user/mingfai/rdf/</ulink></term>
+<listitem><para>This is a great and very comprehensive list of sites which deal
+with <acronym>RDF</acronym> files. You might want to consider bookmarking this
+page for further reference, as it's also fairly up to date and lists virtually
+no dead links.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><ulink url="http://www.w3.org/RDF/">http://www.w3.org/RDF/</ulink></term>
+<listitem><para><emphasis>The</emphasis> authoratative source directly from
+the <ulink url="http://www.w3.org">World Wide Web Consortium</ulink>. It
+features a comprehensive list of links to other sites on the topic as well as
+a timeline of the <acronym>RDF</acronym> development, an overview over the
+architecture, an archive with articles about <acronym>RDF</acronym> as well
+as a carefully assembled list of tools for developers who intend to work with
+<acronym>RDF</acronym>.</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>If you find any other sites or documents on this topic, don't hesitate to
+send them to Frerich Raabe <email>raabe@kde.org</email> so that they can be
+included in this
+document and help everybody.</para>
+
+<para>Thank you very much!</para>
+
+</sect1>
+
+</chapter>
+
+<chapter id="starting-knewsticker">
+<title>Starting &knewsticker;</title>
+
+<screenshot>
+<screeninfo>Here's a screenshot of &knewsticker; in &kde;'s panel</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="knewsticker-kicker.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase>Here's a screenshot of &knewsticker; in &kde;'s panel</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para>
+&knewsticker; is started like every other &kicker; applet, you just have to add
+it to the panel (or any child panel of the main one). To do so, just choose
+<guimenuitem>News Ticker</guimenuitem> from the <guisubmenu>Applet</guisubmenu>
+submenu of &kicker;.
+</para>
+
+<screenshot>
+<screeninfo>Here's a screenshot of &knewsticker; in it's own child panel</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="knewsticker-childpanel.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase>Here's a screenshot of &knewsticker; in it's own child panel</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para>
+Another good way to use &knewsticker; is to put it into it's own child panel.
+Just add a new child panel by choosing <menuchoice><guimenu>Add</guimenu>
+<guisubmenu>Extension</guisubmenu><guimenuitem>Child Panel</guimenuitem>
+</menuchoice> from the context menu of &kicker;. Now you can simply load
+&knewsticker; into the child panel as described above.
+</para>
+</chapter>
+
+<chapter id="configuration">
+<title>Configuring &knewsticker;</title>
+
+<para>
+As &knewsticker; aims for tight system integration, there is more than one way
+to adjust the way it works:
+</para>
+
+<variablelist>
+<varlistentry><term>Via &kcontrol;</term><listitem><para>Start &kcontrol; by
+clicking on the <inlinemediaobject><imageobject>
+<imagedata fileref="kcontrol-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> button in the &kde; panel or choose the corresponding entry
+in the <guimenu>K</guimenu> menu. Then browse to the &knewsticker; module in the
+tree view at the left by choosing <guimenuitem>News Ticker</guimenuitem> in the
+<guisubmenu>Personalization</guisubmenu> submenu.</para></listitem>
+</varlistentry>
+<varlistentry><term>With the right mouse button</term><listitem><para>You can
+open the context menu for &knewsticker; by clicking on it with the right mouse
+button, or clicking on the button with the arrow on it and choose the the entry
+labelled <guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="preferences-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> Preferences</guimenuitem> in the menu.</para></listitem>
+</varlistentry>
+</variablelist>
+
+<sect1 id="config-general">
+<title>General Configuration</title>
+
+<sect2>
+<title>Global Options</title>
+
+<screenshot>
+<screeninfo>This is what the <guilabel>General</guilabel> tab of the
+preferences dialog looks like, when opened via &kcontrol;.</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="kcmnewsticker-general.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase>This is what the <guilabel>General</guilabel> tab of the
+preferences dialog looks like, when opened via &kcontrol;.</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para>
+No matter what way you've chosen to access the configuration dialog, you will be
+presented the first tab of the preferences dialog, labelled <guilabel>
+General</guilabel>. Here you can define how fast the text should be scrolled
+around, what it should look like as well as other options for the applet. Here
+is a brief info on what each of the switches and buttons on this tab does:
+</para>
+
+<variablelist>
+<varlistentry>
+<term><guilabel>News query interval</guilabel></term>
+<listitem><para>
+Here you can define in what intervals &knewsticker; queries the configured news
+sources for new headlines. This depends generally on how fast you'd like to
+hear about news and how much load you want to put on the network:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>
+A lower value (lower than 15 minutes) enables you to be notified about news
+very quickly if you want or need to. Please note, that it increases the network
+traffic significantly, though. Therefore, such low values shouldn't be used
+if you query popular news sites (such as <ulink url="http://slashdot.org">
+Slashdot</ulink> or <ulink url="http://freshmeat.net">Freshmeat</ulink>) as
+they have generally already enough work with processing the incoming queries.
+</para>
+</listitem>
+<listitem>
+<para>
+A higher value (higher than 45 minutes) won't make you hear about news that
+quick. For non-timecritical applications, it should be suitable, though. The
+positive aspect of longer intervals is that only very little load is put on
+the network; this saves resources and nerves, for you and the system
+administrators of the news sites you query.
+</para>
+</listitem>
+</itemizedlist>
+
+<tip>
+<para>
+The default value (30 minutes) should be appropriate and reasonable in most
+cases.
+</para>
+</tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Use custom names for news sites</guilabel></term>
+<listitem><para>
+Check this box to make the news ticker use the names you specified in the list
+of news sources (available on the tab labelled <guilabel>News sources</guilabel>)
+instead of the ones the news sites themselves report. This can be handy for news
+sites which report a very long or useless name.
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Endless scrolling</guilabel></term>
+<listitem><para>
+Check this box to avoid that ugly break and the end of the scrolling (when all
+the headlines have appeared once). If endless scrolling is enabled and the last
+headline has been shown, &knewsticker; will attach the first headline to the
+end of the scrolling text.
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Scroll the most recent headlines only</guilabel></term>
+<listitem><para>
+Check this button to show just the most recent headline for each news site,
+instead of showing every headline available from every news site.
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2>
+<title>Visual Options</title>
+
+<variablelist>
+<varlistentry>
+<term><guilabel>Scrolling speed</guilabel></term>
+<listitem><para>
+This slider lets you define how fast the scrolltext should be scrolling. If
+you have rather little space on your taskbar (and therefore a rather small
+news ticker), you should probably set this to a lower value so that you have a
+chance to read the headlines. For wider news tickers (and better eyes), a
+faster text is probably appropriate so that you have to wait for the next
+headline only as little as possible.
+</para>
+<note>
+<para>
+This value defines, after which period of time the text shall be scrolled a
+little bit further, &eg; this value is antiproportional. This means that lower
+values result in a faster scrolling text.
+</para></note></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Direction of scrolling</guilabel></term>
+<listitem><para>
+These options allow you to define in what direction the text should be
+scrolled, &eg; to the left or to the right, upwards or downwards.
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Scrolltext font</guilabel></term>
+<listitem><para>
+Click on the button at the right labelled "Choose font..." to choose the font
+which will be used for the scrolling text.</para>
+<tip><para>Certain fonts are
+harder to read that others, especially when they're used for a scrolltext, so
+you should probably choose a font which can even easily be read if it's moving.
+</para></tip></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Foreground color</guilabel></term>
+<listitem><para>
+Click this button open a convenient color-selection dialog which lets you
+choose the color which will be used for the foreground of the scrolling text
+(&eg; the color of the text itself).
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Background color</guilabel></term>
+<listitem><para>
+Click this button to open a convenient color-selection dialog which lets you
+choose the color which will be used for the background of the scrolling text.
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Highlighted color</guilabel></term>
+<listitem><para>
+Click this button to open a convenient color-selection dialog which lets you
+choose the color which will be used for the color of the headlines when they
+are highlighted (when you move the mouse over them).
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Underline highlighted headline</guilabel></term>
+<listitem><para>
+Check this box to have the currently highlighted headline (&eg; the headline
+which is currently under the mouse cursor) underlined.
+</para></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+
+<sect1 id="config-newssources">
+<title>Configuration Of The News Sources</title>
+
+<screenshot>
+<screeninfo>This is what the <guilabel>News sources</guilabel> tab of the
+preferences dialog could look like, when with the <guilabel>Preferences
+</guilabel> in the context menu of &knewsticker;.</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="kcmnewsticker-newssources.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase>This is what the <guilabel>News sources</guilabel> tab of the
+preferences dialog could look like, when with the <guilabel>Preferences
+</guilabel> in the context menu of &knewsticker;.</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para>
+Besides the options available on the <link linkend="config-general">
+<guilabel>General</guilabel></link> tab, there are
+even more ways to customize &knewsticker; to fit your needs available on the
+<guilabel>News sources</guilabel> tab. This page mainly consists of a table
+which lets you manage and maintain the list of news sites &knewsticker; queries
+for news. Click on any entry with the right mouse button to open a context menu
+which lets you remove the current entry, or add a new entry with the properties
+of the selected entry.
+</para>
+
+<para>
+At the bottom you can also find two buttons with an <inlinemediaobject>
+<imageobject><imagedata fileref="uparrow-icon.png" format="PNG"/>
+</imageobject></inlinemediaobject> up arrow and another one with
+<inlinemediaobject><imageobject>
+<imagedata fileref="downarrow-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> an arrow which points downwards. These two buttons allow
+you to move the entries in the list upwards and downwards, which is useful if
+you would like to define a specific order in which &knewsticker; loads the
+news sites.
+</para>
+
+<tip>
+<para>
+If you have the <link linkend="starting-knewsticker">applet started</link>, you
+can play around with the settings now.
+Pressing <guilabel>Apply</guilabel> makes the applet use the new settings
+immediately, you don't have to restart it.
+</para>
+</tip>
+
+<sect2>
+<title>Adding A News Site</title>
+
+<para>
+There are four ways to <emphasis>add</emphasis> a new news site to the list:
+
+<itemizedlist>
+<listitem><para>You can click on the button labbeled <guilabel>Add</guilabel>
+at the bottom.</para></listitem>
+<listitem><para>You can click with the right mouse button on the table and
+choose <guimenuitem>Add news source</guimenuitem>. This adds a new entry and
+sets the name to <quote>Unknown</quote>.</para></listitem>
+<listitem><para>You can click with the right mouse button on any entry in the
+list and choose <guimenuitem>Add news source</guimenuitem> to add a new entry
+which has the same properties as the entry you clicked on.</para></listitem>
+<listitem><para>You can drag any <acronym>RDF</acronym> or <acronym>RSS
+</acronym> file from another application (such as &konqueror;) onto the table.
+This adds a new entry to the list, sets the name to <quote>Unknown</quote> and
+sets the maximum number of articles to 10.</para></listitem>
+</itemizedlist>
+There's actually another, fifth way of adding a new news site to the list: you
+can click on any <acronym>RDF</acronym> or <acronym>RSS</acronym> file in the
+&konqueror; filemanager to have it added to the list immediately.
+</para>
+</sect2>
+
+<sect2>
+<title>Modifying An Existing News Site</title>
+
+<para>
+To <emphasis>edit</emphasis> an existing entry in the list, you can use the
+input fields at the right, which are in the box labelled <guilabel>General
+</guilabel>. They're normally deactivated, as long as you didn't select any
+news site in the list. As soon as you select one, though, the input fields
+are enabled and you can edit the properties of the selected news site as you
+wish:</para>
+
+<itemizedlist>
+<listitem><para>The topmost input field which is labelled <guilabel>Name:
+</guilabel> lets you edit the name of the news site. The name defined here
+will be used if the applet was unable to connect to the news site, or if the
+checkbox <guilabel>Use custom names for news sites</guilabel> (on the
+<guilabel>General</guilabel> tab) has been checked.</para></listitem>
+<listitem><para>The input field below lets you edit the <acronym>URL</acronym>
+which points to the <acronym>RDF</acronym> or <acronym>RSS</acronym> file
+to be used for the entry. You can change this string either by hand (&eg; by
+typing in the input field) or by clicking on the small button at the right of
+it (which has a folder icon on it). That button opens a convenient
+file-selection dialog which lets you browse to the desired file</para>
+</listitem>
+<listitem><para>Finally, there's a place to define the number of articles
+&knewsticker; should download and keep from the news site. The default is
+10 articles, but it might be reasonable to adjust this value for some news
+sites.</para></listitem>
+</itemizedlist>
+
+<para>When you change the value/text in any of these input fields, you can
+see the change take effect immediately in the list.</para>
+</sect2>
+
+<sect2>
+<title>Removing A News Site</title>
+
+<para>
+Of course you want to <emphasis>remove</emphasis> a news source from the list
+somewhen. To do this, you can either
+<itemizedlist>
+<listitem><para>click with the right mouse button on the entry you would like
+to delete and choose <guilabel>Remove news source</guilabel> from the popup
+menu.</para></listitem>
+<listitem><para>select the entry you intend to erase with the left mouse
+button and then click on the button and the bottom of the list labelled
+<guilabel>Remove</guilabel>.</para></listitem>
+</itemizedlist>
+In both cases, a confirmation box will pop up and make sure you didn't select
+the wrong entry.
+</para>
+</sect2>
+
+</sect1>
+</chapter>
+
+<chapter id="using-knewsticker">
+<title>Using &knewsticker;</title>
+
+<para>Using &knewsticker; is fairly straightforward and should give you no
+big problems, assuming that you already <link linkend="configuration">configured
+&knewsticker;</link>
+No matter whether you are running
+&knewsticker; in the main panel or it's own child panel, it appears as an area
+with a scrolling text and a button with a small arrow next to it.</para>
+
+<sect1 id="applet-descr">
+<title>The Applet</title>
+
+<para>The area (it is white per default, but you can change the background
+color easily using the preferences dialog) with the scrolling text in it is
+called the <quote>news scroller</quote>. It keeps scrolling the downloaded
+headlines (or just the most recent headlines) continuously and provides easy
+access to the articles. If you see an interesting article, just click on it
+to open the &konqueror; web browser, showing the full article which belongs to
+the headline you clicked on. If you feel that a possibly interesting headline
+just scrolled out of view, you have also some ways to influence the
+scrolling:</para>
+
+<itemizedlist>
+<listitem><para>You can click on the news scroller with the left mouse button
+and move the mouse around (while holding the left mouse button pressed down).
+The news scroller will continue scrolling as usual if you release the left
+mouse button again.</para></listitem>
+<listitem><para>If you own a so-called <quote>Wheelmouse</quote>, you can use
+the wheel on your mouse to scroll the headlines back and forth.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+There's also a very powerful <link linkend="contextmenu-descr">context menu
+</link>, which you can access either by
+clicking on the news scroller with the <mousebutton>right</mousebutton> mouse
+button, or by clicking on the arrow button with the
+<mousebutton>left</mousebutton> button. This context menu is the most
+interesting part of the applet, as it contains about all the
+functionality.
+</para>
+
+</sect1>
+
+<sect1 id="contextmenu-descr">
+<title>The Context Menu</title>
+
+<screenshot>
+<screeninfo>This is what the context menu of &knewsticker; looks like, if using
+just the default news sites.</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="contextmenu.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase>This is what the context menu of &knewsticker; looks like, if using
+just the default news sites.</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+<para>The context menu is basically split into two functional parts:</para>
+
+<para>The upper part shows a list of entries, each entry having a small icon like
+this <inlinemediaobject><imageobject>
+<imagedata fileref="newssite-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> next to it. This list represents
+the list of currently configured news sites. You can click on any of the news
+sources to open another menu which contains a listing of headlines which are
+available for that particular news site as well as an entry labelled <guilabel>
+<inlinemediaobject><imageobject><imagedata fileref="checknews-icon.png"
+format="PNG"/></imageobject></inlinemediaobject> Check news</guilabel> to
+refresh the headline list for this news site. Each of the headlines has an
+<inlinemediaobject><imageobject>
+<imagedata fileref="oldarticle-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> icon next to it which indicates whether you
+have read that article already or the <inlinemediaobject><imageobject>
+<imagedata fileref="newarticle-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> in case it is still
+unread.</para>
+
+<para>
+The lower part shows currently four entries (explaining from top to
+bottom):</para>
+
+<variablelist>
+<varlistentry><term><guilabel><inlinemediaobject><imageobject>
+<imagedata fileref="checknews-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> Check news</guilabel></term>
+<listitem><para>This entry has a little <inlinemediaobject><imageobject>
+<imagedata fileref="checknews-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> next to it. If you want to
+force &knewsticker; to check the configured news sites for new articles, you can
+click here.<note><para>This does not reset the internal timer which queries the
+news sites for new headlines automatically in certain
+intervals.</para></note></para></listitem> </varlistentry>
+<varlistentry><term><guilabel>Offline mode</guilabel></term>
+<listitem><para>This entry in the context menu has no icon associated to
+it. Click this button to enable a special <quote>offline mode</quote> which
+pauses the internal timer for querying the news sites and prevents any
+automatical download of new headlines. The offline mode comes in handy if you
+have to leave your computer for a while during which the system isn't connected
+to the Internet, as it saves you from all the error messages which pop up if any
+of the news sites couldn't be connected.<tip><para>You can still force a reload
+for single news sites as well as for all the news sites by selecting the
+respective <guilabel><inlinemediaobject><imageobject>
+<imagedata fileref="checknews-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> Check news</guilabel> entry.</para></tip>
+</para></listitem> </varlistentry>
+<varlistentry>
+<term><guilabel><inlinemediaobject><imageobject>
+<imagedata fileref="help-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> Help </guilabel></term>
+<listitem><para>This entry is marked with a small <inlinemediaobject>
+<imageobject><imagedata fileref="help-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject>. Clicking
+on this entry opens the &knewsticker; documentation (which you're reading in
+this moment) which details all the features and abilities of &knewsticker;.
+</para></listitem></varlistentry>
+<varlistentry>
+<term><guilabel><inlinemediaobject><imageobject>
+<imagedata fileref="about-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> About</guilabel></term>
+<listitem><para>This entry is marked with a small
+<inlinemediaobject><imageobject>
+<imagedata fileref="about-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject>, too. Selecting it opens a small
+dialog which lists the contributors of &knewsticker; as well as the copyright
+and the license.</para> </listitem></varlistentry>
+<varlistentry>
+<term><guilabel><inlinemediaobject><imageobject><imagedata
+fileref="preferences-icon.png" format="PNG"/></imageobject></inlinemediaobject>
+Preferences</guilabel></term>
+<listitem><para>This entry is easily recognizable due to the <inlinemediaobject>
+<imageobject><imagedata fileref="preferences-icon.png" format="PNG"/></imageobject>
+</inlinemediaobject> icon which
+is next to it. Select this entry to open the preferences dialog which lets you
+customize all of the properties for
+&knewsticker;</para></listitem></varlistentry>
+</variablelist>
+
+</sect1>
+</chapter>
+
+<chapter id="faq">
+<title>Frequently Asked Questions</title>
+
+&reporting.bugs;
+
+<qandaset id="faqlist">
+<qandaentry>
+<question><para>Where do I find the <acronym>RDF</acronym> file for the news
+site XY?</para></question>
+<answer><para>It's actually possible that the news site you're referring to
+doesn't provide any <acronym>RDF</acronym> or <acronym>RSS</acronym> file at
+all! Nevertheless you might want to check <ulink
+url="http://www.webreference.com/services/news">http://www.webreference.com/services/news
+</ulink> for a more or less comprehensive list of sites on the web which provide
+a <acronym>RDF</acronym> or <acronym>RSS</acronym> file. Another great resource
+for <acronym>RDF</acronym> files is <ulink url="http://www.xmltree.com">http://www.xmltree.com</ulink>,
+where you can find hundreds of <acronym>RDF</acronym> and <acronym>RSS</acronym>
+files, sorted by language and/or topic.</para>
+<para>If you found any interesting news sites which provide
+such a backend, though, don't hesitate to send them to Frerich Raabe
+<email>raabe@kde.org
+</email> so that they can be included in future releases. Thank you!</para>
+</answer>
+</qandaentry>
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+<title>Credits And License</title>
+
+<para>&knewsticker;</para>
+
+<para>Program copyright 2000, 2001 Frerich Raabe
+<email>raabe@kde.org</email></para>
+
+<para>Contributors:</para>
+
+<itemizedlist>
+<listitem><para>Malte Starostik <email>malte.starostik@t-online.de</email></para>
+</listitem>
+<listitem><para>Wilco Greven <email>greven@linux.org</email></para>
+</listitem>
+</itemizedlist>
+
+
+<para>Documentation copyright 2001 Frerich Raabe
+<email>raabe@kde.org</email></para>
+
+&underFDL;
+&underBSDLicense;
+
+</chapter>
+
+
+<glossary id="glossary">
+<title>Glossary</title>
+
+<para>
+This chapter is intended to explain the various acronyms which have been used
+throughout the &knewsticker; documentation. If you feel any acronyms or terms
+are missing here, please don't hesitate to send an email to Frerich Raabe
+<email>raabe@kde.org</email> so that they can be added. Thank you.
+</para>
+
+<glossentry id="gloss-rdf">
+<glossterm>RDF</glossterm>
+<glossdef><para>Resource Description Framework. A language derived from
+<acronym>XML</acronym> which describes metadata. Commonly used as a backend
+format for articles and other publications. For more detailed information on
+<acronym>RDF</acronym> files, you might want to read the <link
+linkend="rdffiles">brief info on <acronym>RDF</acronym> files</link>, or go
+directly to the <ulink url="http://www.w3.org/RDF/">official page on <acronym>
+RDF</acronym> files</ulink> at the <ulink url="http://www.w3.org">World Wide
+Web Consortium</ulink>.</para></glossdef>
+</glossentry>
+<glossentry id="gloss-rss">
+<glossterm>RSS</glossterm>
+<glossdef><para>The RDF Site Summary is actually an extension to the
+<acronym>RDF</acronym> language. Quoting the official <ulink
+url="http://www.purl.org/rss/1.0/">RSS v1.0
+specification</ulink>:</para>
+<para><quote><acronym>RDF</acronym> Site Summary (<acronym>RSS</acronym>) is a
+lightweight multipurpose extensible metadata description and syndication format.
+<acronym>RSS</acronym> is an <acronym>XML</acronym> application, conforms to the
+<acronym>W3C</acronym>'s <acronym>RDF</acronym> Specification and is extensible
+via <acronym>XML</acronym>-namespace and/or <acronym>RDF</acronym> based
+modularization.</quote></para></glossdef>
+</glossentry>
+<glossentry id="gloss-xml">
+<glossterm>XML</glossterm>
+<glossdef><para>The Extensible Markup Language is the <quote>universal format
+for structured documents and data on the Web</quote>. It's a derivate of
+<acronym>SGML</acronym> which fits the need of the world wide web. You might
+want to check the the <ulink url="http://www.w3.org/XML/">Extensible Markup
+Language</ulink> page at the <ulink url="http://www.w3.org">World Wide Web
+Consortium</ulink> for further information.</para></glossdef>
+</glossentry>
+<glossentry id="gloss-w3c">
+<glossterm>W3C</glossterm>
+<glossdef><para>An abbreviation for <quote>World Wide Web Consortium</quote>
+Quoting the <ulink url="http://www.w3.org">official homepage</ulink> of the
+W3C, <quote>the World Wide Web Consortium (<acronym>W3C</acronym>) develops
+interoperable technologies (specifications, guidelines, software, and tools) to
+lead the Web to its full potential as a forum for information, commerce,
+communication, and collective understanding</quote></para></glossdef>
+</glossentry>
+<glossentry id="gloss-url">
+<glossterm>&URL;</glossterm>
+<glossdef><para>&URL; stands for <quote>Uniforme Resource
+Locator</quote>, a specially formatted string which can reference resources
+like images, documents and other things on the Internet. Please refer to the
+respective <ulink url="http://www.w3.org/Addressing/">webpage</ulink> for more
+detailed information on this topic.</para></glossdef>
+</glossentry>
+<glossentry id="gloss-dcop">
+<glossterm>DCOP</glossterm>
+<glossdef><para>The Desktop COmmunication Protocol is a way for applications
+to communicate to each other. For instance, &knewsticker;'s <link
+linkend="configuration">configuration dialog</link> uses
+<acronym>DCOP</acronym> to tell the applet itself about the current
+configuration. For more detailled information on <acronym>DCOP</acronym> you
+might want to visit
+<ulink url="http://developer.kde.org/documentation/library/2.0-api/dcop/HOWTO.html">
+http://developer.kde.org/documentation/library/2.0-api/dcop/HOWTO.html</ulink>
+for a complete explanation of <acronym>DCOP</acronym>.</para></glossdef>
+</glossentry>
+
+</glossary>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-knewsticker">
+<title>Where to get &knewsticker;</title>
+
+<para>&knewsticker; is part of the <ulink url="http://www.kde.org">&kde; Project
+</ulink>. You will find the current version of &knewsticker; in the kdenetwork
+package at <ulink url="ftp://ftp.kde.org/pub/kde">ftp://ftp.kde.org/pub/kde
+</ulink>, the &FTP; server of the &kde; project.</para>
+</sect1>
+
+<sect1 id="requirements">
+<title>Requirements</title>
+<para>If you want to install &knewsticker;, you need at least a &kde; 2.1
+installation.</para>
+<para>If you intend to compile and install &knewsticker; yourself, you have to
+make sure that the following programs are present on your system:</para>
+<itemizedlist>
+<listitem><para>g++ 2.8 / egcs 1.0.3 (or compatible)</para></listitem>
+<listitem><para>GNU make</para></listitem>
+<listitem><para>autoconf 2.1</para></listitem>
+<listitem><para>automake 1.4</para></listitem>
+<listitem><para>Qt 2.2.x</para></listitem>
+<listitem><para>KDE 2.1</para></listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="compilation">
+<title>Compilation And Installation</title>
+
+<para>&knewsticker; is part of the kdenetwork package of &kde; 2.1 and is
+installed together with it. In general, there is no need for the user to
+compile the sourcecode of &knewsticker; by hand. If you nevertheless intend to
+do so or if you have only the sourcecode available, compilation and
+installation is, as usual on Linux, done by typing:</para>
+
+<screen width="40">
+<prompt>%</prompt> <userinput><command>./configure</command></userinput>
+<prompt>%</prompt> <userinput><command>make</command></userinput>
+<prompt>%</prompt> <userinput><command>su</command> <option>-c "make install"</option></userinput>
+</screen>
+
+<para>&knewsticker; uses <application>autoconf</application> and <application>
+automake</application>, so there shouldn't occur any problems during the
+compilation process. If you do hit on any problems though, please contact the
+&kde; developers mailing list <email>kde-devel@master.kde.org</email>.</para>
+</sect1>
+</appendix>
+
+<appendix id="develinfo">
+<title>Information For Developers And Advanced Users</title>
+
+<para>&knewsticker; features a currently rather limited but steadily growing
+<acronym>DCOP</acronym> interface. This is not only used to communicate with
+other applications, it makes it possible to control &knewsticker; with a
+shellscript as well. The more the interface is extended, the more useful it will
+become and the more flexible &knewsticker; will be controllable from a script.
+</para>
+
+<para>To use these <acronym>DCOP</acronym> functions you can either use the
+<application>dcop</application> commandline program or use the more convenient
+<application>KDCOP</application> application. Both provide the same
+functionality so it's actually just a matter of taste which program you prefer.
+:-)</para>
+
+<para>This chapter assumes that you're using the commandline program
+<application>dcop</application>. To access &knewsticker;'s
+<acronym>DCOP</acronym> functions make sure that &knewsticker; is <link
+linkend="starting-knewsticker">started</link> and then just enter something like
+this at the console: </para>
+
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>[function]</option></userinput>
+</screen>
+
+<note>
+<para>
+If an error appears that tells you that <filename>dcop</filename> couldn't be
+found or executed, please check whether the file <filename>dcop</filename>
+exists in <filename class="directory">$KDEDIR/bin</filename> and make sure it's
+permissions are appropriately set.
+</para>
+</note>
+
+<para>
+In that command line, just replace <quote>[function]</quote> with the respective
+function name, &ie; type
+</para>
+
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>updateNews</option></userinput>
+</screen>
+
+<para>
+to make &knewsticker; check for new news and download them if neccessary.
+</para>
+
+<sect1 id="dcop-reference">
+<title><acronym>DCOP</acronym> Reference</title>
+<para>
+So, here's (finally) the complete list of all the <acronym>DCOP</acronym> which
+&knewsticker; provides:
+</para>
+
+<variablelist>
+<varlistentry>
+<term><command>updateNews</command></term>
+<listitem><para>This function forces &knewsticker; to updates the internal list
+of articles (&eg; it queries the list of news sources which has been <link
+linkend="config-newssources">configured</link> for new news) and downloads them
+when neccessary.</para><note><para>This also works if &knewsticker; is
+currently in offline mode.</para></note>
+<para>Example:</para>
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>updateNews</option></userinput>
+</screen>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><command>reparseConfig</command></term>
+<listitem><para>The <command>reparseConfig</command> command makes &knewsticker;
+reload it's configuration from the configuration file. This function is used by
+the <link linkend="configuration">configuration dialog</link> to talk to
+&knewsticker; but you can use it in case you modified the configuration file by
+hand.</para>
+<tip><para>The configuration file is saved in
+<filename>~/.kde/share/config/knewstickerrc</filename></para></tip>
+<para>Example:</para>
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>reparseConfig</option></userinput>
+</screen>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><command>setOfflineMode [bool]</command></term>
+<listitem><para>You can call this function to define whether &knewsticker; is
+currently in the offline mode (&eg; whether &knewsticker; should query the
+<link linkend="config-newssources">configured news sites</link> for new news).
+</para>
+<para>Example:</para>
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>setOfflineMode</option> <option>true</option></userinput>
+</screen>
+<para>to enable the offline mode, or type</para>
+<screen width="40">
+<prompt>%</prompt> <userinput><command>dcop</command> <option>knewsticker</option> <option>KNewsTicker</option> <option>setOfflineMode</option> <option>false</option></userinput>
+</screen>
+<para>to disable offline mode.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</appendix>
+
+&documentation.index;
+
+</book>
+

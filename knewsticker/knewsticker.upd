@@ -1,0 +1,5 @@
+# Updates from version 0.1 to version 0.2
+Id=KNewsTicker-0.2
+File=knewstickerrc,knewstickerappletrc
+Script=knt-0.1-0.2.pl,perl
+# End of file

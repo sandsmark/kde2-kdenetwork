@@ -1,0 +1,319 @@
+<!DOCTYPE UI><UI>
+<class>open_ksircData</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>Form1</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>509</width>
+            <height>167</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>Form1</string>
+    </property>
+    <grid>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget row="0"  column="0"  rowspan="1"  colspan="4" >
+            <class>QLayoutWidget</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>Layout1</cstring>
+            </property>
+            <grid>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>0</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget row="1"  column="2" >
+                    <class>QComboBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>ComboB_ServerPort</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>editable</name>
+                        <bool>true</bool>
+                    </property>
+                    <property>
+                        <name>toolTip</name>
+                        <string>Choose a server port</string>
+                    </property>
+                    <property>
+                        <name>whatsThis</name>
+                        <string>Using &lt;i&gt;"6667"&lt;/i&gt; or &lt;i&gt;"6666"&lt;/i&gt; here is safe in most cases. Only use other values if you have been told so.</string>
+                    </property>
+                </widget>
+                <widget row="0"  column="2" >
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel3</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>text</name>
+                        <string>Port:</string>
+                    </property>
+                </widget>
+                <widget row="1"  column="0" >
+                    <class>QComboBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>ComboB_ServerGroup</cstring>
+                    </property>
+                    <property>
+                        <name>toolTip</name>
+                        <string>Choose an IRC Network</string>
+                    </property>
+                    <property>
+                        <name>whatsThis</name>
+                        <string>Usually, IRC Servers are connected to a net (IRCNet, OpenProjects Net, etc.). Here, you can select the closest server for your favorite network.</string>
+                    </property>
+                </widget>
+                <widget row="1"  column="1" >
+                    <class>EnterCombo</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>ComboB_ServerName</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>focusPolicy</name>
+                        <enum>StrongFocus</enum>
+                    </property>
+                    <property>
+                        <name>toolTip</name>
+                        <string>Enter/choose a server to connect to</string>
+                    </property>
+                    <property>
+                        <name>whatsThis</name>
+                        <string>If you selected a IRC Network in &lt;i&gt;"Group"&lt;/i&gt;, this window shows all its servers. If you haven't chosen a group, you can enter your own here or select one of the recent used (&lt;i&gt;"Quick Connect"&lt;/i&gt;).</string>
+                    </property>
+                </widget>
+                <widget row="0"  column="0" >
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel1</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>text</name>
+                        <string>Group:</string>
+                    </property>
+                </widget>
+                <widget row="0"  column="1" >
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel2</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>text</name>
+                        <string>Server/Quick Connect to:</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget row="3"  column="1" >
+            <class>QPushButton</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>PB_Edit</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>&amp;Edit servers</string>
+            </property>
+        </widget>
+        <spacer row="3"  column="0" >
+            <property>
+                <name>name</name>
+                <cstring>Spacer1</cstring>
+            </property>
+            <property stdset="1">
+                <name>orientation</name>
+                <enum>Horizontal</enum>
+            </property>
+            <property stdset="1">
+                <name>sizeType</name>
+                <enum>Expanding</enum>
+            </property>
+            <property>
+                <name>sizeHint</name>
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget row="1"  column="0"  rowspan="1"  colspan="4" >
+            <class>QFrame</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>Frame3</cstring>
+            </property>
+            <property stdset="1">
+                <name>frameShadow</name>
+                <enum>Sunken</enum>
+            </property>
+            <property stdset="1">
+                <name>frameShape</name>
+                <enum>Box</enum>
+            </property>
+            <hbox>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>11</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel4</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>text</name>
+                        <string>Server Description:</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>Label_ServerDesc</cstring>
+                    </property>
+                    <property stdset="1">
+                        <name>text</name>
+                        <string>DoNotTranslateMe!</string>
+                    </property>
+                    <property stdset="1">
+                        <name>sizePolicy</name>
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>1</vsizetype>
+                        </sizepolicy>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer row="2"  column="1" >
+            <property>
+                <name>name</name>
+                <cstring>Spacer1_2</cstring>
+            </property>
+            <property stdset="1">
+                <name>orientation</name>
+                <enum>Vertical</enum>
+            </property>
+            <property stdset="1">
+                <name>sizeType</name>
+                <enum>Expanding</enum>
+            </property>
+            <property>
+                <name>sizeHint</name>
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget row="3"  column="2" >
+            <class>QPushButton</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>PB_Connect</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>Connect</string>
+            </property>
+            <property stdset="1">
+                <name>default</name>
+                <bool>true</bool>
+            </property>
+            <property stdset="1">
+                <name>accel</name>
+                <number>0</number>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Connect to the selected server</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>Connect to the server given in &lt;i&gt;"Server / Quick Connect to:"&lt;/i&gt; on the port given in &lt;i&gt;"Port:"&lt;/i&gt;.</string>
+            </property>
+        </widget>
+        <widget row="3"  column="3" >
+            <class>QPushButton</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>PB_Cancel</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>&amp;Cancel</string>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Cancel Connect</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>Cancel Connect</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>EnterCombo</class>
+        <header location="local">enter_combo.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>-1</height>
+        </sizehint>
+        <container>1</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+</customwidgets>
+<images>
+    <image>
+        <name>image0</name>
+        <data format="XPM.GZ" length="646">789c6dd2c10ac2300c00d07bbf2234b7229d1be245fc04c5a3201e4615f430059d0711ff5ddb2e6bb236ec90eed134cb5a19d8ef36602af5ecdbfeeac05dda0798d3abebde87e3faa374d3807fa0d633a52d38d8de6f679fe33fc776e196f53cd010188256a3600a292882096246517815ca99884606e18044a3a40d91824820924265a7923a2e8bcd05f33db1173e002913175f2a6be6d3294871a2d95fa00e8a94ee017b69d339d90df1e77c57ea072ede6758</data>
+    </image>
+</images>
+<tabstops>
+    <tabstop>ComboB_ServerGroup</tabstop>
+    <tabstop>ComboB_ServerName</tabstop>
+    <tabstop>ComboB_ServerPort</tabstop>
+    <tabstop>PB_Connect</tabstop>
+    <tabstop>PB_Cancel</tabstop>
+    <tabstop>PB_Edit</tabstop>
+</tabstops>
+</UI>

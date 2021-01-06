@@ -1,0 +1,223 @@
+<!DOCTYPE UI><UI>
+<class>PageServChanBase</class>
+<widget>
+    <class>QWidget</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>PageServChanBase</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>386</width>
+            <height>465</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>Server/Channels</string>
+    </property>
+    <vbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QGroupBox</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>GroupBox33</cstring>
+            </property>
+            <property stdset="1">
+                <name>title</name>
+                <string>Server</string>
+            </property>
+            <hbox>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>11</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget>
+                    <class>QListBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>serverLB</cstring>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLayoutWidget</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>Layout15</cstring>
+                    </property>
+                    <vbox>
+                        <property stdset="1">
+                            <name>margin</name>
+                            <number>0</number>
+                        </property>
+                        <property stdset="1">
+                            <name>spacing</name>
+                            <number>6</number>
+                        </property>
+                        <widget>
+                            <class>QPushButton</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>serverDeleteItemPB</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>&amp;Delete server from list</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property>
+                                <name>name</name>
+                                <cstring>Spacer2</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>orientation</name>
+                                <enum>Vertical</enum>
+                            </property>
+                            <property stdset="1">
+                                <name>sizeType</name>
+                                <enum>Expanding</enum>
+                            </property>
+                            <property>
+                                <name>sizeHint</name>
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget>
+                            <class>QPushButton</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>ServerAddItemPB</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>&amp;Add server to list</string>
+                            </property>
+                        </widget>
+                        <widget>
+                            <class>QLineEdit</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>LineEdit6</cstring>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget>
+            <class>QGroupBox</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>GroupBox34</cstring>
+            </property>
+            <property stdset="1">
+                <name>title</name>
+                <string>Channels</string>
+            </property>
+            <hbox>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>11</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget>
+                    <class>QListBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>channelLB</cstring>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLayoutWidget</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>Layout15_2</cstring>
+                    </property>
+                    <vbox>
+                        <property stdset="1">
+                            <name>margin</name>
+                            <number>0</number>
+                        </property>
+                        <property stdset="1">
+                            <name>spacing</name>
+                            <number>6</number>
+                        </property>
+                        <widget>
+                            <class>QPushButton</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>chanDeleteItmPB</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>D&amp;elete channel from list</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property>
+                                <name>name</name>
+                                <cstring>Spacer2_2</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>orientation</name>
+                                <enum>Vertical</enum>
+                            </property>
+                            <property stdset="1">
+                                <name>sizeType</name>
+                                <enum>Expanding</enum>
+                            </property>
+                            <property>
+                                <name>sizeHint</name>
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget>
+                            <class>QPushButton</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>ChanAddItemPB</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>Add &amp;channel to list</string>
+                            </property>
+                        </widget>
+                        <widget>
+                            <class>QLineEdit</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>LineEdit6_2</cstring>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+</UI>

@@ -1,0 +1,8 @@
+knewsticker: no-shlibs-control-file usr/lib/libknewsticker.so
+knewsticker: no-shlibs-control-file usr/lib/libkntsrcfilepropsdlg.so
+knewsticker: no-shlibs-control-file usr/lib/libknewstickerapplet.so
+knewsticker: postinst-must-call-ldconfig usr/lib/libknewstickerapplet.so
+knewsticker: no-shlibs-control-file usr/lib/libkcm_newsticker.so
+knewsticker: postinst-must-call-ldconfig usr/lib/libknewsticker.so
+knewsticker: script-not-executable ./usr/share/apps/kconf_update/knt-0.1-0.2.pl
+

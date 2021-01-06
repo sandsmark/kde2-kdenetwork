@@ -1,0 +1,2 @@
+libkdenetwork1: non-dev-pkg-with-shlib-symlink usr/lib/libkdenetwork.so.1.0.0 usr/lib/libkdenetwork.so
+

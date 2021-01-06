@@ -1,0 +1,26 @@
+This directory contains the library for the kdenetwork package.
+
+Contents:
+  kscoring/            scoring engine & rule editor
+  kscoringeditor       Maintainer: Mathias Waack <mathias@atoll-net.de>
+
+  qregexp3             backport of QRegExp from Qt3
+                       Copyright (C) 1992-2000 Trolltech AS.
+                       
+                       This is *NOT* the original version from Trolltech, 
+                       so don't blame them if something is wrong
+
+  kpgp                 pgp abstraction layer
+                       Maintainer: Andreas Gungl <a.gungl@gmx.de>
+  
+  kwidgetlister        a small and nice widget which enables one to dynamically
+                       add or delete widgets. Used by the filter and scoring
+                       dialogs, which needs to display for instance a variable
+                       number of conditions. 
+                       Maintainer: Marc Mutz <Marc@Mutz.com>
+
+  kregexp3             A KRegExp replacement based on QRegExp from Qt3.x
+                       Maintainer: Marc Mutz <mutz@kde.org>
+
+  kmimetypevalidator   A QValidator for mime types.
+                       Maintainer: Marc Mutz <mutz@kde.org>

@@ -1,0 +1,39 @@
+#! /bin/sh
+# postinst script for klisa
+#
+# see: dh_installdeb(1)
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+case "$1" in
+    configure)
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 0
+    ;;
+esac
+
+if [ -x "/etc/init.d/klisa" ]; then
+        update-rc.d klisa defaults >/dev/null
+        invoke-rc.d --quiet klisa restart
+fi
+
+if [ "$1" = "configure" ]; then
+        if [ -d /usr/doc -a ! -e /usr/doc/klisa -a -d /usr/share/doc/klisa ]; then
+                ln -sf ../share/doc/klisa /usr/doc/klisa
+        fi
+fi
+
+test -e /usr/share/debconf/confmodule && {
+  db_stop
+}
+
+exit 0

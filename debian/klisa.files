@@ -1,0 +1,15 @@
+usr/bin/klisa
+usr/bin/reslisa
+usr/share/man/man1/klisa*
+usr/share/man/man1/reslisa*
+usr/share/applnk/Settings/Network/lanbrowser.desktop
+usr/share/apps/konqueror/dirtree/remote/lan.desktop
+usr/share/apps/klisa/*
+usr/share/services/lan.protocol
+usr/share/services/rlan.protocol
+usr/share/doc/kde/HTML/en/lisa/*
+usr/lib/libkcm_lanbrowser.so
+usr/lib/libkcm_lanbrowser.la
+usr/lib/kio_lan.so
+usr/lib/kio_lan.la
+usr/share/lintian/overrides/klisa

@@ -1,0 +1,8 @@
+?package(kit):\
+	needs=x11\
+	section=Apps/Net\
+	hints="KDE"\
+	kderemove="y"\
+	title="Kit"\
+	command="/usr/bin/kit"
+

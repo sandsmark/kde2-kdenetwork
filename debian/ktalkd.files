@@ -1,0 +1,16 @@
+usr/bin/ktalkd
+usr/bin/kotalkd
+usr/bin/mail.local
+usr/bin/ktalkdlg
+usr/share/man/man1/ktalkd*
+usr/share/man/man1/kotalkd*
+usr/share/man/man1/mail.local*
+usr/share/sounds/ktalkd.wav
+usr/share/icons/*/*/apps/ktalkd.*
+usr/share/applnk/Settings/Network/kcmktalkd.desktop
+usr/lib/kde2/libkcm_ktalkd.so
+usr/lib/kde2/libkcm_ktalkd.la
+etc/kde2/ktalkdrc
+usr/share/doc/kdenetwork/ktalkd/*
+usr/share/doc/kde/HTML/en/ktalkd/*
+usr/share/lintian/overrides/ktalkd

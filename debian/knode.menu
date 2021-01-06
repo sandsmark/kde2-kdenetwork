@@ -1,0 +1,8 @@
+?package(knode):\
+	needs=x11\
+	section=Apps/Net\
+	hints="KDE,News"\
+	kderemove="y"\
+	title="KNode"\
+	command="/usr/bin/knode"
+

@@ -1,0 +1,226 @@
+<!DOCTYPE UI><UI>
+<class>PageStartupBase</class>
+<widget>
+    <class>QWidget</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>PageStartupBase</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>397</width>
+            <height>467</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>StartUp</string>
+    </property>
+    <vbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QGroupBox</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>nickGB</cstring>
+            </property>
+            <property stdset="1">
+                <name>title</name>
+                <string>Name Settings</string>
+            </property>
+            <property stdset="1">
+                <name>maximumSize</name>
+                <size>
+                    <width>32767</width>
+                    <height>100</height>
+                </size>
+            </property>
+            <grid>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>11</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget row="0"  column="0" >
+                    <class>QLayoutWidget</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>Layout8</cstring>
+                    </property>
+                    <grid>
+                        <property stdset="1">
+                            <name>margin</name>
+                            <number>0</number>
+                        </property>
+                        <property stdset="1">
+                            <name>spacing</name>
+                            <number>6</number>
+                        </property>
+                        <widget row="0"  column="0" >
+                            <class>QLabel</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>nickLabel</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>Nick name:</string>
+                            </property>
+                        </widget>
+                        <widget row="0"  column="1" >
+                            <class>QLineEdit</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>nickLE</cstring>
+                            </property>
+                        </widget>
+                        <widget row="1"  column="1" >
+                            <class>QLineEdit</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>rnLE</cstring>
+                            </property>
+                        </widget>
+                        <widget row="1"  column="0" >
+                            <class>QLabel</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>rnLabel</cstring>
+                            </property>
+                            <property stdset="1">
+                                <name>text</name>
+                                <string>Real name:</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </grid>
+        </widget>
+        <widget>
+            <class>QGroupBox</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>notifyListGB</cstring>
+            </property>
+            <property stdset="1">
+                <name>title</name>
+                <string>Notify List</string>
+            </property>
+            <vbox>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>11</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget>
+                    <class>QLayoutWidget</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>Layout15</cstring>
+                    </property>
+                    <hbox>
+                        <property stdset="1">
+                            <name>margin</name>
+                            <number>0</number>
+                        </property>
+                        <property stdset="1">
+                            <name>spacing</name>
+                            <number>6</number>
+                        </property>
+                        <widget>
+                            <class>QListBox</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>notifyLB</cstring>
+                            </property>
+                        </widget>
+                        <widget>
+                            <class>QLayoutWidget</class>
+                            <property stdset="1">
+                                <name>name</name>
+                                <cstring>Layout14</cstring>
+                            </property>
+                            <vbox>
+                                <property stdset="1">
+                                    <name>margin</name>
+                                    <number>0</number>
+                                </property>
+                                <property stdset="1">
+                                    <name>spacing</name>
+                                    <number>6</number>
+                                </property>
+                                <widget>
+                                    <class>QPushButton</class>
+                                    <property stdset="1">
+                                        <name>name</name>
+                                        <cstring>removeNotifyPB</cstring>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>text</name>
+                                        <string>&amp;Remove from list</string>
+                                    </property>
+                                </widget>
+                                <spacer>
+                                    <property>
+                                        <name>name</name>
+                                        <cstring>Spacer1</cstring>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>orientation</name>
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>sizeType</name>
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property>
+                                        <name>sizeHint</name>
+                                        <size>
+                                            <width>20</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget>
+                                    <class>QLineEdit</class>
+                                    <property stdset="1">
+                                        <name>name</name>
+                                        <cstring>LineEdit6</cstring>
+                                    </property>
+                                </widget>
+                                <widget>
+                                    <class>QPushButton</class>
+                                    <property stdset="1">
+                                        <name>name</name>
+                                        <cstring>addNotifyPB</cstring>
+                                    </property>
+                                    <property stdset="1">
+                                        <name>text</name>
+                                        <string>&amp;Add to list</string>
+                                    </property>
+                                </widget>
+                            </vbox>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </vbox>
+</widget>
+</UI>

@@ -1,0 +1,2 @@
+kdict: non-dev-pkg-with-shlib-symlink usr/lib/libkdictapplet.so.1.0.0 usr/lib/libkdictapplet.so
+

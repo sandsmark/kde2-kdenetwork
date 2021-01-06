@@ -1,0 +1,21 @@
+kppp and execution of kppp
+==========================
+
+In order to actually use kppp you must first be a part of the "dip" group.
+This is the same for using PPP in general on Debian.  If you are not a part
+of this group you will not be able to actually run pppd or setup proper
+connections.
+
+
+kppp and immediate disconnects
+==============================
+
+In order for kppp to properly work you must set "noauth" in /etc/ppp/options.
+Keep in mind that you main have /etc/ppp/options.ttyS0 (For example) so make
+sure you change it in the proper (all?) file.
+
+The default is "auth" so if you don't change this most likely you'll connect
+and end up just getting a disconnect shortly after.
+
+
+- Ivan E. Moore II <rkrusty@debian.org>

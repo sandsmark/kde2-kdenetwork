@@ -1,0 +1,8 @@
+?package(kdict):\
+	needs=x11\
+	section=Apps/Net\
+	hints="KDE"\
+	kderemove="y"\
+	title="KDict"\
+	command="/usr/bin/kdict"
+

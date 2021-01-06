@@ -1,0 +1,13 @@
+usr/share/icons/*/*/actions/message_get.*
+usr/share/icons/*/*/apps/kmail.*
+usr/share/apps/kmail/*
+usr/share/applnk/Internet/KMail.desktop
+usr/bin/kmail
+usr/share/man/man1/kmail*
+usr/include/kde/kmailIface.h
+usr/share/doc/kdenetwork/kmail/*
+usr/share/doc/kde/HTML/en/kmail/*                                            
+usr/share/doc/kde/HTML/en/kmailcvt/*
+usr/bin/kmailcvt
+usr/share/icons/*/*/apps/kmailcvt.*
+usr/share/applnk/Utilities/kmailcvt.desktop

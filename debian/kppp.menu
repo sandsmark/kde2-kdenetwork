@@ -1,0 +1,16 @@
+?package(kppp):\
+	needs=x11\
+	section=Apps/System\
+	hints="KDE"\
+	kderemove="y"\
+	title="KPPP - Logview"\
+	command="/usr/bin/kppplogview"
+
+?package(kppp):\
+	needs=x11\
+	section=Apps/System\
+	hints="KDE"\
+	kderemove="y"\
+	title="KPPP"\
+	command="/usr/bin/kppp"
+

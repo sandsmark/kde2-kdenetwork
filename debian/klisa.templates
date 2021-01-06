@@ -1,0 +1,12 @@
+Template: klisa/suid
+Type: note
+Description: WARNING.  reslisa is setuid root
+ In order for reslisa to properly run you must run it setuid root.  I
+ have set this to be the default behavior.
+Description-de: WARNUNG: resilsa ist setuid root.
+ Damit relisa ordnungsgemäß ausgeführt werden kann, muss es setuid root sein.   
+ Diese Einstellung wurde als Standardeinstellung festgelegt.
+Description-es: AVISO. reslisa se ejecuta con permisos de root.
+ Para que reslisa funcione correctamente debe ejecutarse con permisos de
+ root (setuid root). Así está incluido en este paquete Debian.
+

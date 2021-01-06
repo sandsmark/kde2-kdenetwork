@@ -1,0 +1,8 @@
+?package(korn):\
+	needs=x11\
+	section=Apps/Net\
+	hints="KDE"\
+	kderemove="y"\
+	title="Korn"\
+	command="/usr/bin/korn"
+

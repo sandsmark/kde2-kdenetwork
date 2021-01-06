@@ -1,0 +1,3 @@
+usr/include/kde/*mime*
+usr/lib/libmime*.so
+usr/lib/libmime*.a

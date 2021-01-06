@@ -1,0 +1,15 @@
+usr/bin/ksticker
+usr/bin/dsirc
+usr/bin/ksirc
+usr/share/man/man1/ksticker*
+usr/share/man/man1/dsirc*
+usr/share/man/man1/ksirc*
+usr/share/apps/ksirc/*
+usr/share/icons/*/*/apps/ksirc.*
+usr/share/applnk/Internet/ksirc.desktop
+usr/lib/ksirc.so
+usr/lib/ksirc.la
+etc/kde2/ksircrc
+usr/share/doc/kdenetwork/ksirc/*
+usr/share/doc/kde/HTML/en/ksirc/*
+usr/share/lintian/overrides/ksirc

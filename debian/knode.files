@@ -1,0 +1,9 @@
+usr/share/apps/knode/*
+usr/share/icons/*/*/apps/knode.*
+usr/share/applnk/Internet/KNode.desktop
+usr/share/services/knewsservice.protocol
+usr/bin/knode
+usr/share/man/man1/knode*
+usr/share/doc/kdenetwork/knode/*
+usr/share/doc/kde/HTML/en/knode/*
+etc/kde2/knurc

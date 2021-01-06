@@ -1,0 +1,90 @@
+
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD)
+#       undef __BSD__
+#       define __BSD__ 1 /* needed so that #elif __BSD__ will work with gcc */
+#endif
+
+
+#ifndef HAVE_SETENV
+#define HAVE_SETENV
+#ifdef __cplusplus
+extern "C" 
+#endif
+int setenv(const char *name, const char *value, int overwrite);
+#endif
+
+#ifndef HAVE_UNSETENV
+#define HAVE_UNSETENV
+#ifdef __cplusplus
+extern "C" 
+#endif
+int unsetenv(const char *name);
+#endif
+
+#ifndef HAVE_USLEEP
+#define HAVE_USLEEP
+#ifdef __cplusplus
+extern "C" 
+#endif
+#ifndef __osf__
+void usleep(unsigned int);
+#endif
+#endif
+
+#ifdef __osf__
+/* From Tom Leitner <tom@radar.tu-graz.ac.at> */
+#if __STDC__
+#include <stdarg.h>
+#include <stdlib.h>
+#else
+#include <varargs.h>
+#endif
+#ifndef __OSF_INCLUDED__
+#define __OSF_INCLUDED__
+#define MSG_NOSIGNAL 0
+#ifndef AF_LOCAL
+#define AF_LOCAL 1          /* is the same as AF_UNIX */
+#endif
+#ifndef herror
+#define herror(a)   printf(a)
+#endif
+
+#ifndef _XOPEN_SOURCE_EXTENDED
+#ifdef __cplusplus  
+extern "C" int usleep __((useconds_t ));
+#else
+extern int usleep __((useconds_t ));
+#endif
+#endif
+
+#include <sys/types.h>
+#ifdef __cplusplus  
+extern "C" int sethostname (char *name, int name_len );
+extern "C" int snprintf(char *str, size_t n, char const *fmt, ...);
+extern "C" int flock(int filedes, int operation );
+extern "C" int vsnprintf(char *str, size_t n, char const *fmt, va_list ap);
+extern "C" int snprintf(char *str, size_t n, char const *fmt, ...);
+#else
+int sethostname (char *name, int name_len );
+int snprintf(char *str, size_t n, char const *fmt, ...);
+int flock(int filedes, int operation );
+int vsnprintf(char *str, size_t n, char const *fmt, va_list ap);
+int snprintf(char *str, size_t n, char const *fmt, ...);
+#endif
+#endif
+#endif
+
+/*
+ * AIX defines FD_SET in terms of bzero, but fails to include <strings.h>
+ * that defines bzero. 
+ */
+
+#if defined(_AIX)
+#include <strings.h>
+#endif
+
+/* For Solaris etc. */
+#ifndef INADDR_NONE
+#define INADDR_NONE -1
+#endif
+

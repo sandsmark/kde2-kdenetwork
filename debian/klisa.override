@@ -1,0 +1,5 @@
+klisa: setuid-binary usr/bin/reslisa 4755 root/root
+klisa: no-shlibs-control-file usr/lib/libkcm_lanbrowser.so
+klisa: no-shlibs-control-file usr/lib/kio_lan.so
+klisa: postinst-must-call-ldconfig usr/lib/kio_lan.so
+

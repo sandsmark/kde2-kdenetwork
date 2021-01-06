@@ -1,0 +1,34 @@
+#MIN_CONFIG
+dnl Image readers/writers
+KDE_CHECK_KIMGIO
+
+AC_LANG_CPLUSPLUS
+dnl Checks for header files.
+AC_CHECK_HEADERS(linux/tcp.h linux/if_ppp.h)
+AC_CHECK_HEADERS(net/errno.h net/if_ppp.h)
+AC_CHECK_HEADERS(asm/param.h)
+AC_CHECK_HEADERS(sys/file.h sys/stat.h sys/time.h sys/cdefs.h)
+AC_CHECK_HEADERS(fcntl.h unistd.h fnmatch.h sysent.h strings.h paths.h)
+AC_CHECK_HEADERS(utmp.h re_comp.h getopt.h resolv.h)
+
+AC_CHECK_FUNCS(flock)
+AC_CHECK_USLEEP
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(socket fabsl strdup vsnprintf setenv unsetenv)
+AC_CHECK_GETDOMAINNAME
+AC_CHECK_GETHOSTNAME
+
+AC_CHECK_FUNC(res_init)
+if test "$ac_cv_func_res_init" = no; then
+  AC_CHECK_LIB(resolv, res_init, LIBRESOLV="-lresolv $LIBSOCKET", , $LIBSOCKET)
+fi
+AC_SUBST(LIBRESOLV)
+
+KDE_CHECK_THREADING
+
+dnl For apps that NEED threads
+if test -z "$LIBPTHREAD" && test -z "$USE_THREADS"; then
+  DO_NOT_COMPILE="$DO_NOT_COMPILE knode kdict"
+fi
+CXXFLAGS="$CXXFLAGS -DQT_CLEAN_NAMESPACE -DQT_NO_COMPAT -DQT_NO_ASCII_CAST"

@@ -1,0 +1,918 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1-Based Variant V1.0//EN" "dtd/kdex.dtd" [
+  <!ENTITY mirc "<application>mIrc</application>">
+  <!ENTITY irc "<acronym>IRC</acronym>">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+]>
+
+<book lang="&language;">
+
+<bookinfo>
+<title>The KSirc Handbook</title>
+<authorgroup>
+<author>
+<firstname>Andrew</firstname>
+<surname>Stanley-Jones</surname>
+<affiliation>
+<address><email>asj@chowtown.cban.com</email></address>
+</affiliation>
+</author>
+<author>
+<firstname>Philip</firstname>
+<surname>Rodrigues</surname>
+<affiliation>
+<address><email>phil.rod@ntlworld.com</email></address>
+</affiliation>
+</author>
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+<date>2001-07-25</date>
+<releaseinfo>1.10.00</releaseinfo>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<abstract>
+<para>This documentation describes &ksirc; 1.1, the &kde; &irc;
+client.</para>
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>KSirc</keyword>
+<keyword>irc</keyword>
+<keyword>Internet relay chat</keyword>
+</keywordset>
+</bookinfo>
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>&ksirc; is the default &kde; &irc; client. It supports scripting
+with <acronym>Perl</acronym> and has a lot of compatibility with &mirc;
+for general use.</para>
+
+</chapter>
+
+<chapter id="using-ksirc">
+<title>Using &ksirc;</title>
+
+<sect1 id="irc-basics">
+<title>If you haven't used &irc; before...</title>
+
+<para>Simply put, &irc; is a chat protocol, defined by official Internet
+standards, and capable of stealing many hours of your life. To use
+&irc;, you must connect to a server, and then join a channel (equivalent
+to a chat room). </para> 
+
+<para>To connect to a server, open &ksirc; and select
+<menuchoice><guimenu>Connections</guimenu><guimenuitem>New
+Server</guimenuitem></menuchoice> or press <keycap>F2</keycap>. In the
+dialog box that is displayed, select a group from the leftmost drop-down
+box and then a server from the middle drop-down box. The port, shown on
+the right, will almost always be 6667. A new window will be displayed
+showing the messages sent by the server to the client. When these
+messages have finished scrolling past, you want to choose your
+channel. To display a list of available channels, type
+<userinput><command>/list</command></userinput>. To join a channel,
+type: <userinput><command>/join</command>
+<replaceable>#channelname</replaceable></userinput>. To leave a channel,
+just type <userinput><command>/part</command></userinput>.</para>
+
+<para>That's the basics, for more detailed information, read
+on...</para>
+
+</sect1>
+
+<sect1 id="ksirc-basics">
+<title>&ksirc; Basics</title>
+
+<sect2 id="servers">
+<title>Servers</title>
+
+<para>&ksirc; allows you to connect to an arbitrary number of
+servers. To connect to a server, select
+<menuchoice><guimenu>Connections</guimenu><guimenuitem>New
+Server</guimenuitem></menuchoice> or press <keycap>F2</keycap>.The
+Connection Dialog appears, and you can select a
+<guilabel>Group</guilabel>, then a <guilabel>Server</guilabel>, and also
+a <guilabel>Port</guilabel> to connect to.</para>
+
+<para>Just click <guilabel>Connect</guilabel> when you're done, and a
+new window for the server is displayed. You can keep track of the
+servers you're connected to in the &ksirc; <guilabel>Server
+Control</guilabel> window.</para>
+
+</sect2>
+
+<sect2 id="channels">
+<title>Channels</title>
+
+<para>You can connect to channels with the normal
+<userinput><command>/join</command></userinput>, by selecting
+<menuchoice><guimenu>Connections</guimenu><guimenuitem>Join
+Channel</guimenuitem></menuchoice> or by pressing
+<keycap>F3</keycap>.</para>
+
+<para>Channels you are connected to are shown in the <guilabel>Server
+Control</guilabel> window under the server to which the they belong. To
+leave a channel, you can <userinput>/part</userinput>, select
+<menuchoice><guimenu>Channel</guimenu><guimenuitem>Close</guimenuitem>
+</menuchoice> or press <keycombo
+action="simul">&Ctrl;<keycap>W</keycap></keycombo>.</para>
+
+</sect2>
+
+<sect2 id="channel-options">
+<title>Channel Options</title>
+
+<para>The <guimenu>Channel</guimenu> menu, available in any channel
+window, contains some useful options:</para>
+
+<variablelist>
+
+<varlistentry>
+<term><menuchoice><shortcut>
+<keycombo>&Ctrl;<keycap>T</keycap>
+</keycombo></shortcut>
+<guimenuitem>Ticker Mode</guimenuitem>
+</menuchoice></term>
+<listitem>
+<para><action>Displays the channel like a stock or a news
+ticker. </action>Note that this mode does not allow you to enter text
+into the channel. To exit Ticker Mode, <mousebutton>right</mousebutton>
+click the ticker, and select <guimenuitem>Hide...</guimenuitem>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo>&Ctrl;<keycap>S</keycap>
+</keycombo></shortcut>
+<guimenuitem>Save to Logfile...</guimenuitem>
+</menuchoice></term>
+<listitem>
+<para><action>Saves the contents of the channel to a
+file.</action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut><keycombo>&Ctrl;<keycap>A</keycap>
+</keycombo></shortcut>
+<guimenuitem>Time Stamp</guimenuitem>
+</menuchoice></term>
+<listitem>
+<para><action>Prepends each thing said in the channel with the time it
+was said, in the form HH:MM</action></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="users">
+<title>Users</title>
+
+<para>In a channel, the user list is displayed along the right hand
+side. Right-clicking a nick in that list gives you some options, most of
+which are self-explanatory:</para>
+
+<variablelist>
+
+<varlistentry>
+<term><guimenuitem>Refresh Nicks</guimenuitem></term>
+<listitem>
+<para><action>Sends a message to the server to request the list of users
+in the channel.</action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Follow</guimenuitem></term>
+<listitem>
+<para><action>Follows the user into whatever channels he goes
+to.</action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>unFollow</guimenuitem></term>
+<listitem>
+<para><action>Stops following the user.</action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Whois</guimenuitem></term>
+<listitem>
+<para><action>Sends a CTCP whois query to the user, which
+provides information about the user, such as their hostname and what
+server they are connected to.</action></para> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Ping</guimenuitem></term>
+<listitem>
+<para><action>Sends a CTCP Ping to the user, to determine
+their echo time. </action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Version</guimenuitem></term>
+<listitem>
+<para><action>Sends a CTCP Version to the user, to
+determine what software they are using. </action></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Abuse</guimenuitem></term>
+<listitem>
+<para><action>Abuses the user in one of various amusing
+ways.</action></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para>The following commands are only available if you are an operator
+on the channel:</para>
+
+<variablelist>
+<varlistentry>
+<term><guimenuitem>Kick</guimenuitem></term>
+<listitem>
+<para>Kicks the user off the channel.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Ban</guimenuitem></term>
+<listitem>
+<para>Bans the user from joining the channel.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>unBan</guimenuitem></term>
+<listitem>
+<para>Removes the ban on the user joining the channel.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>Op</guimenuitem></term>
+<listitem>
+<para>Gives the user operator privileges.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guimenuitem>DeOp</guimenuitem></term>
+<listitem>
+<para>Removes operator privileges from the user.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+</sect1>
+
+</chapter>
+
+<chapter id="sectcolors">
+<title>&ksirc; Colors</title>
+
+<para>&ksirc; follows the color scheme used by
+&mirc; and a slight modification for more
+powerful in house use.</para>
+
+<screen>&lt;fg&gt; == foreground
+&lt;bg&gt; == background
+&lsqb;&rsqb; == optional
+</screen>
+
+<sect1 id="mirccompatibility">
+<title>&mirc; compatibility</title>
+
+<para>Format:</para>
+<itemizedlist>
+<listitem>
+<para><userinput>0x03&lt;fg&gt;&lsqb;,&lt;bg&gt;&rsqb;</userinput>
+sets the foreground and background</para>
+</listitem>
+<listitem>
+<para><userinput>0x03</userinput>
+resets to defaults for THAT line</para>
+</listitem>
+</itemizedlist>
+</sect1>
+
+<sect1 id="ksircnative">
+<title>&ksirc; native</title>
+
+<para>Format:</para>
+
+<itemizedlist>
+<listitem>
+<para><userinput>&tilde;&lt;fg&gt;&lsqb;,&lt;bg&gt;&rsqb;</userinput>
+sets the foreground and background</para>
+</listitem>
+<listitem>
+<para><userinput>&tilde;c</userinput> resets to defaults</para>
+</listitem>
+<listitem>
+<para><userinput>&tilde;b</userinput> sets bold font</para>
+</listitem>
+<listitem>
+<para><userinput>&tilde;u</userinput> sets underline</para>
+</listitem>
+<listitem>
+<para><userinput>&tilde;i</userinput> sets italics</para>
+</listitem>
+<listitem>
+<para><userinput>&tilde;r</userinput> sets underline</para>
+</listitem>
+</itemizedlist>
+
+<para>Why did I change &ksirc; to use &tilde; instead of 0x03 (&circ;C)?
+Well, it's hard to use 0x03 in scripts and not all C functions seem to
+like it. &tilde;&lt;letter&gt; also alows more commands while not
+stomping on &mirc;'s future changes.</para>
+
+</sect1>
+
+<sect1 id="colornumbers">
+<title>Color Numbers</title>
+
+<orderedlist>
+<listitem>
+<para> white</para>
+</listitem>
+<listitem>
+<para> black</para>
+</listitem>
+<listitem>
+<para> blue</para>
+</listitem>
+<listitem>
+<para> green</para>
+</listitem>
+<listitem>
+<para> red</para>
+</listitem>
+<listitem>
+<para> brown</para>
+</listitem>
+<listitem>
+<para> purple</para>
+</listitem>
+<listitem>
+<para> orange</para>
+</listitem>
+<listitem>
+<para> yellow</para>
+</listitem>
+<listitem>
+<para> lightGreen</para>
+</listitem>
+<listitem>
+<para> cyan</para>
+</listitem>
+<listitem>
+<para> lightCyan</para>
+</listitem>
+<listitem>
+<para> lightBlue</para>
+</listitem>
+<listitem>
+<para> pink</para>
+</listitem>
+<listitem>
+<para> gray</para>
+</listitem>
+<listitem>
+<para> lightGray</para>
+</listitem>
+</orderedlist>
+</sect1>
+
+<sect1 id="sendingboldunderlinereverseandcolor">
+<title>Sending Bold, Underline, Reverse, and Color</title>
+
+<para>You can use the following key combinations to insert control codes
+in text:</para>
+
+<itemizedlist>
+<listitem>
+<para><keycombo action="simul">&Ctrl;<keycap>B</keycap></keycombo> for
+bold text</para>
+</listitem>
+<listitem>
+<para><keycombo action="simul">&Ctrl;<keycap>U</keycap></keycombo> for
+underlined text</para>
+</listitem>
+<listitem>
+<para><keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo> for
+reverse text</para>
+</listitem>
+<listitem>
+<para><keycombo action="simul">&Ctrl;<keycap>K</keycap></keycombo> for
+colored text</para>
+</listitem>
+<listitem>
+<para><keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo> for
+plain text</para>
+</listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="examplessetcolors">
+<title>Examples</title>
+
+<para>To underline a single word in a sentence:</para>
+
+<procedure>
+<step>
+<para>Type <keycombo
+action="simul">&Ctrl;<keycap>U</keycap></keycombo></para>
+</step>
+<step>
+<para>Type in the word</para>
+</step>
+<step>
+<para>Type <keycombo action="simul">&Ctrl;<keycap>U</keycap></keycombo>
+again</para>
+</step>
+</procedure>
+
+<para>Only the text that is enclosed by the start and end codes will be
+affected. You can use this method with all of the other control
+codes.</para>
+
+<para>The <keycombo action="simul">&Ctrl;<keycap>K</keycap></keycombo>
+control code is slightly different because it allows you to specify a
+color number. To color a single word in a sentence:</para>
+
+<procedure>
+<step>
+<para>Type <keycombo
+action="simul">&Ctrl;<keycap>K</keycap></keycombo></para>
+</step>
+<step>
+<para>Type a number between 0 and 15</para>
+</step>
+<step>
+<para>Type the word</para>
+</step>
+<step>
+<para>Type <keycombo
+action="simul">&Ctrl;<keycap>K</keycap></keycombo> again</para>
+</step>
+</procedure>
+
+<para>If you also want to change the background color of a word, you
+would need to type two numbers separated by a comma instead of just one
+number. The first number is the text color, the second number is the
+background color. The colors range from 0 to 15, the index is in the
+previous section.</para> 
+
+<para>You can enclose text in multiple control codes, so for example you
+could have a bold, underlined, and colored word.</para>
+
+</sect1>
+</chapter>
+
+<chapter id="filters">
+<title>Filters</title>
+
+<sect1 id="filterrulesandhowtomakethem">
+<title>Filter Rules and How to Make them</title>
+
+<para>If you just can't figure it out, wait. I want to build a nice
+<quote>filter builder</quote> where you can just click your way through
+it.  Though, it might be a while.</para>
+
+<para>The filter tries to find the <quote>match</quote> string then use
+the <quote>From</quote> and <quote>To</quote> as a substitution.  The
+match, from and to are all <application>Perl</application> regex
+expressions. Rules are evaluated in descending order.  The top rule is
+evaluated first, then the second from the top, &etc; All strings are
+evaluated as:</para>
+
+<para><varname>$<replaceable>name</replaceable></varname> is expanded to
+the environment variable
+<varname><replaceable>name</replaceable></varname>.  This is done
+immediately when you insert the rule, and will not change after that
+time.  Therefore it's probably of limited value.</para>
+
+<para><varname>$$<replaceable>name</replaceable></varname> is
+substituted with the perl
+<varname>$<replaceable>name</replaceable></varname> variable during the
+match.  This can be substrings such as <varname>$1</varname>,
+<varname>$2</varname> in the substitution, or normal variables available
+under <application>sirc</application> (such as <varname>$nick</varname>,
+<varname>$channel</varname>, &etc;).</para>
+
+<para><varname>&tilde;<replaceable>name</replaceable>&tilde;</varname>
+<emphasis>PREPENDED ONCE AND ONLY ONCE</emphasis> to the line will send
+the line of text to the window called <replaceable>name</replaceable>.
+If the window does not exist it will go to the last window which had
+focus.  There are several special windows, all prefixed by a single
+<literal>!</literal>:</para>
+
+<para><variablelist>
+<varlistentry>
+<term><varname>!default</varname></term>
+<listitem>
+<para>The current default window.  Guaranteed to exist.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><varname>!all</varname></term>
+<listitem>
+<para>Send to every window.  This might not show up on all windows,
+depending on how the text is parsed.  For example, channel windows won't
+show a part/quit unless the nick is on the channel.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><varname>!discard</varname></term>
+<listitem>
+<para>discards the text.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</para>
+
+<para>The rest of the expression is dealt with as normal Perl regex.  A
+good understanding of the <command>perlre</command> man page will
+definitely help, but a basic understanding of regex is most certainly
+required.</para>
+
+</sect1>
+
+<sect1 id="examplesfilters">
+<title>Examples:</title>
+
+<orderedlist><listitem>
+<para>Want to convert all boren from boren to BoreN</para>
+
+<screen>Match: .*
+From: boren
+To: BoreN</screen>
+
+<para>Pretty straight forward, match anything, then substitute boren
+with BoreN.</para>
+
+</listitem>
+<listitem>
+<para>You want to match everything with boren in it and send to the
+window called <quote>boren</quote></para>
+
+<screen>Match: boren
+From: &circ;
+To: &tilde;boren&tilde;</screen>
+
+<para>Looks for <quote>boren</quote> if found, substitutes the beginning
+of the string (&circ;) with &tilde;boren&tilde;.</para>
+
+</listitem>
+<listitem>
+
+<para>Though the previous example works, if the string already has
+<literal>&tilde;somewindow&tilde;</literal> on it, you'll now have two
+<literal>&tilde;boren&tilde;&tilde;somewindow&tilde;...</literal> So you
+can do this instead.</para>
+
+<screen>Match: boren
+From: ^(?:&tilde;\S+&tilde;)
+To: &tilde;boren&tilde;</screen>
+
+<para>Ok, the from line is a little bit more complicated.  It means: match
+0 or 1 copies of <literal>&tilde;\S+&tilde;</literal>.  Which is 1
+tilde, one or more non-whitespaces, and then another tilde.  The
+paranoid might do <literal>(*:&tilde;\S+&tilde;)</literal>, which means:
+match 0 or more channel directives in case prior rules are
+broken.</para>
+
+</listitem>
+
+<listitem>
+<para>Server kill messages tend to be long, ugly, annoying, &etc; A basic
+message on dalnet looks like:</para>
+
+<screen>*** Notice -- Received KILL message for
+BOBO!ANDY@line82-basel.datacomm.ch from NickServ 
+Path: empire.ny.us.dal.net[209.51.168.14]!trapdoor.ca.us.dal.net
+[206.86.127.252]!caris.ca.us.dal.net[208.1.222.221]
+!services.dal.net[2008.1.222.222]!services.dal.net
+(NickServ Enforcement)</screen>
+
+<para>When you're <literal>+s</literal> you get tons of them; you don't
+want all of them flying across your screen.  I'm going to make 3 rules
+to deal with them one bit at a time.  You could do it in less rules, but
+it'll show you the basic rule structure, in nice steps, and how to use
+multiple rules to parse a message.  The first step is to remove the
+Path: portion of the message, and will be example 4.</para>
+
+<screen>Match: ^\*\*\*.* KILL message for.*
+From:  Path: \S+
+To: .</screen>
+
+
+<para>Match looks for the message starting with <literal>***</literal>,
+the <literal>*</literal>'s have to be quoted with <literal>\</literal>
+since by themselves they mean 0 or more of the prior character.
+<literal>.*</literal> means: match anything until you find <literal>
+"KILL message for"</literal>.  This allows us to avoid typing in
+<literal>-- Received...</literal> &etc; The trailing
+<literal>.*</literal> means: match anything to the end of the line. (not
+needed, I think)</para>
+
+<para>The From line means: substitute " Path: " and any
+non-whitespace characters with the To.  To is a <literal>"."</literal>
+therefore the entire path turns into a single period.</para>
+
+<para>The message now looks like:</para>
+
+<screen>*** Notice -- Received KILL message for BOBO!ANDY@line82-basel.datacomm.ch
+from NickServ. (NickServ Enforcement)</screen>
+
+<para>Notice the new <literal>"."</literal> after
+<literal>NickServ</literal>?</para>
+</listitem>
+
+<listitem>
+<para>Ok, the message is a lot cleaner, but KILLs from nickserv aren't
+really that important, so let's forward them to the
+<literal>!discard</literal> window.</para>
+
+<screen>Match: ^\*\*\*.*KILL message.*\(NickServ Enforcement\) 
+From: ^(?:&tilde;\S+&tilde;) 
+To:  &tilde;!discard&tilde;</screen>
+
+<para>Match rule searches for the KILL message and makes sure it's from
+NickServ.  Notice the <literal>\(</literal> and <literal>\)</literal>
+both <literal>()</literal> and used in regex, therefore we have to quote
+them.  This is very similar to example 3.</para>
+
+</listitem>
+<listitem>
+<para>We've now filtered out all the nickserv kills, but the message is
+still pretty hard to read by simply glancing at it.  So let's reorder it
+to something like:</para>
+
+<screen>*** [KILL] &lt;KILLER&gt; killed &lt;KILLED&gt; (reason)
+Match: \*\*\*.*KILL message
+From: \*\*\*.*for (.*?) from (.*?)\. \((.*?)\).*
+To: *** [KILL] $$2 killed $$1 ($$3)
+</screen>
+
+<para>Ok, the match looks for
+<literal>***<replaceable>something</replaceable></literal> KILL message.
+We can't use <literal>&circ;</literal> since we may have just appended
+<literal>&tilde;&lt;window&gt;&tilde;</literal>.</para>
+
+<para>The from line get's a little more interesting.  The <literal>"for
+(.*?) "</literal> looks for the word "for" then some text.
+<literal>.*?</literal> means: match zero or more of anything except
+newline, but isn't greedy. Stop when the first terminating condition is
+found, not the last.  In other words it matches anything until a space is encountered.
+The surrounding <literal>()</literal> means: save the contents.  Each
+() saves the matched data in <literal>$&num;</literal> where
+<literal>&num;</literal> starts at 1 for the first substring, &etc;  In
+this case, <varname>$1</varname> gets the nick/user-info of the person
+killed.  <varname>$2</varname> is then filled with the name of the
+killer.  Between the <literal>()</literal> we have the reason for the
+kill.  Here the <literal>(</literal> and <literal>\(</literal> get a
+little confusing.  Remember <literal>\(</literal> matches the actual
+character <literal>'('</literal>.</para>
+
+</listitem>
+<listitem>
+<para>How to colorize your life. Ok, you want to add some color to
+&ksirc;.  See the <link linkend="sectcolors">Colors section</link> for
+color info, but here's a filter rule to highlight the nick between
+<literal>&lt;NICK&gt;</literal> on each line: </para>
+
+<screen>Match: ^(?:&tilde;\S+&tilde;)&lt;\S+&gt;
+From: &lt;(\S+)&gt;
+To: &lt;&tilde;4$$1&tilde;c&gt;</screen>
+
+<para>Takes the nick and adds color &num;4 between the two
+<literal>&lt;&gt; &tilde;c</literal> clears the color.</para>
+
+</listitem>
+</orderedlist>
+
+</sect1>
+</chapter>
+
+<chapter id="keys">
+<title>Keys</title>
+
+<para>This is a listing of the short cut and command keys available
+under &ksirc;.</para>
+
+<table>
+<title>Keybindings</title>
+<tgroup cols="2">
+<thead>
+<row>
+<entry>Keybinding</entry>
+<entry>Action</entry>
+</row>
+</thead>
+
+<tbody>
+<row>
+<entry><keycombo
+action="simul">&Alt;<keycap>F</keycap></keycombo></entry>
+<entry>Open the <guimenu>File</guimenu> menu.</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Alt;<keycap>E</keycap></keycombo></entry>
+<entry>Open the <guimenu>Edit</guimenu> menu.</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>N</keycap></keycombo></entry>
+<entry>Open a new Channel/Query Window</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>T</keycap></keycombo></entry>
+<entry>Ticker Mode</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>Q</keycap></keycombo></entry>
+<entry>Quit</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>X</keycap></keycombo></entry>
+<entry>Cut Window</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>V</keycap></keycombo></entry>
+<entry>Paste</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>Enter</keycap></keycombo></entry>
+<entry>Begin a message to the most recent person to send you a
+message</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;&Shift;<keycap>Enter</keycap></keycombo></entry>
+<entry>Begin a message to the next to last person to send you a
+message</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>K</keycap></keycombo></entry>
+<entry>Start color code (with a number, text you type after this will be
+colored)</entry>
+</row>
+
+<row>
+<entry><keycombo
+action="simul">&Ctrl;<keycap>U</keycap></keycombo></entry>
+<entry>Begin or end underlining text.  Text after the first occurrence
+of this will be underlined until you type it again.</entry>
+</row>
+
+<row>
+<entry><keycombo action="simul">&Ctrl;<keycap>I</keycap></keycombo></entry>
+<entry>Begin or end italic text.  Text after the first occurrence
+of this will be italic until you type it again.</entry>
+</row>
+
+<row>
+<entry><keycombo action="simul">&Ctrl;<keycap>B</keycap>
+</keycombo></entry>
+<entry>Begin or end bold text.  Text after the first occurrence
+of this will be bold until you type it again.</entry>
+</row>
+
+<row>
+<entry><keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo></entry>
+<entry>Begin or end reverse video text.  Text after the first occurrence
+of this will be reversed  until you type it again.</entry>
+</row>
+
+<row>
+<entry><keycap>Tab</keycap></entry>
+<entry>Tries to complete the nickname of someone on the channel, based
+on the text you entered. You are probably familiar with this from your
+commandline shell.</entry>
+</row>
+
+</tbody>
+</tgroup>
+</table>
+
+</chapter>
+
+<chapter id="credits-and-license">
+<title>Credits and Licenses</title>
+
+<para>&ksirc; copyright 1997-2001, the &ksirc; developers.</para>
+
+<para>Portions of documentation copyright 1997, Andrew Stanley
+Jones</para>
+
+<para>Documentation updated for &kde; 2.2 by Philip Rodrigues
+<email>phil.rod@@ntlworld.com</email></para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;
+&underGPL;
+
+</chapter>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-ksirc">
+<title>Where to get &ksirc;</title>
+
+<para>&ksirc; is part of the <ulink url="http://www.kde.org">&kde; Project
+</ulink>. You will find the current version of &ksirc; in the kdenetwork
+package at <ulink url="ftp://ftp.kde.org/pub/kde">ftp://ftp.kde.org/pub/kde
+</ulink>, the &FTP; server of the &kde; project.</para>
+</sect1>
+
+<sect1 id="requirements">
+<title>Requirements</title>
+<para>If you want to install &ksirc;, you need at least a &kde; 2.2
+installation.</para>
+<para>If you intend to compile and install &ksirc; yourself, you have to
+make sure that the following programs are present on your system:</para>
+<itemizedlist>
+<listitem><para>g++ 2.8 / egcs 1.0.3 (or compatible)</para></listitem>
+<listitem><para>GNU make</para></listitem>
+<listitem><para>autoconf 2.1</para></listitem>
+<listitem><para>automake 1.4</para></listitem>
+<listitem><para>Qt 2.2.x</para></listitem>
+<listitem><para>KDE 2.1</para></listitem>
+</itemizedlist>
+</sect1>
+
+
+<sect1 id="compilation">
+<title>Compilation and Installation</title>
+<para>&ksirc; is part of the kdenetwork package of &kde; 2.2 and is
+installed together with it. In general, there is no need for the user to
+compile the source code of &ksirc; by hand. If you nevertheless intend to
+do so, or if you have only the source code available, compilation and
+installation is, as usual on Linux, done by typing:</para>
+
+<screen width="40">
+<prompt>%</prompt> <userinput><command>./configure</command></userinput>
+<prompt>%</prompt> <userinput><command>make</command></userinput>
+<prompt>%</prompt> <userinput><command>su</command> <option>-c</option> <parameter>"make install"</parameter></userinput>
+</screen>
+
+<para>&ksirc; uses <command>autoconf</command> and <command>
+automake</command>, so no problems should occur during the
+compilation process. If you do hit on any problems though, please contact the
+&kde; developers mailing list <email>kde-devel@master.kde.org</email>.</para>
+</sect1>
+</appendix>
+
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-omittag: nil
+sgml-shorttag: t
+End:
+-->
+
+
+
+

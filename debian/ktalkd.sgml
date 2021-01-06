@@ -1,0 +1,89 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!-- Process this file with docbook-to-man to generate an nroff manual
+     page: `docbook-to-man manpage.sgml > manpage.1'.  You may view
+     the manual page with: `docbook-to-man manpage.sgml | nroff -man |
+     less'.  A typical entry in a Makefile or Makefile.am is:
+
+manpage.1: manpage.sgml
+	docbook-to-man $< > $@
+  -->
+
+  <!ENTITY dhfirstname "<firstname>Daniel</firstname>">
+  <!ENTITY dhsurname   "<surname>Stone</surname>">
+  <!ENTITY dhdate      "<date>October 21, 2001</date>">
+  <!ENTITY dhsection   "<manvolnum>8</manvolnum>">
+  <!ENTITY dhemail     "<email>daniel@sfarc.net</email>">
+  <!ENTITY dhusername  "Daniel Stone">
+  <!ENTITY dhucpackage "<refentrytitle>KTALKD</refentrytitle>">
+  <!ENTITY dhpackage   "ktalkd">
+
+  <!ENTITY debian      "<productname>Debian GNU/Linux</productname>">
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+]>
+
+<refentry>
+  <refentryinfo>
+    <address>
+      &dhemail;
+    </address>
+    <author>
+      &dhfirstname;
+      &dhsurname;
+    </author>
+    <copyright>
+      <year>2001</year>
+      <holder>&dhusername;</holder>
+    </copyright>
+    &dhdate;
+  </refentryinfo>
+  <refmeta>
+    &dhucpackage;
+
+    &dhsection;
+  </refmeta>
+  <refnamediv>
+    <refname>&dhpackage;</refname>
+
+    <refpurpose>KDE 'talk' daemon.</refpurpose>
+  </refnamediv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para>This manual page documents briefly the
+      <command>&dhpackage;</command> command.</para>
+
+    <para><command>&dhpackage;</command> is a KDE daemon for the 'talk' 
+      protocol. It does not accept any options.</para>
+
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+
+    <para>This manual page was written by &dhusername; &lt;&dhemail;&gt; for
+      the &debian; system (but may be used by others).  Permission is
+      granted to copy, distribute and/or modify this document under
+      the terms of the <acronym>GNU</acronym> Free Documentation
+      License, Version 1.1 or any later version published by the Free
+      Software Foundation; with no Invariant Sections, no Front-Cover
+      Texts and no Back-Cover Texts.</para>
+
+  </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->

@@ -1,0 +1,257 @@
+<!DOCTYPE UI><UI>
+<class>KntSrcFilePropsDlgWidget</class>
+<comment>The widget to be used for the RDF/RSS file properties dialog plugin.</comment>
+<author>Frerich Raabe &lt;raabe@kde.org&gt;</author>
+<include location="global">klistbox.h</include>
+<include location="global">kurllabel.h</include>
+<include location="global">kseparator.h</include>
+<widget>
+    <class>QWidget</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>KntSrcFilePropsDlgWidget</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>311</width>
+            <height>274</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>KntSrcFilePropsDlgWidget</string>
+    </property>
+    <property>
+        <name>layoutMargin</name>
+    </property>
+    <property>
+        <name>layoutSpacing</name>
+    </property>
+    <grid>
+        <property stdset="1">
+            <name>margin</name>
+            <number>4</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>4</number>
+        </property>
+        <spacer row="0"  column="3" >
+            <property>
+                <name>name</name>
+                <cstring>Spacer5</cstring>
+            </property>
+            <property stdset="1">
+                <name>orientation</name>
+                <enum>Horizontal</enum>
+            </property>
+            <property stdset="1">
+                <name>sizeType</name>
+                <enum>Expanding</enum>
+            </property>
+            <property>
+                <name>sizeHint</name>
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget row="0"  column="4" >
+            <class>QLabel</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>pixmapIcon</cstring>
+            </property>
+            <property stdset="1">
+                <name>sizePolicy</name>
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                </sizepolicy>
+            </property>
+            <property stdset="1">
+                <name>pixmap</name>
+                <pixmap>image0</pixmap>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Icon of this news site</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>Here you can see the icon of this news site.</string>
+            </property>
+        </widget>
+        <widget row="0"  column="1"  rowspan="1"  colspan="2" >
+            <class>KURLLabel</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>urlName</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>heise online news</string>
+            </property>
+            <property>
+                <name>url</name>
+                <string>http://www.heise.de/newsticker/</string>
+            </property>
+        </widget>
+        <widget row="1"  column="0"  rowspan="1"  colspan="2" >
+            <class>QLabel</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>lDescription</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>Description:</string>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Brief description of the news site</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>Here you can see a brief description about the news site and it's contents.</string>
+            </property>
+        </widget>
+        <widget row="0"  column="0" >
+            <class>QLabel</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>lName</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>Name:</string>
+            </property>
+            <property>
+                <name>buddy</name>
+                <cstring>leName</cstring>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Name of the news site</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>This is the name of the news site.</string>
+            </property>
+        </widget>
+        <widget row="1"  column="2"  rowspan="2"  colspan="3" >
+            <class>QMultiLineEdit</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>mleDescription</cstring>
+            </property>
+            <property stdset="1">
+                <name>sizePolicy</name>
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>4</vsizetype>
+                </sizepolicy>
+            </property>
+            <property stdset="1">
+                <name>wordWrap</name>
+                <enum>WidgetWidth</enum>
+            </property>
+            <property stdset="1">
+                <name>readOnly</name>
+                <bool>true</bool>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Brief description of the news site</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>Here you can see a brief description about the news site and it's contents.</string>
+            </property>
+        </widget>
+        <spacer row="2"  column="0" >
+            <property>
+                <name>name</name>
+                <cstring>Spacer2</cstring>
+            </property>
+            <property stdset="1">
+                <name>orientation</name>
+                <enum>Vertical</enum>
+            </property>
+            <property stdset="1">
+                <name>sizeType</name>
+                <enum>Maximum</enum>
+            </property>
+            <property>
+                <name>sizeHint</name>
+                <size>
+                    <width>20</width>
+                    <height>63</height>
+                </size>
+            </property>
+        </spacer>
+        <widget row="3"  column="0"  rowspan="1"  colspan="5" >
+            <class>KSeparator</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>Line1</cstring>
+            </property>
+            <property stdset="1">
+                <name>orientation</name>
+                <enum>Horizontal</enum>
+            </property>
+        </widget>
+        <widget row="4"  column="0"  rowspan="1"  colspan="5" >
+            <class>QLabel</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>lArticles</cstring>
+            </property>
+            <property stdset="1">
+                <name>text</name>
+                <string>Available articles:</string>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Articles contained within this source file</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>This list shows the headlines and links to the corresponding complete articles which have been stored in the source file whose properties you are watching.</string>
+            </property>
+        </widget>
+        <widget row="5"  column="0"  rowspan="1"  colspan="5" >
+            <class>KListBox</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>lbArticles</cstring>
+            </property>
+            <property stdset="1">
+                <name>sizePolicy</name>
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>7</vsizetype>
+                </sizepolicy>
+            </property>
+            <property>
+                <name>toolTip</name>
+                <string>Articles contained within this source file</string>
+            </property>
+            <property>
+                <name>whatsThis</name>
+                <string>This list shows the headlines and links to the corresponding complete articles which have been stored in the source file whose properties you are watching.&lt;p&gt;You can open the corresponding full article for each headline by, depending on the global KDE settings, clicking or double-clicking on a headline</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image>
+        <name>image0</name>
+        <data format="XPM.GZ" length="2205">789c6dd4db52db301006e07b9e22c3de319d6d7c90634da7179ce9010a85b6b49d5ec8929c404802c121844edfbdf2eeca6d492738335ff6977665e2bcdcea5d9e1ef7b65e6edc37a6b9b23d3b32f3de965b4c26abef3f5effdcd84c8a5ef8d3ba976ebed8d83c6b7ab677329bfa16380d80a49f95fd3ef9ae7349be2097799eb0df8a4bf161ebb4af74caeb77c42e61df92b572a926cfd845c206cb1e28d96fd93a4bb27e96904fd96522f503b22e55c6fb3db6ce9342e594874aacd958b30752c77b71ac5f7736e4376c23f3e1b958c93cfb6493e7929fb756a931b21f908dd28aebdb6ce3253f6a5da49557f4cfc021dba6e23db2295cc1f92b76a8b327ad0759e1061979c11e24e20fadcbaad425db74aec8beb5b65a6b4bf70b5b9b5c2bc9e7e298d76ca34c4e7e6257a9a1f558906d97bf64873cd733b1111fb1eb42fabbd6556ebcd4dfb1aba2e27e1fd9b5e1feb0223b930ca81fccc4323f18b1d1bc3e157be9f7c00ef373dd8963bf4f9d1d59fa55860df47db7aaebbf10c7fe076223deefccf951b4cc57b2ab54e6db13cbfdc113b1e1f960472cf70b76c9613ef113dba632efb6389ee741ec2dd7e9f974ca1aabc8f43c386fbde477d9ce38febdb062cf06fa7efac2a5bc1f9e89bd2fc8c76c9fcafa2a9aeb40cfaf0ffd64fe86ed5239ef541cefff3c5ae69d883d1b07ecd08ffda533cf4bcf7f5d74eb6fd85ee6876134af87b1b890fd12b191f3f5c5f1bc713f5fb315bb8ee75d76e679e8f7b6aee37ee0c5b21fd4ec98c7cfd1bc3f80b890fab768e9ffbe734dfe2a36526f3a737d2caed9670dbf109ebff8f37f32062bb472b990f19cfa93c11a8738c2ab705de3186f7012de2915339498e20c6ff10ee7788f0d2ef08152cb2e330cb5475c85cf9f701b777037745ee01eeeff9539c0439a678c47f806dfe23b7c8fc778821ffe6442ea34ac3bc38f619e73bcc04fa1db67fc1252cb67673f92c4257ec56fd8c704d3b50c27b290c8516181032cd7326d42b77b841b087499e719a8c0826bbb80871a86e11aad65aee01aae4302610c37308129ccd6e7093bddc21dd498c31ceea181c57a2f9cc203edb10c7b34f008abb5cc136cc30eecc21e96b00f07b082c3b55ecbffbd367fbddaf80dbaa80afc</data>
+    </image>
+</images>
+</UI>
