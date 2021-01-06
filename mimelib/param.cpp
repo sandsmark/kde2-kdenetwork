@@ -206,7 +206,7 @@ DwMessageComponent* DwParameter::Clone() const
 }
 
 
-void DwParameter::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwParameter::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm << 
@@ -216,7 +216,7 @@ void DwParameter::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwParameter::_PrintDebugInfo(ostream& aStrm) const
+void DwParameter::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwMessageComponent::_PrintDebugInfo(aStrm);

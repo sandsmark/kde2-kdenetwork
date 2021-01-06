@@ -4,7 +4,7 @@
 #include <qregexp.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <iostream.h>
+#include <iostream>
 #include <stdio.h>
 #include <ssfeprompt.h>
 #include <string.h>
@@ -288,7 +288,7 @@ parseResult * ChannelParser::parseSSFEPrompt(QString string)
     if(string[1] == 'P')
       sp->setPassword(TRUE);
     sp->exec();
-    //	  cerr << "Entered: " << sp->text() << endl;
+    //	  std::cerr << "Entered: " << sp->text() << endl;
     prompt = sp->text();
     prompt += "\n";
     emit top->outputLine(prompt);
@@ -752,7 +752,7 @@ parseResult * ChannelParser::parseINFOMode(QString string)
       }
     }
     else{
-      //	      cerr << "Did not handle: " << mode.at(i) << " arg: " << arg.at(i)<<endl;
+      //	      std::cerr << "Did not handle: " << mode.at(i) << " arg: " << arg.at(i)<<endl;
     }
   }
   /*

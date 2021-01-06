@@ -1,7 +1,7 @@
 #include "kspainter.h"
 #include "../config.h"
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 #include <qregexp.h>
 #include <qapplication.h>
@@ -202,7 +202,7 @@ QString KSPainter::stripColourCodes(QString col, QList<int> *xlate){
     }
     else{
       // It's a printable character
-      //      cerr << i << "-" << col.mid(i, 1) << " ";
+      //      std::cerr << i << "-" << col.mid(i, 1) << " ";
       noCol += col.mid(i, 1);
       if(xlate != 0x0)
         xlate->append(new int(i));
@@ -210,7 +210,7 @@ QString KSPainter::stripColourCodes(QString col, QList<int> *xlate){
       i++; // Move ahead to next character
     }
   }
-//  cerr << endl;
+//  std::cerr << endl;
 //debug("NoCol: %s", noCol.data());
   return noCol;
 

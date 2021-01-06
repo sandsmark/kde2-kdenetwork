@@ -18,7 +18,7 @@
 #include "lisadefines.h"
 #include "getdebug.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <unistd.h>
 
 #include <strings.h>

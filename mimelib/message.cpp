@@ -93,7 +93,7 @@ const DwMessage& DwMessage::operator = (const DwMessage& aMessage)
 }
 
 
-void DwMessage::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwMessage::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm << "------------ Debug info for DwMessage class ------------\n";
@@ -108,7 +108,7 @@ void DwMessage::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwMessage::_PrintDebugInfo(ostream& aStrm) const
+void DwMessage::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwEntity::_PrintDebugInfo(aStrm);

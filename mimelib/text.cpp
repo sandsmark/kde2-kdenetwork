@@ -103,7 +103,7 @@ DwMessageComponent* DwText::Clone() const
 }
 
 
-void DwText::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwText::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm << 
@@ -113,7 +113,7 @@ void DwText::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwText::_PrintDebugInfo(ostream& aStrm) const
+void DwText::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

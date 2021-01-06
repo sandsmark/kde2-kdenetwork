@@ -29,7 +29,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
 #include <mimelib/string.h>
 #include <mimelib/mailbox.h>
 #include <mimelib/token.h>
@@ -409,7 +409,7 @@ DwMessageComponent* DwMailbox::Clone() const
 }
 
 
-void DwMailbox::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwMailbox::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm <<
@@ -419,7 +419,7 @@ void DwMailbox::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwMailbox::_PrintDebugInfo(ostream& aStrm) const
+void DwMailbox::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwAddress::_PrintDebugInfo(aStrm);

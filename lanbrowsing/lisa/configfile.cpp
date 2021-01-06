@@ -16,7 +16,7 @@
 #include "configfile.h"
 #include "getdebug.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <fstream.h>
 #include <ctype.h>
 #include <stdlib.h>

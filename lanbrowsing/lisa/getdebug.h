@@ -3,7 +3,7 @@
 
 #include "lisadefines.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <fstream.h>
 
 ostream& getDebug();

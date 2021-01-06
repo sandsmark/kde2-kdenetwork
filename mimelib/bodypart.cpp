@@ -30,7 +30,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <mimelib/string.h>
 #include <mimelib/headers.h>
 #include <mimelib/bodypart.h>
@@ -115,7 +115,7 @@ DwMessageComponent* DwBodyPart::Clone() const
 
 
 
-void DwBodyPart::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwBodyPart::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm << "----------- Debug info for DwBodyPart class -----------\n";
@@ -130,7 +130,7 @@ void DwBodyPart::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwBodyPart::_PrintDebugInfo(ostream& aStrm) const
+void DwBodyPart::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwEntity::_PrintDebugInfo(aStrm);

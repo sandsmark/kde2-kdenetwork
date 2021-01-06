@@ -23,7 +23,7 @@
 //=============================================================================
 
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <fstream.h>
 #include "multipar.h"
 
@@ -59,7 +59,7 @@ int main()
     // but we won't do that in this example.
     
     if (msg->Headers().ContentType().Type() != DwMime::kTypeMultipart) {
-        cerr << "Not a multipart message\n";
+        std::cerr << "Not a multipart message\n";
         return 0;
     }
     

@@ -106,7 +106,7 @@ void DwAddress::SetNext(DwAddress* aAddress)
 }
 
 
-void DwAddress::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwAddress::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm << 
@@ -116,7 +116,7 @@ void DwAddress::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwAddress::_PrintDebugInfo(ostream& aStrm) const
+void DwAddress::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

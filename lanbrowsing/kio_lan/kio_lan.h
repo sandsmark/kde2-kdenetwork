@@ -28,7 +28,7 @@
 #include <qstring.h>
 #include <qdict.h>
 
-#include <iostream.h>
+#include <iostream>
 #include <arpa/inet.h>
 #include <sys/types.h>
 

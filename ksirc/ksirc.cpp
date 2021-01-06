@@ -17,7 +17,7 @@
 #include "servercontroller.h"
 #include "welcomeWin.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -166,8 +166,8 @@ int main( int argc, char ** argv )
       kApp->exec();
   }
   catch(...){
-      cerr << "Caught Unkown Exception, uhoh!!!\n";
-      cerr << "Dying!!!\n";
+      std::cerr << "Caught Unkown Exception, uhoh!!!\n";
+      std::cerr << "Dying!!!\n";
       exit(10);
   }
 

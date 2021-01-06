@@ -73,7 +73,7 @@
 #include "version.h"
 #include "KSPrefs/ksprefs.h"
 #include "toplevel.h"
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
 
 #include "objFinder.h"

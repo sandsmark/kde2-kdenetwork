@@ -1,4 +1,4 @@
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
 #include <qpainter.h>
 #include <qframe.h>

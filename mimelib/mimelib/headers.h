@@ -25,7 +25,7 @@
 #ifndef DW_HEADERS_H
 #define DW_HEADERS_H
 
-#include <iostream.h>
+#include <iostream>
 
 #ifndef DW_CONFIG_H
 #include <mimelib/config.h>
@@ -413,7 +413,7 @@ protected:
 
 public:
 
-    virtual void PrintDebugInfo(ostream& aStrm, int aDepth=0) const;
+    virtual void PrintDebugInfo(std::ostream& aStrm, int aDepth=0) const;
     //. This virtual function, inherited from {\tt DwMessageComponent},
     //. prints debugging information about this object to {\tt aStrm}.
     //. It will also call {\tt PrintDebugInfo()} for any of its child
@@ -431,7 +431,7 @@ public:
 
 private:
 
-    void _PrintDebugInfo(ostream& aStrm) const;
+    void _PrintDebugInfo(std::ostream& aStrm) const;
 
 };
 

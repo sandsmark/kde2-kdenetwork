@@ -176,11 +176,11 @@ void ResLisaSettings::save()
    m_config.sync();
 };
 
-//#include <iostream.h>
+//#include <iostream>
 void ResLisaSettings::autoSetup()
 {
    NICList* nl=findNICs();
-//   cerr<<"autoSetup() "<<nl->count()<<endl;
+//   std::cerr<<"autoSetup() "<<nl->count()<<endl;
    if (nl->count()==0)
    {
       //ok, easy one :-)

@@ -1,6 +1,6 @@
 #include "usercontrolmenu.h"
 
-#include <iostream.h>
+#include <iostream>
 #include "config.h"
 
 extern KConfig *kConfig;

@@ -1,0 +1,37 @@
+kde2_library(libmimelib
+    SOURCES
+        protocol.cpp
+        address.cpp
+        addrlist.cpp
+        body.cpp
+        bodypart.cpp
+        boyermor.cpp
+        datetime.cpp
+        disptype.cpp
+        dw_cte.cpp
+        dw_date.cpp
+        dw_mime.cpp
+        entity.cpp
+        field.cpp
+        fieldbdy.cpp
+        group.cpp
+        headers.cpp
+        mailbox.cpp
+        mboxlist.cpp
+        mechansm.cpp
+        mediatyp.cpp
+        message.cpp
+        msgcmp.cpp
+        msgid.cpp
+        nntp.cpp
+        param.cpp
+        pop.cpp
+        smtp.cpp
+        string.cpp
+        text.cpp
+        token.cpp
+        uuencode.cpp
+        binhex.cpp
+    )
+target_compile_definitions(libmimelib PRIVATE -DDW_DEVELOPMENT_VERSION)
+

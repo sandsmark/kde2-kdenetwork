@@ -79,7 +79,7 @@ const DwFieldBody& DwFieldBody::operator = (const DwFieldBody& aFieldBody)
 }
 
 
-void DwFieldBody::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwFieldBody::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -89,7 +89,7 @@ void DwFieldBody::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwFieldBody::_PrintDebugInfo(ostream& aStrm) const
+void DwFieldBody::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwMessageComponent::_PrintDebugInfo(aStrm);

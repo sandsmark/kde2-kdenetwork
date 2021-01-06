@@ -29,7 +29,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
 #include <time.h>
 #include <mimelib/string.h>
 #include <mimelib/param.h>
@@ -517,7 +517,7 @@ void DwMediaType::CopyParameterList(DwParameter* aFirst)
 }
 
 
-void DwMediaType::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwMediaType::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm <<
@@ -536,7 +536,7 @@ void DwMediaType::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwMediaType::_PrintDebugInfo(ostream& aStrm) const
+void DwMediaType::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

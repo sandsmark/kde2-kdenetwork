@@ -283,7 +283,7 @@ void DwMsgId::CreateDefault()
 }
 
 
-void DwMsgId::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwMsgId::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -293,7 +293,7 @@ void DwMsgId::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwMsgId::_PrintDebugInfo(ostream& aStrm) const
+void DwMsgId::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

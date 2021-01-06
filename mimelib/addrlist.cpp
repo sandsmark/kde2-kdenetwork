@@ -249,7 +249,7 @@ void DwAddressList::CopyList(const DwAddress* aFirstAddr)
 }
 
 
-void DwAddressList::PrintDebugInfo(ostream& aStrm, int aDepth/*=0*/) const
+void DwAddressList::PrintDebugInfo(std::ostream& aStrm, int aDepth/*=0*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -268,7 +268,7 @@ void DwAddressList::PrintDebugInfo(ostream& aStrm, int aDepth/*=0*/) const
 }
 
 
-void DwAddressList::_PrintDebugInfo(ostream& aStrm) const
+void DwAddressList::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

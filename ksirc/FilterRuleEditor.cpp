@@ -12,7 +12,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <qregexp.h>
-#include <iostream.h>
+#include <iostream>
 #include <klocale.h>
 
 #undef Inherited

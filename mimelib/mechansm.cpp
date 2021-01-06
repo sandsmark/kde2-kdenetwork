@@ -187,7 +187,7 @@ void DwMechanism::StringToEnum()
 }
 
 
-void DwMechanism::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwMechanism::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -197,7 +197,7 @@ void DwMechanism::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwMechanism::_PrintDebugInfo(ostream& aStrm) const
+void DwMechanism::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

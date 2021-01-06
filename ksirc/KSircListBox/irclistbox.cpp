@@ -1,5 +1,5 @@
 #include "irclistbox.h"
-#include <iostream.h>
+#include <iostream>
 #include "../config.h"
 
 #include <qevent.h>
@@ -236,7 +236,7 @@ void KSircListBox::clearSelection() {
   min = 1; // Turns off repeated clears
   max = 0;
   waitForClear = FALSE;
-//  cerr << "Got clear\n";
+//  std::cerr << "Got clear\n";
 }
 
 void KSircListBox::mouseMoveEvent(QMouseEvent *me){

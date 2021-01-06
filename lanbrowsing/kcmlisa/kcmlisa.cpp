@@ -270,7 +270,7 @@ void LisaSettings::save()
 void LisaSettings::autoSetup()
 {
    NICList* nl=findNICs();
-//   cerr<<"autoSetup() "<<nl->count()<<endl;
+//   std::cerr<<"autoSetup() "<<nl->count()<<endl;
    if (nl->count()==0)
    {
       //ok, easy one :-)

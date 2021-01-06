@@ -44,7 +44,7 @@
 #include "alistbox.h"
 
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <termios.h>
 #include <unistd.h>
 #include <string.h>

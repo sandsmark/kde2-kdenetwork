@@ -160,7 +160,7 @@ private:
 
 public:
 
-    virtual void PrintDebugInfo(ostream& aStrm, int aDepth=0) const;
+    virtual void PrintDebugInfo(std::ostream& aStrm, int aDepth=0) const;
     //. This virtual function, inherited from {\tt DwMessageComponent},
     //. prints debugging information about this object to {\tt aStrm}.
     //. It will also call {\tt PrintDebugInfo()} for any of its child
@@ -178,7 +178,7 @@ public:
 
 protected:
 
-    void _PrintDebugInfo(ostream& aStrm) const;
+    void _PrintDebugInfo(std::ostream& aStrm) const;
 
 };
 

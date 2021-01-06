@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <iostream.h>
+#include <iostream>
 #include <mimelib/string.h>
 #include <mimelib/headers.h>
 #include <mimelib/field.h>
@@ -934,7 +934,7 @@ DwDispositionType& DwHeaders::ContentDisposition()
 }
 
 
-void DwHeaders::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwHeaders::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -953,7 +953,7 @@ void DwHeaders::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwHeaders::_PrintDebugInfo(ostream& aStrm) const
+void DwHeaders::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwMessageComponent::_PrintDebugInfo(aStrm);

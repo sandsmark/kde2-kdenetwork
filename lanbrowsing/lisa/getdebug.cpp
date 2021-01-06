@@ -5,7 +5,7 @@
 ostream& getDebug()
 {
 #ifdef LISA_DEBUG_ON
-   return cerr;
+   return std::cerr;
 #else
    static ofstream nullStream("/dev/null");
    return nullStream;

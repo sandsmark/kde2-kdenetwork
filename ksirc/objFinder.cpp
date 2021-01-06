@@ -3,7 +3,7 @@
 #include <qwidgetlist.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream.h>
+#include <iostream>
 #include "config.h"
 
 #include <kdebug.h>

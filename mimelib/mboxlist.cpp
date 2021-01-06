@@ -29,7 +29,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
 #include <mimelib/string.h>
 #include <mimelib/mailbox.h>
 #include <mimelib/mboxlist.h>
@@ -257,7 +257,7 @@ void DwMailboxList::CopyList(const DwMailbox* aFirst)
 }
 
 
-void DwMailboxList::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwMailboxList::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -276,7 +276,7 @@ void DwMailboxList::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwMailboxList::_PrintDebugInfo(ostream& aStrm) const
+void DwMailboxList::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

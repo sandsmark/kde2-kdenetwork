@@ -262,7 +262,7 @@ DwBody& DwEntity::Body() const
 }
 
 
-void DwEntity::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwEntity::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm << "------------ Debug info for DwEntity class ------------\n";
@@ -277,7 +277,7 @@ void DwEntity::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwEntity::_PrintDebugInfo(ostream& aStrm) const
+void DwEntity::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwMessageComponent::_PrintDebugInfo(aStrm);

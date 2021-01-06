@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <iostream.h>
+#include <iostream>
 
 #include <klocale.h>
 #include <kmessagebox.h>

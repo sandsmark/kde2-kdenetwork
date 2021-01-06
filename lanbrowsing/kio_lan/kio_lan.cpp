@@ -31,7 +31,7 @@
 #include <qfile.h>
 #include <qstringlist.h>
 
-#include <iostream.h>
+#include <iostream>
 #include <string.h>
 #include <sys/un.h>
 #include <sys/stat.h>
@@ -527,7 +527,7 @@ int LANProtocol::checkPort( int _port, in_addr ip )
    int mysocket = ::socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
    if (mysocket< 0 )
    {
-      cerr << "Node::scanPort -> Error while opening Socket" << endl;
+      std::cerr << "Node::scanPort -> Error while opening Socket" << endl;
       ::close( mysocket );
       return 0;
    }
@@ -536,7 +536,7 @@ int LANProtocol::checkPort( int _port, in_addr ip )
    long int options = O_NONBLOCK | ::fcntl(mysocket, F_GETFL);
    if (::fcntl( mysocket, F_SETFL, options )!=0)
    {
-      cerr << "Node::scanPort -> Error making it nonblocking"<< endl;
+      std::cerr << "Node::scanPort -> Error making it nonblocking"<< endl;
       ::close( mysocket );
       return 0;
    };
@@ -545,7 +545,7 @@ int LANProtocol::checkPort( int _port, in_addr ip )
    //it succeeded immediately
    if (result==0)
    {
-      cerr<<"LANProtocol::checkPort("<<_port<<") connect succeeded immediatly"<<endl;
+      std::cerr<<"LANProtocol::checkPort("<<_port<<") connect succeeded immediatly"<<endl;
       ::shutdown( mysocket, SHUT_RDWR );
       return 1;
    };
@@ -596,7 +596,7 @@ int LANProtocol::checkPort( int _port, in_addr ip )
       ::shutdown( mysocket, SHUT_RDWR );
       return 0;
    };
-   cerr<<"LANProtocol::checkPort("<<_port<<") select succeeded "<<result<<endl;
+   std::cerr<<"LANProtocol::checkPort("<<_port<<") select succeeded "<<result<<endl;
    ::shutdown( mysocket, SHUT_RDWR );
    return 1;*/
 }

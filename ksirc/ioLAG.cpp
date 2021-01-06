@@ -9,7 +9,7 @@
 
 #include "ioLAG.h"
 #include "control_message.h"
-#include <iostream.h>
+#include <iostream>
 #include "config.h"
 
 #include <kdebug.h>
@@ -43,8 +43,8 @@ void KSircIOLAG::sirc_receive(QString str, bool)
       return;
     }
     QString lag = str.mid(s1, s2 - s1);
-    //    cerr << "Lag: " << str << endl;
-    //    cerr << "Setting lag to: " << lag << endl;
+    //    std::cerr << "Lag: " << str << endl;
+    //    std::cerr << "Setting lag to: " << lag << endl;
     (proc->getWindowList())["!all"]->control_message(SET_LAG, lag);
   }
 

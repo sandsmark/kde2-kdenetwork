@@ -17,7 +17,7 @@
 #include "netmanager.h"
 #include "lisadefines.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <unistd.h>
 
 #include <sys/un.h>
@@ -35,7 +35,7 @@
 #include "getdebug.h"
 
 #define getDebug() getDebug()<<procId
-//#define getDebug() cerr<<procId
+//#define getDebug() std::cerr<<procId
 
 NetManager::NetManager(int& rawSocketFD, int portToUse, MyString configFile, int configStyle, int strictMode)
 :NetScanner(rawSocketFD,strictMode)
@@ -973,22 +973,22 @@ void NetManager::getListFromServerServer( int address)
 
 void NetManager::printState()
 {
-   cerr<<"LAN Information Server Lisa 0.1\nAlexander Neundorf <neundorf@kde.org>\n";
-   cerr<<"Reading options from config file: "<<m_usedConfigFileName<<endl;
-   cerr<<"StrictMode: "<<m_strictMode<<endl;
-   cerr<<"ServerServer: "<<m_serverServer<<endl;
-   cerr<<"UseNmblookup: "<<m_useNmblookup<<endl;
-   cerr<<"Pinging: "<<ipRangeStr<<endl;
-   cerr<<"Allowed hosts: "<<validator.validAddresses()<<endl;
-   cerr<<"Broadcasting to: "<<ios::hex<<ntohl(m_broadcastAddress)<<ios::dec<<endl;
-   cerr<<"Initial update period: "<<m_initialRefreshTime<<" seconds"<<endl;
-   cerr<<"Current update period: "<<m_refreshTime<<" seconds"<<endl;
-   cerr<<"Last update: "<<time(0)-m_lastUpdate<<" seconds over"<<endl;
-   cerr<<"Waiting "<<m_firstWait<<" 1/100th seconds for echo answers on the first try"<<endl;
-   cerr<<"Waiting "<<m_secondWait<<" 1/100th seconds for echo answers on the second try"<<endl;
-   cerr<<"Sending "<<m_maxPings<<" echo requests at once"<<endl;
-   cerr<<"Publishing unnamed hosts: "<<m_deliverUnnamedHosts<<endl;
-   cerr<<"Already served "<<m_serveCount<<" times"<<endl;
+   std::cerr<<"LAN Information Server Lisa 0.1\nAlexander Neundorf <neundorf@kde.org>\n";
+   std::cerr<<"Reading options from config file: "<<m_usedConfigFileName<<endl;
+   std::cerr<<"StrictMode: "<<m_strictMode<<endl;
+   std::cerr<<"ServerServer: "<<m_serverServer<<endl;
+   std::cerr<<"UseNmblookup: "<<m_useNmblookup<<endl;
+   std::cerr<<"Pinging: "<<ipRangeStr<<endl;
+   std::cerr<<"Allowed hosts: "<<validator.validAddresses()<<endl;
+   std::cerr<<"Broadcasting to: "<<ios::hex<<ntohl(m_broadcastAddress)<<ios::dec<<endl;
+   std::cerr<<"Initial update period: "<<m_initialRefreshTime<<" seconds"<<endl;
+   std::cerr<<"Current update period: "<<m_refreshTime<<" seconds"<<endl;
+   std::cerr<<"Last update: "<<time(0)-m_lastUpdate<<" seconds over"<<endl;
+   std::cerr<<"Waiting "<<m_firstWait<<" 1/100th seconds for echo answers on the first try"<<endl;
+   std::cerr<<"Waiting "<<m_secondWait<<" 1/100th seconds for echo answers on the second try"<<endl;
+   std::cerr<<"Sending "<<m_maxPings<<" echo requests at once"<<endl;
+   std::cerr<<"Publishing unnamed hosts: "<<m_deliverUnnamedHosts<<endl;
+   std::cerr<<"Already served "<<m_serveCount<<" times"<<endl;
 };
 
 //this one is not used at the moment

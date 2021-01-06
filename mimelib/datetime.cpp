@@ -328,7 +328,7 @@ DwMessageComponent* DwDateTime::Clone() const
 }
 
 
-void DwDateTime::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwDateTime::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm <<
@@ -338,7 +338,7 @@ void DwDateTime::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwDateTime::_PrintDebugInfo(ostream& aStrm) const
+void DwDateTime::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

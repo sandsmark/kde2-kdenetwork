@@ -23,7 +23,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include "mystring.h"
 
 class IPAddress

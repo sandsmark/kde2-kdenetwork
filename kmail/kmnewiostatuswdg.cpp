@@ -2,7 +2,7 @@
 // (c) Markus Wuebben markus@kde.org
 // This code is published under the GPL
 
-#include <iostream.h>
+#include <iostream>
 #include <kapp.h>
 #include <kwin.h>
 #include "kmnewiostatuswdg.h"

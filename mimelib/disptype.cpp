@@ -381,7 +381,7 @@ void DwDispositionType::CopyParameterList(DwParameter* aFirst)
 }
 
 
-void DwDispositionType::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwDispositionType::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined(DW_DEBUG_VERSION)
     aStrm <<
@@ -400,7 +400,7 @@ void DwDispositionType::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwDispositionType::_PrintDebugInfo(ostream& aStrm) const
+void DwDispositionType::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined(DW_DEBUG_VERSION)
     DwFieldBody::_PrintDebugInfo(aStrm);

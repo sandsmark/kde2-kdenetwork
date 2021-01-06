@@ -18,7 +18,7 @@
 
 #include "getdebug.h"
 
-#include <iostream.h>
+#include <iostream>
 #include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
       case 'u':
       case 'k':
       case 'K':
-         cerr<<"\a\nThe command line switches -k, -K, -u and \ntheir long versions "\
+         std::cerr<<"\a\nThe command line switches -k, -K, -u and \ntheir long versions "\
             "--kde1, --kde2 and --unix are not supported anymore.\n"\
             "ResLisa will always first look for $(HOME)/.reslisarc , then for /etc/reslisarc.\n"\
             "If your lisa configuration file was created using an older version of \n"\

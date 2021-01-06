@@ -217,7 +217,7 @@ DwMessageComponent* DwGroup::Clone() const
 }
 
 
-void DwGroup::PrintDebugInfo(ostream& aStrm, int aDepth) const
+void DwGroup::PrintDebugInfo(std::ostream& aStrm, int aDepth) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm << "------------ Debug info for DwGroup class ------------\n";
@@ -231,7 +231,7 @@ void DwGroup::PrintDebugInfo(ostream& aStrm, int aDepth) const
 }
 
 
-void DwGroup::_PrintDebugInfo(ostream& aStrm) const
+void DwGroup::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     DwAddress::_PrintDebugInfo(aStrm);

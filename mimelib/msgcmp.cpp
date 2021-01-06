@@ -72,8 +72,8 @@ DwMessageComponent::~DwMessageComponent()
 {
 #if defined (DW_DEBUG_VERSION) || defined (DW_DEVELOPMENT_VERSION)
     if (mMagicNumber != (DwUint32) kMagicNumber) {
-        cerr << "Bad value for 'this' in destructor\n";
-        cerr << "(Possibly 'delete' was called twice for same object)\n";
+        std::cerr << "Bad value for 'this' in destructor\n";
+        std::cerr << "(Possibly 'delete' was called twice for same object)\n";
         abort();
     }
     mMagicNumber = 0;
@@ -160,7 +160,7 @@ int DwMessageComponent::ObjectId() const
 }
 
 
-void DwMessageComponent::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
+void DwMessageComponent::PrintDebugInfo(std::ostream& aStrm, int /*aDepth*/) const
 {
 #if defined (DW_DEBUG_VERSION)
     _PrintDebugInfo(aStrm);
@@ -168,7 +168,7 @@ void DwMessageComponent::PrintDebugInfo(ostream& aStrm, int /*aDepth*/) const
 }
 
 
-void DwMessageComponent::_PrintDebugInfo(ostream& aStrm) const
+void DwMessageComponent::_PrintDebugInfo(std::ostream& aStrm) const
 {
 #if defined (DW_DEBUG_VERSION)
     aStrm << "ObjectId:         " << ObjectId() << '\n';

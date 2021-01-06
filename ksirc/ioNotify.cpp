@@ -8,7 +8,7 @@
 
 
 #include "ioNotify.h"
-#include <iostream.h>
+#include <iostream>
 #include "config.h"
 
 #include <kdebug.h>
