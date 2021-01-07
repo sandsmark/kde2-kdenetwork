@@ -95,11 +95,11 @@ static NewsSourceBase::Data NewsSourceDefault[DEFAULT_NEWSSOURCES] = {
 		QString::fromLatin1("http://www.heise.de/newsticker/heise.rdf"),
 		QString::fromLatin1("http://www.heise.de/favicon.ico"),
 		NewsSourceBase::Computers, 10, true, false, QString::fromLatin1("de")),
-		NewsSourceBase::Data(
-		QString::fromLatin1("Kuro5hin"),
-		QString::fromLatin1("http://kuro5hin.org/backend.rdf"),
-		QString::fromLatin1("http://kuro5hin.org/favicon.ico"),
-		NewsSourceBase::Computers, 10, true, false),
+		//NewsSourceBase::Data(
+		//QString::fromLatin1("Kuro5hin"),
+		//QString::fromLatin1("http://kuro5hin.org/backend.rdf"),
+		//QString::fromLatin1("http://kuro5hin.org/favicon.ico"),
+		//NewsSourceBase::Computers, 10, true, false),
 		NewsSourceBase::Data(
 		QString::fromLatin1("Prolinux"),
 		QString::fromLatin1("http://www.pl-forum.de/backend/pro-linux.rdf"),
