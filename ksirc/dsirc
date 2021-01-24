@@ -68,12 +68,7 @@ $|=1;
 
 $publicAway = 1;
 
-if (!eval "require 'getopts.pl';") {
-  print "\n\n\
-Your perl interpreter is *really* screwed up: the getopts.pl library is not
-even there! Have you even bothered to run 'install'?\n";
-  exit;
-}
+use Getopt::Std;
 
 if ($] >= 5 && (eval "use Socket;", $@ eq '')) {
     $sock6 = eval ("require Socket6;") and eval("use Socket6;");
@@ -96,7 +91,7 @@ if($@) {
 }
     
 
-&Getopts('n:s:p:u:i:l:L:H:rqQR78S');
+&getopts('n:s:p:u:i:l:L:H:rqQR78S');
 
 %set=("LOGFILE", "", "LOG", "off", "PRINTUH", "none", "PRINTCHAN", "off",
  	"LOCALHOST", "", "CTCP", "noflood", "SENDAHEAD", 4096,
