@@ -238,7 +238,7 @@ parseResult * ChannelParser::parseSSFEMsg(QString string)
   int found = sscanf(string.ascii(), "`t` %s", nick);
 
   if(found < 1) {
-    delete nick;
+    delete []nick;
     return new parseError(string, QString("Could not find nick in string"));
   }
 
@@ -247,7 +247,7 @@ parseResult * ChannelParser::parseSSFEMsg(QString string)
     if(top->nick_ring.count() > 10)
       top->nick_ring.removeFirst();
   }
-  delete nick;
+  delete []nick;
   return new parseSucc(QString::null); // Null string, don't display anything
 }
 

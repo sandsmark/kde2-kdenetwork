@@ -904,7 +904,7 @@ void KSircTopLevel::control_message(int command, QString str)
       }
       emit changeChannel(channel_name, chan);
       if(channel_name)
-        delete channel_name;
+        delete []channel_name;
       channel_name = qstrdup(chan.ascii());
       setName(server + "_" + QString(channel_name) + "_" + "toplevel");
       f->setName(QString(QString(QObject::name()) + "_" + "kstIFrame"));
