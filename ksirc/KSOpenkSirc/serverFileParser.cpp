@@ -44,7 +44,7 @@ int serverFileParser::readDatafile( const char *fileName )
     QString buf;
     QString portbuff;
 
-    pos = sscanf(strC, "%1023[^:]:%1024[^:]:%1023[^:]:%1023[^:]:", groupC, servernameC, serveraddressC, portsC);
+    pos = sscanf(strC, "%1023[^:]:%1023[^:]:%1023[^:]:%1023[^:]:", groupC, servernameC, serveraddressC, portsC);
     if(pos != 4){
       kdWarning() << "Failed to parse servers.txt on line: " << strC << ". Invalid format" << endl;
       return 0;
