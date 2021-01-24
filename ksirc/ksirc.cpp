@@ -33,7 +33,6 @@
 
 #include "config.h"
 #include "version.h"
-#include "cdate.h"
 #include <klocale.h>
 #include <kcmdlineargs.h>
 

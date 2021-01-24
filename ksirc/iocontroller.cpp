@@ -74,6 +74,7 @@
 #include <kglobal.h>
 #include <kstddirs.h>
 #include <kdebug.h>
+#include <assert.h>
 
 extern KApplication *kApp;
 extern global_config *kSircConfig;
@@ -196,12 +197,12 @@ void KSircIOController::stdout_read(KProcess *, char *_buffer, int buflen)
 //        debug("Creating window for: %s because of: %s", name.data(), line.data());
 	ksircproc->new_toplevel(name);
       }
-      if (!ksircproc->TopList[qsname]) {
+      if (!ksircproc->TopList[name]) {
 	name = "!default";
 	if(line[0] == '`')
 	  name = "!discard";
       }
-      assert(ksircproc->TopList[qsname]);
+      assert(ksircproc->TopList[name]);
     }
 
 //    debug("Before: %s", line.data());
