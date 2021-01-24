@@ -235,7 +235,7 @@ PainterState::~PainterState(){
 }
 
 inline void PainterState::resetCol(){
-  if(bSelect == FALSE && bSelect == FALSE){
+  if(bSelect == FALSE && bReverse == FALSE){
     painter->setPen(qcDefFGCol);
     painter->setBackgroundColor(qcDefBGCol);
   }
@@ -260,7 +260,7 @@ inline void PainterState::resetAll(){
 }
 
 inline void PainterState::setFGCol(const QColor &col){
-  if(bSelect == FALSE && bSelect == FALSE){
+  if(bSelect == FALSE && bReverse == FALSE){
     painter->setPen(col);
   }
   else
@@ -268,7 +268,7 @@ inline void PainterState::setFGCol(const QColor &col){
 }
 
 inline void PainterState::setBGCol(const QColor &col){
-  if(bSelect == FALSE && bSelect == FALSE)
+  if(bSelect == FALSE && bReverse == FALSE)
     painter->setBackgroundColor(col);
   else
     painter->setPen(col);
