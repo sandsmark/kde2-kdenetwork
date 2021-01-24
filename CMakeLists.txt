@@ -6,6 +6,15 @@ project(kde2-kdenetwork
     VERSION 2.2.2
     )
 
+option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
+if (ENABLE_SANITIZERS)
+    message("Enabling asan and ubsan")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined")
+endif()
+
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(kde2_configure)
 
@@ -30,7 +39,6 @@ find_package(konq REQUIRED)
 find_package(kicker REQUIRED)
 find_package(kparts REQUIRED)
 find_package(PNG REQUIRED)
-find_package(OpenSSL)
 
 create_kde2_config_header()
 
