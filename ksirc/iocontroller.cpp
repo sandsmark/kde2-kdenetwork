@@ -183,7 +183,7 @@ void KSircIOController::stdout_read(KProcess *, char *_buffer, int buflen)
     line = buffer.mid(pos, pos2 - pos);
     if((line.length() > 0) && (line[0] == '~')){
       pos3 = line.find('~', 1);
-      if(pos3 > 0){
+      if(pos3 > 1){
 	name = line.mid(1,pos3-1);
 	name = name.lower();
 	line.remove(0, pos3+1);
@@ -196,11 +196,12 @@ void KSircIOController::stdout_read(KProcess *, char *_buffer, int buflen)
 //        debug("Creating window for: %s because of: %s", name.data(), line.data());
 	ksircproc->new_toplevel(name);
       }
-      else{
+      if (!ksircproc->TopList[qsname]) {
 	name = "!default";
 	if(line[0] == '`')
 	  name = "!discard";
       }
+      assert(ksircproc->TopList[qsname]);
     }
 
 //    debug("Before: %s", line.data());
