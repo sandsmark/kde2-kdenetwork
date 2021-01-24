@@ -8,12 +8,12 @@ typedef struct {
   int iArg;
   int iTextSize; // Size of the text message that follows
   char *cArg;
-} PukeMessage;
+} __attribute__((packed)) PukeMessage;
 
 typedef struct {
   int fd;
   int iWinId;
-} widgetId;
+} __attribute__((packed)) widgetId;
 
 const uint iPukeHeader = 42U;
 
