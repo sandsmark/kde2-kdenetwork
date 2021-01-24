@@ -21,6 +21,7 @@
 #	-R = run in restricted (secure) mode
 #	-r = raw mode (no control-char filtering)
 #	-8 = 8-bit mode
+#       -S = connect using SSL
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,8 +62,11 @@ $add_ons='';
 $libdir=$ENV{"SIRCLIB"} || ".";
 push(@INC, $libdir, $ENV{"HOME"});
 @loadpath=($ENV{"HOME"}."/.sirc", $libdir, ".");
+$ENV{"SIRCWAIT"} or $ready=1;
 
 $|=1;
+
+$publicAway = 1;
 
 if (!eval "require 'getopts.pl';") {
   print "\n\n\
@@ -72,6 +76,7 @@ even there! Have you even bothered to run 'install'?\n";
 }
 
 if ($] >= 5 && (eval "use Socket;", $@ eq '')) {
+    $sock6 = eval ("require Socket6;") and eval("use Socket6;");
 } elsif (-f "$libdir/sircsock.ph") {
   do "$libdir/sircsock.ph";
 } elsif (-f $ENV{'HOME'}."/sircsock.ph") {
@@ -83,7 +88,15 @@ couldn't be found. Have you even bothered to run 'install'?\n";
     exit;
 }
 
-&Getopts('n:s:p:u:i:l:L:H:rqQR78');
+$hasPOSIX = 1;
+eval "use POSIX;";
+if($@) {
+  $hasPOSIX = 0;
+  print "*** No Posix library, falling back to blocking IO (dcc will suck)\n";
+}
+    
+
+&Getopts('n:s:p:u:i:l:L:H:rqQR78S');
 
 %set=("LOGFILE", "", "LOG", "off", "PRINTUH", "none", "PRINTCHAN", "off",
  	"LOCALHOST", "", "CTCP", "noflood", "SENDAHEAD", 4096,
@@ -101,7 +114,11 @@ $set{"IRCNAME"}=$opt_i || $ENV{"SIRCNAME"} || $ENV{"IRCNAME"} || "sirc user";
 $nick=$opt_n || $ARGV[0] || $ENV{"SIRCNICK"} || $ENV{"IRCNICK"} || $username;
 $set{"FINGER"}=$ENV{"IRCFINGER"} || "keep your fingers to yourself";
 $set{"USERINFO"}=$ENV{"USERINFO"} || "yep, I'm a user";
-($server, $port, $pass)=split(/[\s:]+/, $server);
+if ($server =~ /^\[([^\]]+)\]:([0-9]*):?([^:]*)$/
+    or $server =~ /^([^:]+):([0-9]*):?([^:]*)$/)
+{
+	($server, $port, $pass)=($1, $2, $3);
+}
 $port || ($port=$port0);
 $server0=$server1=$server;
 $port0=$port1=$port;
@@ -117,10 +134,7 @@ $opt_8 || ($set{"EIGHT_BIT"}="off");
 $restrict=$opt_R;
 $set{"LOCALHOST"}=$opt_H || $ENV{"SIRCHOST"} || $ENV{"IRCHOST"} ||
 		$ENV{"LOCALHOST"} || "";
-
-if ($set{"LOCALHOST"}) {
-  $bindaddr=&resolve($set{"LOCALHOST"});
-}
+$SSL=$opt_S;
 
 @ARGV=();  # ignore any more arguments
 
@@ -136,11 +150,11 @@ if (open(H, "$libdir/sirc.help") || ((-f "$libdir/sirc.help.gz") &&
 } else {
   print "*** Warning: help file ($libdir/sirc.help) not found!\n";
 }
+$floodtimer=0;
 
 sub exit {
   &dohooks("quit");
-  $args || ($args="using \cbsirc\cb version $version$add_ons");
-  &sl("QUIT :$args") if $connected;
+  &sl("QUIT :using sirc version $version$add_ons") if $connected;
   close LOG if $logging;
   exit 0;
 }
@@ -170,13 +184,26 @@ sub sigquit {
 }
 
 sub resolve {
-  if ($_[0] =~ /^\d+$/) {
-    return pack("N", $_[0]+0);
-  } elsif ($_[0] =~ /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/) {
-    return pack("c4", $1, $2, $3, $4);
-  } else {
-    return (gethostbyname($_[0]))[4];
+  if ($sock6) {
+    my $addr = $_[0];
+    if ("$addr" =~ /^\d+$/)
+    {
+      $addr = pack("N", $addr);
+      my @i = unpack("C4", $addr);
+      $addr = "$i[0].$i[1].$i[2].$i[3]";
+    }
+    return getaddrinfo($addr, $_[1], $_[2] || &AF_UNSPEC, &SOCK_STREAM);
   }
+  my $addr;
+  if ($_[0] =~ /^\d+$/) {
+    $addr = pack("N", $_[0]+0);
+  } elsif ($_[0] =~ /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/) {
+    $addr = pack("c4", $1, $2, $3, $4);
+  } else {
+    $addr=(gethostbyname($_[0]))[4];
+    return -1 unless (defined($addr));
+  }
+  return (&AF_INET, &SOCK_STREAM, 0, pack_sockaddr_in($_[1], $addr), undef);
 }
 
 $nextfh="sircblah000";
@@ -187,38 +214,153 @@ sub newfh {
 sub connect {
   $_[0]=&newfh;
   local($fh, $host, $port)=@_;
-  local($adr, $otherend)=&resolve($host);
-  &tell("*\cbE\cb* Hostname `$host' not found"), return -1 unless $adr;
-  $otherend=pack("S n a4 x8", &AF_INET, $port, $adr);
-  &print("*\cbE\cb* Out of file descriptors"), return -2
-    unless socket($fh, &PF_INET, &SOCK_STREAM, 0);
-  if ($set{"LOCALHOST"}) {
-    bind($fh, pack("S n a4 x8", &AF_INET, 0, $bindaddr)) ||
-      &tell("*\cbE\cb* Warning: can't bind to sirc host ".$set{'LOCALHOST'});
+  my @res = resolve($host, $port);
+  &tell("*\cbE\cb* Hostname `$host' not found"), return -1 if scalar(@res) < 5;
+  $family = -1;
+  my $bindfailed;
+  while (scalar(@res) >= 5) {
+    ($family, my ($socktype, $proto, $addr), undef, @res) = @res;
+    &print("*\cbE\cb* Out of file descriptors: $!"), return -2
+      unless socket($fh, $family, $socktype, $proto);
+
+    $bindfailed = undef;
+    if ($set{"LOCALHOST"}) {
+      # once again, DCC only does ipv4
+      $bindaddr =  (&resolve($set{"LOCALHOST"}, 0, &AF_INET))[3];
+      $bindfailed = 1 unless bind($fh, $bindaddr);
+    }
+
+    $trysock=$fh;
+    $SIG{'QUIT'}='sigquit';    
+    $SIG{'QUIT'}='IGNORE', last if connect($fh, $addr);
+    $SIG{'QUIT'}='IGNORE';
+    $family = -1;
   }
-  $trysock=$fh;
-  $SIG{'QUIT'}='sigquit';
-  &print("*\cbE\cb* Can't connect to host: $!"), close $fh,
-    $SIG{'QUIT'}='IGNORE', return -3 unless connect($fh, $otherend);
-  $SIG{'QUIT'}='IGNORE';
-  $bindaddr=(unpack("S n a4", getsockname($fh)))[2] if !$bindaddr;
+  &print("*\cbE\cb* Can't connect to host: $!"), return -3 if $family == -1;
+  # Tried to just check for $family != &AF_INET where needed, but
+  # that segfaulted perl (!), guess it's a bug in Socket6.pm, but I won't try
+  # to debug that. (malte)
+  $ipv6 = 1 if ($sock6 && $family == &AF_INET6);
+  &tell("*\cbE\cb* Warning: can't bind to sirc host: ".$set{'LOCALHOST'})
+    if $bindfailed;
+
+  if ($ipv6 != 1)
+  {
+    $bindaddr=getsockname($fh) unless $bindaddr;
+  }
   select($fh); $|=1; select(STDOUT);
   return 1;
+}
+
+sub connectSSL {
+  eval "use IO::Socket::SSL;";
+  
+  if($@){
+      &tell("Can't load SSL socket library, perl does not support SSL!");
+      &tell("To use SSL you must install the IO::Socket::SSL perl library");
+      &tell("Try as root: perl -MCPAN -e 'install IO::Socket::SSL'");
+      &tell("Giving up connect");
+      return 0;
+  }
+  local($fh, $host, $port)=@_;
+  &tell("*** Doing SSL server connect...");
+  $fh = new IO::Socket::SSL("$host:$port");
+  if(defined $fh){
+      $_[0] = $fh;
+      select($fh); $|=1; select(STDOUT);
+      return 1;
+  }
+  else {
+      warn "*** I encountered a problem: ($!) ",
+      &IO::Socket::SSL::errstr();
+      warn "*** Invalid hostname or port?\n";
+      return -1;
+  }
+}
+
+sub sel_nbconnecthandler {
+    local($fh) = $_[0];
+    &remwsel($fh);
+    $!="";        
+    my $res = unpack("i", getsockopt("$fh", SOL_SOCKET(), SO_ERROR()) || die "Failed to get sockopt: $!");
+    select($fh); $|=1; select(STDOUT);
+    &{$nbconnectlist{$fh}{"callback"}}($fh, $res);
+    $nbconnectlist{$fh} = undef;
+}
+
+#
+# Non blocking connect
+# arguments are: filehandle(returned), host, port, callback function.
+#
+
+sub connectnb {
+    if($hasPOSIX == 0){
+        my $cb = $_[3];
+        $_[3] = undef;
+        my $ret = &connect(@_);
+        if($ret == 1){
+            &$cb($_[0], 0);
+        }
+        else {
+            &$cb($_[0], -1);
+        }
+        return $ret;
+        
+    }
+    $_[0]=&newfh;
+    local($fh, $host, $port, $callback)=@_;
+    my @res = resolve($host, $port);
+    &tell("*\cbE\cb* Hostname `$host' not found"), return -1 if scalar(@res) < 5;
+
+    while (scalar(@res) >= 5) {
+        ($family, my ($socktype, $proto, $addr), undef, @res) = @res;
+        &print("*\cbE\cb* Out of file descriptors: $!"), return -2
+        unless socket($fh, $family, $socktype, $proto);                
+        
+        fcntl($fh, F_SETFL(), O_NONBLOCK());
+        &addwsel($fh, "nbconnecthandler", 0);
+        if(connect($fh, $addr)){
+            &$callback($fh, 0);
+        }
+        else {
+            if($! == EINPROGRESS()){
+                $nbconnectlist{$fh}{"callback"} = $callback;
+            }
+            else {
+                &print("*\cbI\cb* got other error $!");
+                return -1;
+            }            
+        }        
+    }
+    return 1;
 }
 
 sub listen {
   $_[0]=&newfh;
   local($fh, $port)=@_;
   local($thisend);
-  $bindaddr=pack("x4", 0) unless $bindaddr;
-  $thisend=pack("S n a4 x8", &AF_INET, $port+0, $bindaddr);
+
+  &tell("\cbE\cb* first set your ipv4 hostname with /set LOCALHOST <hostname>"), return 0
+    unless (length $bindaddr);
+
+
+# XXX: don't use ipv6 for the time being as ipv6 and dcc don't mix
+#  if ($ipv6) {
+    # XXX: substr() hack to avoid problems on some Linux systems
+#    (undef, my $addr) = unpack_sockaddr_in6(substr($bindaddr, 0, 24));
+#    $thisend = pack_sockaddr_in6($port, $addr);
+#  } else {
+    (undef, my $addr) = unpack_sockaddr_in($bindaddr);
+    $thisend = pack_sockaddr_in($port, $addr);
+#  }
   &tell("*\cbE\cb* Out of file descriptors"), return 0
-    unless socket($fh, &PF_INET, &SOCK_STREAM, 0);
+    unless socket($fh, &AF_INET, &SOCK_STREAM, 0);
   &tell("*\cbE\cb* Can't bind local socket!"), close $fh, return 0
     unless bind($fh, $thisend);
   &tell("*\cbE\cb* Can't listen to socket!"), close $fh, return
     unless listen($fh, 5);
-  return (unpack("S n", getsockname($fh)))[1];
+  $ipv6=0;
+  return getsockname($fh);
 }
 
 sub accept {
@@ -233,8 +375,10 @@ sub bindtoserver {
   @waituh=(); @douh=(); @erruh=(); $invited='';
   &dostatus;
   &tell("*** Connecting to $server, port $port...");
-  while(&connect($S, $server, $port) <= -1){
-    sleep(5);
+  if($SSL == 1){
+      sleep 10, &bindtoserver if &connectSSL($S, $server, $port) < 0;
+  } else {
+      sleep 10, &bindtoserver if &connect($S, $server, $port) < 0;
   }
   $connected=1;
   $server1=$server;
@@ -254,6 +398,7 @@ sub gl {
     return 1;
   }
   local($buf)='';
+  #  &tell("About to sysread: $_[0]");
   if (sysread($_[0], $buf, 4096)) {
     $buffer{$_[0]}.=$buf;
     if ($buffer{$_[0]} =~ /^([^\n\r]*)\r?\n\r?/) {
@@ -268,6 +413,7 @@ sub gl {
 }
 
 sub sl {
+  $logging && print LOG "<<".$_[0]."\n";
   if(!print $S $_[0]."\n"){
     &print("*\cbE\cb* Error writing to server: $!");
     &tell("*\cbE\cb* Connection to server lost");
@@ -275,7 +421,12 @@ sub sl {
     delete $buffer{$S};
     $connected=0;
     &dohooks("disconnect");
+    &bindtoserver;
   }
+  elsif (time-$floodtimer < 1){
+    select(undef, undef, undef, 0.5);
+  }
+  $floodtimer=time;
 }
 
 sub dostatus {
@@ -300,6 +451,7 @@ sub dostatus {
     &dohooks("status", $s);
 #    $laststatus=$s, print "~${t}~`#ssfe#s$s\n" if $laststatus ne $s;
     $laststatus=$s;
+    $logging && print LOG "** ~${t}~`#ssfe#s$s\n";
     print "~${t}~`#ssfe#s$s\n";
   }
 }
@@ -324,7 +476,7 @@ sub print {
   # thanks to Toy (wacren@obspm.fr) for this translation
   $what =~ tr/\x80-\xff/\x00-\x1f !cLxY|$_ca<\-\-R_o+23\'mp.,1o>123?AAAAAAACEEEEIIIIDNOOOOO*0UUUUYPBaaaaaaaceeeeiiiidnooooo:0uuuuypy/
     if $set{"EIGHT_BIT"} ne 'on';
-  $logging && print LOG $what."\n";
+  $logging && print LOG "-> " . $what."\n";
   if ($raw_mode) {
     print $what, "\n" || &exit;
   } elsif ($ansi) {
@@ -368,6 +520,7 @@ sub dcerror {
   local($fh, $n)=($_[0], $dcnick{$_[0]});
   &dohooks("chat_disconnect", $n);
   &tell("*\cbE\cb* DCC chat with $n lost");
+  &tell("~!dcc~Closing DCC CHAT with who: $n");
   close($fh);
   $n =~ tr/A-Z/a-z/;
   delete $dcnick{$fh};
@@ -377,10 +530,11 @@ sub dcerror {
 }
 
 sub dgsclose {
-  local($sfh, $rfh)=@_;
+  local($sfh, $rfh, $type, $err)=@_;
   &dohooks("dcc_disconnect", $dnick{$sfh}, $dfile{$rfh}, $dtransferred{$sfh},
 	   time-$dstarttime{$rfh}, $rfh);
-  &tell("*\cbD\cb* DCC transfer with $dnick{$sfh} ($dfile{$rfh}) terminated; $dtransferred{$sfh} bytes transferred in ".(time-$dstarttime{$rfh}). " seconds");
+  &tell("*\cbD\cb* DCC $type with $dnick{$sfh} ($dfile{$rfh}) terminated; $dtransferred{$sfh} bytes transferred in ".(time-$dstarttime{$rfh}). " seconds");
+  &tell("~!dcc~DCC $type terminated who: $dnick{$sfh} file: $dfile{$rfh} reason: $err");
   close($sfh);
   close($rfh);
   delete $dgrfh{$sfh};
@@ -388,6 +542,10 @@ sub dgsclose {
   delete $dfile{$rfh};
   delete $dstarttime{$rfh};
   delete $dtransferred{$sfh};
+  delete $dsoffset{$sfh};
+  delete $dsport{$sfh};
+  delete $dsresumedb{$sfh};
+  delete $dgxferadd{$sfh};
   delete $dnick{$sfh};
 }
 
@@ -410,11 +568,11 @@ sub msg {
     $what=substr($what, 0, 485);
     &dohooks("send_text", $towho, $what);
     if (&eq($towho, $talkchannel) && !$printchan) {
-      &tell("~${towho}~<\c_${nick}\c_> $what"); # KSIRC MOD
+      &tell("~${towho}~<${nick}> $what"); # KSIRC MOD
     } elsif ($towho =~ /^[\&\#\+]/) {
-      &tell("~${towho}~<\c_$nick\c_> $what"); #KSIRC MOD
+      &tell("~${towho}~<$nick> $what"); #KSIRC MOD
     } else {
-      &tell("~${towho}~>\cb${nick}\cb< $what"); #KSIRC MOD
+      &tell("~${towho}~>${nick}< $what"); #KSIRC MOD
     }
     &sl("PRIVMSG $towho :$what");
   } else {
@@ -438,7 +596,7 @@ sub notice {
   local($towho, $what)=@_;
   $what=substr($what, 0, 485);
   &dohooks("send_notice", $towho, $what);
-  &tell("~${towho}~-> -${towho}- $what");
+  &tell("~${towho}~-> -~n${towho}~n- $what");
   &sl("NOTICE $towho :$what");
 }
 
@@ -553,26 +711,55 @@ sub ctcp {
       } elsif ($newarg eq 'CHAT' && grep (&eq($who, $dcwait{$_}),
 		keys(%dcwait))) {
 	&tell("*\cbD\cb* DCC chat already requested from $who, connecting...");
-	local ($wfh)=(grep(&eq($dcwait{$_}, $who), keys(%dcwait)));
-	local ($n, $fh)=$who;
+	my ($wfh)=(grep(&eq($dcwait{$_}, $who), keys(%dcwait)));
+        my ($n, $fh)=$who;
 	delete $dcwait{$wfh};
-	close($wfh);
-        if(&connect($fh, $dhost, $dport) < 1) { return; };
-	$dcnick{$fh}=$who;
-	&tell("*\cbD\cb* DCC CHAT with $who established");
-	$n =~ tr/A-Z/a-z/;
-	$dcvol{$n}=0;
-	$dcfh{$n}=$fh;
-	print "`#ssfe#t/m =$who \n" if $ssfe;
+        close($wfh);
+        my $w = $who;
+        my $cb = sub {
+            my ($lfh, $lres) = @_;
+            if($lres != 0){
+                &tell("*\cbD\cb* DCC CHAT with $w failed: " . strerror($lres));
+                &tell("~!dcc~DCC CHAT failed who: $who reason: " . strerror($lres));
+                close($lfh);
+                return;
+            }
+            $dcnick{$lfh}=$w;
+            &tell("*\cbD\cb* DCC CHAT with $w established");
+            &tell("~!dcc~DCC CHAT established who: $w");
+            $n =~ tr/A-Z/a-z/;
+            $dcvol{$n}=0;
+            $dcfh{$n}=$lfh;
+            print "`#ssfe#t/m =$w \n" if $ssfe;
+        };
+        if(&connectnb($fh, $dhost, $dport, $cb) < 1) { 
+            return; 
+        }
       } elsif ($newarg eq 'CHAT' && grep(&eq($who, $_), keys(%dcfh))) {
 	&tell("*\cbD\cb* DCC chat from $who$puh1 ignored (already established)");
       } else {
-	&tell("*\cbD\cb* DCC $newarg ($dfile) from $who$puh1 ".
-	      ($dsize ? "(size: $dsize) " : "")."[$dhost, $dport]");
-	if ($newarg eq 'CHAT') {
+        #&tell("*\cbD\cb* DCC $newarg ($dfile) from $who$puh1 ".
+        #     ($dsize ? "(size: $dsize) " : "")."[$dhost, $dport]");
+        my $ip = inet_ntoa(pack("N", $dhost));
+        if ($newarg eq 'CHAT') {
+            &tell("~!dcc~DCC CHAT OFFERED who: $who$puh1 ip: $ip port: $dport");
 	  $dcoffered{$who}="$dhost $dport";
 	  &dohooks("dcc_request", "CHAT", $dhost, $dport);
-	} else {
+        } else {
+            my $index = 1; # KSIRC MOD - Make the file name unique
+            UNIQ: {
+              foreach $i (keys(%dgoffered)) {
+                my($h, $p, $f) = split(/ /, $i);
+                if (&eq($f, $dfile)) {
+                  $dfile =~ s/(.*)\.\d+$/$1/;
+                  $dfile .= ".$index";
+                  $index++;
+                  redo UNIQ;
+                }
+              }
+          }
+          &tell("~!dcc~INBOUND DCC SEND who: $who$puh1 file: $dfile size: $dsize ip: $ip port: $dport");
+            
 	  $dgoffered{"$dhost $dport $dfile"}=$who;
 	  &dohooks("dcc_request", "SEND", $dhost, $dport, $dfile, $dsize);
 	}
@@ -612,7 +799,8 @@ sub doset {
     $set{$var}=$val if $val =~ /^(on|off)$/;
   } elsif ($var eq 'LOCALHOST') {
     &restrict || return;
-    local($ad)=&resolve($val);
+    # IPV6: DCC is always ipv4 :(
+    local($ad) = (&resolve($val, 0, &AF_INET))[3];
     $set{$var}=$val, $bindaddr=$ad if $ad;
   } elsif ($var eq 'LOADPATH') {
     @loadpath=split(/:/, $val);
@@ -905,7 +1093,7 @@ sub docommand {
     system($args);
   } elsif ($cmd eq 'BYE' || $cmd eq 'QUIT' || $cmd eq 'EXIT' ||
 		$cmd eq 'SIGNOFF') {
-    $args || ($args="using \cbsirc\cb version $version$add_ons");
+    $args || ($args="using sirc version $version$add_ons");
     &dohooks("quit");
     &sl("QUIT :$args") if $connected;
     &exit;
@@ -922,7 +1110,6 @@ sub docommand {
       $port || ($port=$port0);
       &sl("QUIT :changing servers"), close $S, delete $buffer{$S} if $connected;
       $connected=0;
-      &bindtoserver;
     }
   } elsif ($cmd eq 'MSG' || $cmd eq 'M') {
     &dosplat;
@@ -953,14 +1140,28 @@ sub docommand {
       if ($n) {
 	local($dcadr, $dcport)=split(/ +/, $dcoffered{$n});
 	local($fh);
-	delete $dcoffered{$n};
-        if(&connect($fh, $dcadr, $dcport) < 1){ return; };
-	$dcnick{$fh}=$n;
-	&tell("*\cbD\cb* DCC CHAT with $n established");
-	print "`#ssfe#t/m =$n \n" if $ssfe;
-	$n =~ tr/A-Z/a-z/;
-	$dcvol{$n}=0;
-	$dcfh{$n}=$fh;
+        delete $dcoffered{$n};
+        my $w = $n;
+        my $cb = sub {
+            my ($lfh, $lres) = @_;
+            if($lres != 0){
+                &tell("*\cbD\cb* DCC CHAT with $w failed: " . strerror($lres));
+                &tell("~!dcc~DCC CHAT failed who: $w reason: " . strerror($lres));
+                close($lfh);
+                return;
+            }
+            $dcnick{$lfh}=$w;
+            &tell("*\cbD\cb* DCC CHAT with $w established");
+            &tell("~!dcc~DCC CHAT established who: $w");
+            print "`#ssfe#t/m =$w \n" if $ssfe;
+            my $n = $w;
+            $n =~ tr/A-Z/a-z/;
+            $dcvol{$n}=0;
+            $dcfh{$n}=$fh;
+        };
+        if(&connectnb($fh, $dcadr, $dcport, $cb) < 1){ 
+            return; 
+        }
       } elsif (grep (&eq($newarg, $dcwait{$_}), keys(%dcwait))) {
 	&tell("*\cbE\cb* DCC CHAT request to $newarg already sent");
       } elsif (grep(&eq($newarg, $dcnick{$_}), keys(%dcnick))) {
@@ -968,12 +1169,23 @@ sub docommand {
       } elsif ($newarg) {
 	&tell("*** You're not connected to a server"), return if $connected<2;
 	&tell("*** Don't be antisocial!"), return if &eq($newarg, $nick);
-	local($mynumber, $myport, $fh)=unpack("N", $bindaddr);
-	$myport=&listen($fh) || return;
+	local($mynumber, $myport, $fh);
+	my $sockaddr = &listen($fh) or return;
+	if ($ipv6) {
+          # XXX: substr is used in order to avoid dying on Linux with older
+          # glibc that lacks the scope field from sockaddr_in6 but the kernel
+          # has it and returns it from getsockname()
+          ($myport, undef) = unpack_sockaddr_in6(substr($sockaddr, 0, 24));
+          $mynumber = '0';
+        } else {
+          ($myport, $mynumber) = unpack_sockaddr_in(&listen($fh)) or return;
+          $mynumber = unpack("N", $mynumber);
+        }
 	$dcwait{$fh}=$newarg;
 	&sl("PRIVMSG $newarg :\caDCC CHAT chat $mynumber $myport\ca");
 	&dohooks("send_ctcp", $newarg, "DCC CHAT chat $mynumber $myport");
-	&tell("*\cbD\cb* Sent DCC CHAT request to $newarg");
+        &tell("*\cbD\cb* Sent DCC CHAT request to $newarg");
+        &tell("~!dcc~DCC CHAT SEND who: $newarg");
       } else {
 	&tell("*** I need a nick");
       }
@@ -982,12 +1194,16 @@ sub docommand {
       local($n)=$newarg;
       &getarg;
       if ($newarg) {
-	local($fh)=grep(&eq($dcnick{$_}, $n), keys(%dcnick));
-	&tell("*\cbE\cb* No DCC CHAT established with $n"), return 
-	  unless $fh;
+        local($fh)=grep(&eq($dcnick{$_}, $n), keys(%dcnick));
+        if( ! $fh){  
+            &tell("*\cbE\cb* No DCC CHAT established with $n");
+            &tell("~!dcc~No DCC CHAT established who: $n");
+            return;
+        }
 	&tell("*\cbE\cb* DCC CHAT already established with $newarg"), return 
 	  if grep(&eq($dcnick{$_}, $newarg), keys(%dcnick));
-	&tell("*\cbD\cb* DCC CHAT with $n renamed to $newarg");
+        &tell("*\cbD\cb* DCC CHAT with $n renamed to $newarg");
+        &tell("~!dcc~DCC CHAT renamed who: $n to: $newarg");
 	$dcnick{$fh}=$newarg;
 	$n =~ tr/A-Z/a-z/;
 	$newarg =~ tr/A-Z/a-z/;
@@ -1007,77 +1223,140 @@ sub docommand {
 	local($fh)=$dcfh{$newarg};
 	local($nn)=(grep(&eq($_, $newarg), keys(%dcoffered)));
 	if ($nn) {
-	  &tell("*\cbD\cb* Forgetting offered DCC CHAT from $nn");
-	  delete $dcoffered{$nn};
+          &tell("*\cbD\cb* Forgetting offered DCC CHAT from $nn");
+          &tell("~!dcc~Closing DCC CHAT who: $nn");
+          delete $dcoffered{$nn};
+          if($no_reject == 0){
+              $who = $nn;
+              &reply("DCC REJECT CHAT chat");
+          }
+          $no_reject = 0;
 	} elsif ($fh) {
 	  &dohooks("chat_disconnect", $n);
-	  &tell("*\cbD\cb* Closing DCC CHAT connection with $n");
+          &tell("*\cbD\cb* Closing DCC CHAT connection with $n");
+          &tell("~!dcc~Closing DCC CHAT who: $n");
 	  close($fh);
 	  delete $dcnick{$fh};
 	  delete $dcvol{$newarg};
 	  delete $dcfh{$newarg};
-	  delete $buffer{$fh};
+          delete $buffer{$fh};
+          if($no_reject == 0){
+              $who = $n;
+              &reply("DCC REJECT CHAT chat");
+          }
+          $no_reject = 0;
+
 	} elsif (($fh)=grep(&eq($dcwait{$_}, $n), keys (%dcwait)), $fh) {
 	  close($fh);
 	  delete $dcwait{$fh};
-	  &tell("*\cbD\cb* Closing listening DCC CHAT with $n");
-	} else {
-	  $n && &tell("*\cbE\cb* No DCC CHAT connection with $n");
+          &tell("*\cbD\cb* Closing listening DCC CHAT with $n");
+          &tell("~!dcc~Closing DCC CHAT who: $n");
+          if($no_reject == 0){
+              $who = $n;
+              &reply("DCC REJECT CHAT chat");
+          }
+          $no_reject = 0;
+        } else {
+            if($n){
+                &tell("*\cbE\cb* No DCC CHAT connection with $n");
+                &tell("~!dcc~No DCC CHAT connection who: $n");
+            }
 	}
       } elsif ($newarg =~ /^get$/i) {
-	&getarg;
-	local($found)='';
+        &getarg;
+        my $arg = $newarg;  
+        local($found)='';
 	foreach $i (keys(%dgoffered)) {
-	  if (&eq($dgoffered{$i}, $newarg) && (!$args ||
-	      &eq($args, (split(/ +/, $i))[2]))) {
-	    &tell("*\cbE\cb* Forgetting pending DCC GET from $newarg");
-	    delete $dgoffered{$i};
-	    $found=1;
+            if (&eq($dgoffered{$i}, $newarg) && (!$args ||
+                &eq($args, (split(/ +/, $i))[2]))) {
+              &tell("*\cbE\cb* Forgetting pending DCC GET from $newarg");
+              my($host, $port, $file) = split(/ /, $i);
+              &tell("~!dcc~Closing DCC GET connection with who: $newarg file: $file"); # KSIRC MOD
+              delete $dgoffered{$i};
+              $found=1;
+              if($no_reject == 0){
+                  $who = $newarg;
+                  &reply("DCC REJECT GET $file");
+              }
+              $no_reject = 0;
 	  }
 	}
 	foreach $sfh (grep(&eq($newarg, $dnick{$_}), keys(%dnick))) {
 	  if (!$found && $dgrfh{$sfh}) {
-	    local($fh)=$dgrfh{$sfh};
+              local($fh)=$dgrfh{$sfh};
+              my($file)=$dfile{$fh};
 	    next if $args && ($args ne $dfile{$fh});
 	    &dohooks("dcc_disconnect", $dnick{$sfh}, $dfile{$fh}, 
-		$dtransferred{$sfh}, time-$dstarttime{$fh}, $fh);
-	    &tell("*\cbE\cb* Closing DCC GET connection with $newarg");
+            $dtransferred{$sfh}, time-$dstarttime{$fh}, $fh);
+            
+            &tell("*\cbE\cb* Closing DCC GET connection with: $newarg ($file)"); # KSIRC MOD
+            &tell("~!dcc~Closing DCC GET connection with who: $newarg file: $file"); # KSIRC MOD
 	    $found=1;
 	    close $sfh;
 	    close $fh;
 	    delete $dgrfh{$sfh};
 	    delete $dfile{$fh};
 	    delete $dstarttime{$fh};
-	    delete $dtransferred{$sfh};
-	    delete $dnick{$sfh};
+            delete $dtransferred{$sfh};
+            delete $dgxferadd{$sfh};
+            delete $dnick{$sfh};
+            if($no_reject == 0){
+                $who = $newarg;
+                &reply("DCC REJECT GET $file");
+            }
+            $no_reject = 0;
 	  }
-	}
-	&tell("*\cbE\cb* No DCC GET connection with $newarg") unless $found;
+        }
+        if( ! $found){
+            &tell("*\cbE\cb* No DCC GET connection with $newarg for $arg");
+            &tell("~!dcc~No DCC GET connection who: $newarg file: $arg");
+        }
       } elsif ($newarg =~ /^send$/i) {
         &getarg;
 	local($n, $found, $fh)=($newarg, '');
-	&getarg;
+        &getarg;
+        my $arg = $newarg;
 	$newarg =~ s/(\W)/\\$1/g;
 	foreach $sfh (keys(%dswait), keys(%dsrfh)) {
 	  next unless &eq($dnick{$sfh}, $n);
 	  $fh=$dswait{$sfh} || $dsrfh{$sfh} || next;
 	  if ($newarg eq '' || $dfile{$fh} =~ /^${newarg}$/ ||
 	      $dfile{$fh} =~ /\/${newarg}$/) {
-	    &tell("*\cbD\cb* DCC SEND connection with $n closed");
-	    &dohooks("dcc_disconnect", $dnick{$sfh}, $dfile{$fh}, 
-		$dtransferred{$sfh}, time-$dstarttime{$fh}, $fh);
-	    close($sfh);
-	    close($fh);
-	    delete $dswait{$sfh};
-	    delete $dsrfh{$sfh};
-	    delete $dfile{$fh};
-	    delete $dstarttime{$fh};
-	    delete $dtransferred{$sfh};
-	    delete $dnick{$sfh};
-	    $found=1;
-	  }
-	}
-	&tell("*\cbE\cb* No DCC SEND connection with $n") unless $found;
+              #&tell("*\cbD\cb* DCC SEND connection with $n closed");
+              #my($file)=$dfile{$fh};
+              #&tell("~!dcc~Closing DCC SEND connection with who: $n file: $file"); # KSIRC MOD
+              #&dohooks("dcc_disconnect", $dnick{$sfh}, $dfile{$fh}, 
+              #  $dtransferred{$sfh}, time-$dstarttime{$fh}, $fh);
+              #close($sfh);
+              #close($fh);
+              #delete $dswait{$sfh};
+              #delete $dsrfh{$sfh};
+              #delete $dfile{$fh};
+              #delete $dstarttime{$fh};
+              #delete $dtransferred{$sfh};
+              #delete $dsoffset{$sfh};
+              #delete $dsport{$sfh};
+              #delete $dsresumedb{$sfh};
+              #delete $dgxferadd{$sfh};
+              #delete $dnick{$sfh};
+              if($no_reject == 0){
+                  $who = $n;
+                  &reply("DCC REJECT SEND $dfile{$fh}");
+              }
+              $no_reject = 0;
+              
+              if($dstarttime{$fh} == undef) {
+                  $dstarttime{$fh} = time;
+              }
+              &dgsclose($sfh, $fh, "SEND", "CLOSE");
+              
+              $found=1;
+          }
+        }
+        if(!$found){
+            &tell("*\cbE\cb* No DCC SEND connection with $n for $arg");
+            &tell("~!dcc~No DCC SEND connection with who: $n file: $arg");
+        }
       } else {
 	&tell("*\cbE\cb* Unknown DCC type");
       }
@@ -1107,20 +1386,42 @@ sub docommand {
 		      &eq($args, (split(/ +/, $_))[2]))),
 		     keys(%dgoffered));
       if ($n) {
-	local($dgadr, $dgport, $file)=split(/ +/, $n);
-	local($fh, $sfh);
+        my($dgadr, $dgport, $file)=split(/ +/, $n);
+        my($fh, $sfh);
+        my $offset = 0;
 	$n=(delete $dgoffered{$n});
-	$fh=&newfh;
-	&print("*\cbE\cb* Can't write to file $file"), return
-	  unless open($fh, "> $file");
-        if(&connect($sfh, $dgadr, $dgport) < 1){ return;};
-	$dgrfh{$sfh}=$fh;
-	$dnick{$sfh}=$n;
-	$dfile{$fh}=$file;
-	$dstarttime{$fh}=time;
-	$dtransferred{$sfh}=0;
-        &tell("*\cbD\cb* DCC GET connection with $n established");
-        &dohooks("dcc_get", $n, $file, $fh);
+        $fh=&newfh;
+        if($dgresume{$dgport} && $dgresume{$dgport}{"GotReply"}){
+            &print("*\cbE\cb* Can't write to file $file"), return unless open($fh, ">> $file");
+            seek($fh, $dgresume{$dgport}{"pos"}, SEEK_SET);
+            $offset = $dgresume{$dgport}{"pos"};
+            delete $dgresume{$dgport};
+        }
+        else {
+            &print("*\cbE\cb* Can't write to file $file"), return unless open($fh, "> $file");
+        }
+        my $who = $n;
+        my $cb = sub {
+            my ($lfh, $lres) = @_;
+            if($lres != 0){
+                &tell("*\cbD\cb* DCC GET connection with $who ($file) failed: " . strerror($lres));
+                &tell("~!dcc~DCC GET failed who: $who file: $file reason: " . strerror($lres));
+                close($lfh);
+                return;
+            }
+            $dgrfh{$lfh}=$fh;
+            $dnick{$lfh}=$who;
+            $dfile{$fh}=$file;
+            $dstarttime{$fh}=time;
+            $dtransferred{$lfh}=0;
+            $dgxferadd{$lfh}=$offset;
+            &tell("*\cbD\cb* DCC GET connection with $who established");
+            &tell("~!dcc~DCC GET established who: $who file: $file");
+            &dohooks("dcc_get", $who, $file, $fh);
+        };
+        if(&connectnb($sfh, $dgadr, $dgport, $cb) < 1){ 
+            return;
+        }
       } else {
 	if ($newarg) {
 	  &tell("*\cbE\cb* No pending DCC GET from $newarg");
@@ -1134,13 +1435,17 @@ sub docommand {
 	&tell("*\cbD\cb* Established DCC CHAT with $n ($dcvol{$n} bytes)");
       }
       foreach $n (keys(%dcoffered)) {
-	&tell("*\cbD\cb* DCC CHAT offered by $n");
+        my ($pip, $port) = split(/ /, $dcoffered{$n});
+        my $ip = inet_ntoa(pack("N", $pip));          
+	&tell("*\cbD\cb* DCC CHAT offered by $n ($ip:$port)");
       }
       foreach $f (keys(%dcwait)) {
 	&tell("*\cbD\cb* DCC CHAT offered to $dcwait{$f}");
       }
       foreach $i (keys(%dgoffered)) {
-	&tell("*\cbD\cb* DCC GET $i offered by $dgoffered{$i}");
+          my ($pip, $port, $file) = split(/ /, $i);
+          my $ip = inet_ntoa(pack("N", $pip));
+          &tell("*\cbD\cb* DCC GET \"$file\" ($ip:$port) offered by $dgoffered{$i}");
       }
       foreach $s (keys(%dgrfh)) {
         local($f)=$dgrfh{$s};
@@ -1158,11 +1463,35 @@ sub docommand {
       &tell("*** You're not connected to a server"), return if $connected<2;
       &restrict || return;
       local(($n),($f)) = $args =~ /^(.+?) (.+)/;
-      local($tf, $mynumber, $sz, $fh, $myport, $lfh)=($f, unpack("N", $bindaddr));
-      $fh=&newfh;
+      local($tf, $mynumber, $sz, $fh, $myport, $lfh)=($f);
       &tilde($f);
+      while (my($fh, $ni) = each %dnick ) {
+          if(&eq($n, $ni)){
+              my $lfh = $dswait{$fh};
+              if(&eq($dfile{$lfh}, $f)){
+                  &tell("*\cbE\cb* DCC Send already pending of $f to $n");
+                  return;
+              }
+              if($dsrfh{$fh}){
+                  &tell("*\cbE\cb* DCC Send already in progress $f to $n");
+                  return;
+
+              }
+          }
+      }
+      $fh=&newfh;
       &tell("*\cbE\cb* Can't open file $f"), return unless open($fh, "<$f");
-      $myport=&listen($lfh) || (close $fh, return);
+      my $sockaddr = &listen($lfh) or (close $fh, return);
+      if ($ipv6) {
+        # XXX: substr is used in order to avoid dying on Linux with older
+        # glibc that lacks the scope field from sockaddr_in6 but the kernel
+        # has it and returns it from getsockname()
+        ($myport, undef) = unpack_sockaddr_in6(substr($sockaddr, 0, 24));
+        $mynumber = 0;
+      } else {
+        ($myport, $mynumber) = unpack_sockaddr_in($sockaddr);
+        $mynumber = unpack("N", $mynumber);
+      }
       $dswait{$lfh}=$fh;
       $tf=$1 if $f =~ m|/([^/]*)$|;
       $sz=(-s $f);
@@ -1170,17 +1499,29 @@ sub docommand {
       &sl("PRIVMSG $n :\caDCC SEND $tf $mynumber $myport $sz\ca");
       &dohooks("send_ctcp", $n, "DCC SEND $tf $mynumber $myport $sz");
       &dohooks("dcc_send", $n, $f, $sz, $fh);
-      &tell("*\cbD\cb* Sent DCC SEND request to $n ($f,$sz)");
+      #&tell("*\cbD\cb* Sent DCC SEND request to $n ($f,$sz)");
+      &tell("~!dcc~Sent DCC SEND request to who: $n file: $f size: $sz");
       $dfile{$fh}=$f;
       $dswait{$lfh}=$fh;
       $dnick{$lfh}=$n;
+      $dsport{$lfh}=$myport;
+      $dsoffset{$lfh}=0;
     } else {
       &tell("*** I can \"only\" do DCC CHAT, RCHAT, GET, SEND, CLOSE, RENAME and LIST, *sheesh*");
     }
+  } elsif ($cmd eq 'QUOTE') { #KSIRC MOD
+     $args ne '' && &sl($args); #Allow this even if not connected to talk to proxies
   } elsif ($connected<2) {
     &tell("*** You're not connected to a server");
   } elsif ($cmd eq 'AWAY') {
       &sl($args ? "AWAY :$args" : "AWAY");
+	  my $oldchannel = $talkchannel;
+      if ( $publicAway == 1 ) {
+	      foreach $talkchannel (@channels) {
+	          &me($args ? "is away: $args" : "is back");
+	      }
+      }
+	  $talkchannel = $oldchannel;
   } elsif ($cmd eq 'NEXT') {
     if ($#channels>0) {
       $talkchannel=shift(@channels);
@@ -1226,6 +1567,8 @@ sub docommand {
     delete $buffer{$S};
     $connected=0;
     &dohooks("disconnect");
+    &bindtoserver;
+    
   } elsif ($cmd eq 'INVITE' || $cmd eq 'INV' || $cmd eq 'I') {
     local(@ns)=split(/ +/, $args);
     local($l, $c)=(pop(@ns), $talkchannel);
@@ -1335,18 +1678,17 @@ sub docommand {
     }
   } elsif ($cmd eq 'JOIN' || $cmd eq 'J') {
     $args=$invited if $args eq '';
-    unless ($args =~ /^[\#\&\+]/) {
-      $args='#'.$args;
+    if ($args !~ /^[\#\&\+]/) {
+      $query = $args;
     }
-    if (grep(&eq($_, $args), @channels)) {
+    elsif (grep(&eq($_, $args), @channels)) {
 #      &tell("*** Talking to $args now"); # KSIRC MOD
       $talkchannel=$args;
+      $query = "";
       &dostatus;
     } else {
       &sl("JOIN $args");
     }
-  } elsif ($cmd eq 'QUOTE') {
-    $args ne '' && &sl($args);
   } elsif ($cmd eq 'UMODE') {
     &sl("MODE $nick $args");
   } elsif ($cmd eq 'MO') {
@@ -1419,7 +1761,10 @@ sub docommand {
 	   $cmd eq 'UPING') {
     &sl($line);
   } else {
-    &tell("*\cbE\cb* Unknown command: $cmd");
+     # Unknown command sucks. People want to use extensions like /nickserv, which works
+     # on some servers (Simon)
+     &sl($line);
+#    &tell("*\cbE\cb* Unknown command: $cmd");
   }
 }
 
@@ -1479,12 +1824,12 @@ sub addcmd {
 sub addhelp {
   local($cmd, $txt)=@_;
   $cmd =~ tr/A-Z/a-z/;
-  push(@help, "\@".$cmd);
-  foreach (split(/\n/, $txt)) {
+  foreach (reverse(split(/\n/, $txt))) {
     s/\$v/$version/g;
     s/\$d/$date/g;
-    push (@help, $_);
+    unshift (@help, $_);
   }
+  unshift(@help, "\@".$cmd);
 }
 
 sub addset {
@@ -1503,13 +1848,22 @@ sub remsel {
   delete $sel_fds{$_[0]};
 }
 
+sub addwsel {
+  $sel_w_fds{$_[0]}="sel_".$_[1];
+}
+
+sub remwsel {
+  delete $sel_w_fds{$_[0]};
+}
+
 @hooks=("action", "ctcp", "ctcp_reply", "dcc_chat", "dcc_request", "input",
 	"invite", "join", "kick", "leave", "mode", "msg", "nick", "notice",
 	"server_notice", "notify_signoff", "notify_signon", "public",
 	"raw_irc", "send_action", "send_dcc_chat", "send_text", "send_notice",
 	"signoff", "topic", "disconnect", "status", "print", "command",
         "chat_disconnect", "dcc_disconnect", "send_ctcp",
-        "dcc_send", "dcc_send_status", "dcc_get", "dcc_get_status", "quit");
+        "dcc_send", "dcc_send_status", "dcc_get", "dcc_get_status", "quit",
+        "pong"); # ksirc additions
 
 sub addhook {
   local($type, $name)=@_;
@@ -1691,6 +2045,7 @@ sub loadrc {
 sub selline {
   $leftover=0;
   $rin=$rout="\0" x 32;
+  $win=$wout="\0" x 32;
   foreach ($S, 'STDIN', keys(%dcnick), keys(%buf_fds)) {
     $leftover=1, return $_ if $buffer{$_} =~ /\n/;
   }
@@ -1698,20 +2053,27 @@ sub selline {
 		keys(%dsrfh), keys(%sel_fds), keys(%buf_fds)) {
     vec($rin, fileno($_), 1)=1;
   }
+  foreach (keys(%sel_w_fds)){
+    vec($win, fileno($_), 1)=1;
+  }
   vec($rin, fileno($S), 1)=1 if $connected;
   if ($#timers<0 || $timers[0]>time+30) {
-    select($rout=$rin, undef, undef, 30);
+    select($rout=$rin, $wout=$win, undef, 30);
   } elsif ($timers[0]<=time) {
-    select($rout=$rin, undef, undef, 0);
+    select($rout=$rin, $wout=$win, undef, 0);
   } else {
-    select($rout=$rin, undef, undef, $timers[0]-time);
+    select($rout=$rin, $wout=$win, undef, $timers[0]-time);
   }
 }
 
 sub getnick {
-  &getuserline("Pick a nick: ", "Nick: ");
-  $nick=$_;
-  &sl("NICK $_");
+  if ($ENV{'BACKUPNICK'} && !($nick eq $ENV{'BACKUPNICK'})) {
+    $nick=$ENV{'BACKUPNICK'};
+  } else {  
+    &getuserline("Pick a nick: ", "Nick: ");
+    $nick=$_;
+  }
+  &sl("NICK $nick");
   &dostatus;
 }
 
@@ -1855,14 +2217,14 @@ sub donumeric {
     local($n)=$newarg;
     &yetonearg;
     if ($newarg>=3600) {
-      &tell("*** $n has been ".int($newarg/3600)." hours, ".
+      &tell("*** $n has been idle for ".int($newarg/3600)." hours, ".
 	  int(($newarg%3600)/60)." minutes and ".
-	  ($newarg%60)." seconds idle");
+	  ($newarg%60)." seconds");
     } elsif ($newarg>=60) {
-      &tell("*** $n has been ".int($newarg/60)." minutes and ".
-	    ($newarg%60)." seconds idle");
+      &tell("*** $n has been idle for ".int($newarg/60)." minutes and ".
+	    ($newarg%60)." seconds");
     } else {
-      &tell("*** $n has been $newarg seconds idle");
+      &tell("*** $n has been idle for $newarg seconds");
     }
   } elsif ($cmd eq '319') {
     local($g, $g, $c)=split(/ +/, $args, 3);
@@ -1929,17 +2291,17 @@ sub donumeric {
     $n =~ s/(\W)/\\$1/g;
     $r =~ s/^://;
     if($DSIRC_NAMES eq ''){ #KSIRC MOD
-      &tell("~${c}~*C* Users on $c: $r"); # KSIRC MOD
+      &tell("*I* Users on $c: $r"); # KSIRC MOD
       $DSIRC_NAMES = $c; # KSIRC MOD
     }                    # KSIRC MOD
     else {               # KSIRC MOD
-      &tell("~${c}~*\cb#\cb* Users on $c: $r"); # KSIRC MOD
+        &tell("*\cbI\cb* Users on $c: $r"); # KSIRC MOD
     }                                           # KSIRC MOD
     $c =~ tr/A-Z/a-z/;
     $haveops{$c}=1 if ($r =~ /\@${n}( |$)/i);
     &dostatus if &eq($c, $talkchannel);
   } elsif ($cmd eq '366'){                      # KSIRC MOD
-    &tell("~${DSIRC_NAMES}~*c* Users on $DSIRC_NAMES:"); # KSIRC MOD
+    #&tell("*I* Users on $DSIRC_NAMES:"); # KSIRC MOD
     $DSIRC_NAMES = '';                                   # KSIRC MOD
   } elsif ($cmd eq '221') {
     &yetonearg;
@@ -1958,6 +2320,10 @@ sub donumeric {
   } elsif ($cmd eq '375' || $cmd eq '372' || $cmd =~ /^25/) {
     &yetonearg;
     &tell("*** $args");
+  } elsif ($cmd eq '379' ) { # RPL_FORWARD (Simon)
+    &yetonearg;
+    local( $from_channel, $to_channel ) = split( / +/, $args );
+    &tell("~$from_channel~*\cb<\cb* You have left channel $from_channel");
   } else {
     &yetonearg;
     #$args =~ s/ :/ /;
@@ -1973,8 +2339,8 @@ print "`#ssfe#i\n" unless (-t STDOUT);
 &load($sysinit) if $sysinit ne '' && -f $sysinit;
 &load($initfile) if !$restrict && $initfile ne '' && -f $initfile;
 
-&bindtoserver;
 while (1) {
+  &bindtoserver, undef $ready if $ready;
   $silent=$skip='';
   if ($connected==2) {
     $time=time;
@@ -1997,7 +2363,15 @@ while (1) {
   foreach $rfh (keys (%sel_fds)) {
     if (vec($rout, fileno($rfh), 1)) {
       local($h)=$sel_fds{$rfh};
-      eval { &$h(); };
+      eval { &$h($rfh); }; #KSIRC MOD
+      $@ =~ s/\n$//, &tell("*\cbE\cb* error in unbuffered fd hook &$h: $@")
+	if $@ ne '';
+    }
+  }
+  foreach $rfh (keys (%sel_w_fds)) {
+    if (vec($wout, fileno($rfh), 1)) {
+      local($h)=$sel_w_fds{$rfh};
+      eval { &$h($rfh); }; #KSIRC MOD
       $@ =~ s/\n$//, &tell("*\cbE\cb* error in unbuffered fd hook &$h: $@")
 	if $@ ne '';
     }
@@ -2019,14 +2393,18 @@ while (1) {
   foreach $rfh (keys (%dcwait)) {
     if (vec($rout, fileno($rfh), 1)) {
       local($n, $fh);
-      if (&accept($fh, $rfh)) {
-	select($fh); $|=1; select(STDOUT);
+      my $paddr;
+      if ($paddr = &accept($fh, $rfh)) {
+        select($fh); $|=1; select(STDOUT);
+        my($port,$iaddr) = sockaddr_in($paddr);
+        my $ip = inet_ntoa($iaddr);
 	$n=$dcwait{$rfh};
 	$dcnick{$fh}=$n;
 	$n =~ tr/A-Z/a-z/;
 	$dcvol{$n}=0;
 	$dcfh{$n}=$fh;
-	&tell("*\cbD\cb* DCC CHAT connection with $n established");
+        &tell("*\cbD\cb* DCC CHAT connection with $n established");
+        &tell("~!dcc~DCC CHAT inbound established who: $n ip: $ip");
 	print "`#ssfe#t/m =$n \n" if $ssfe;
       }
       delete $dcwait{$rfh};
@@ -2035,16 +2413,23 @@ while (1) {
   foreach $sfh (keys (%dswait)) {
     local($rfh, $fh)=$dswait{$sfh};
     if (vec($rout, fileno($sfh), 1)) {
-      if (&accept($fh, $sfh)) {
+      my $paddr;  
+      if ($paddr = &accept($fh, $sfh)) {
+        my($port,$iaddr) = sockaddr_in($paddr);
+        my $ip = inet_ntoa($iaddr);
 	select($fh); $|=1; select(STDOUT);
 	$dsrfh{$fh}=$rfh;
 	$dstarttime{$rfh}=time;
 	$dtransferred{$fh}=0;
-	$dnick{$fh}=$dnick{$sfh};
-	&tell("*\cbD\cb* DCC SEND connection with $dnick{$sfh} ($dfile{$rfh}) established");
+        $dnick{$fh}=$dnick{$sfh};
+        $dsoffset{$fh}=$dsoffset{$sfh};
+        &tell("*\cbD\cb* DCC SEND connection with $dnick{$sfh}/$ip ($dfile{$rfh}) established");
+        &tell("~!dcc~DCC SEND established who: $dnick{$sfh} file: $dfile{$rfh} ip: $ip");
       }
       delete $dnick{$sfh};
       delete $dswait{$sfh};
+      delete $dsoffset{$sfh};
+      delete $dsport{$sfh};
     }
   }
   foreach $sfh (keys (%dgrfh)) {
@@ -2056,10 +2441,12 @@ while (1) {
         $dtransferred{$sfh}+=$a;
         &dohooks("dcc_get_status", $dfile{$rfh}, $dtransferred{$sfh}, $rfh);
         #	&tell("*\cbD\cb* DCC GET read: $dfile{$rfh} bytes: $dtransferred{$sfh}"); # KSIRC MOD FOR 971217
-	print $rfh $buf;
-	print $sfh pack("N", $dtransferred{$sfh});
+        my $b = $dtransferred{$sfh}+$dgxferadd{$sfh};
+        &tell("~!dcc~DCC GET read: $dfile{$rfh} who: $dnick{$sfh} bytes: $b"); # KSIRC MOD FOR 971217
+        print $rfh $buf;
+        print $sfh pack("N", $b); # used to be just $dtransfered but most seem to want xfet + offset        
       } else {
-	&dgsclose($sfh, $rfh);
+	&dgsclose($sfh, $rfh, "GET", "OK");
       }
     }
   }
@@ -2068,18 +2455,53 @@ while (1) {
     if (vec($rout, fileno($sfh), 1) || !$dtransferred{$sfh}) {
       local($ack, $csa, $buf, $b, $l, $w)=(0, '', '');
       if ($dtransferred{$sfh}) {
-	&dgsclose($sfh, $rfh), next if sysread($sfh, $b, 4)!=4;
-	$ack=unpack("N", $b);
+          &dgsclose($sfh, $rfh, "SEND", "Protocol Error"), next if sysread($sfh, $b, 4)!=4;
+          $ack=unpack("N", $b);
       }
-      $csa=$set{"SENDAHEAD"}-$dtransferred{$sfh}+$ack;
+      if($ack > ($dtransferred{$sfh} + $dsoffset{$sfh})){
+          my $v = $dtransferred{$sfh} + $dsoffset{$sfh};
+          &tell("*\cbD\cb* DCC transfer protocol failure! $ack $dtransferred{$sfh} $dsoffset{$sfh} $v");
+          &dgsclose($sfh, $rfh, "SEND", "Protocol Out of Sync");
+          next;
+      }
+      #
+      # When you do a dcc resume the ack value returned from the
+      # remote client is not well defined.  Two different values
+      # are used, the current number of bytes transfered, or
+      # the current location in the file.  We try to detech
+      # which type of ack we got and we adjust our math
+      # according so we keep up nice packet sizes.
+      # xchat can't seem to take > 4k packets after a resume
+      # and it causes the backoff to ack a little funny, but
+      # it's not our fault!
+      #
+      if($dsoffset{$sfh} && ($ack != 0) && ($dsresumedb{$sfh} == undef)) {
+          if($ack > $dsoffset{$sfh}){
+              $dsresumedb{$sfh} = 1;
+          }
+          else {
+              $dsresumedb{$sfh} = 2;
+          }
+          #&print("*** Resume style is: $dsresumedb{$sfh}");
+          
+      }
+      if($dsoffset{$sfh} && ($dsresumedb{$sfh} == 1)){
+          $csa=$set{"SENDAHEAD"}-($dtransferred{$sfh}+$dsoffset{$sfh})+$ack;
+      }
+      else {
+          $csa=$set{"SENDAHEAD"}-$dtransferred{$sfh}+$ack;
+      }
+      #&print("*** CSA is: $csa ack: $ack dt: $dtransferred{$sfh} $dsoffset{$sfh}");
       next if $csa<0;
       $l=read($rfh, $buf, 512+$csa);
       $w=syswrite($sfh, $buf, $l) if $l;
       &dohooks("dcc_send_status", $dfile{$rfh}, $dtransferred{$sfh}, $rfh);
       #      &tell("*\cbD\cb* DCC SEND write: $dfile{$rfh} bytes: $dtransferred{$sfh}"); # KSIRC MOD FOR 971218
+      my $sz = $dtransferred{$sfh}+$dsoffset{$sfh};
+      &tell("~!dcc~DCC SEND write: $dfile{$rfh} who: $dnick{$sfh} bytes: $sz"); # KSIRC MOD FOR 971218
       next if $l==0 && $ack<$dtransferred{$sfh};
       $dtransferred{$sfh}+=$w;
-      &dgsclose($sfh, $rfh), next if ($w<$l || $l==0);
+      &dgsclose($sfh, $rfh, "SEND", "OK"), next if ($w<$l || $l==0);
     }
   }
   while ($#timers>=0 && $timers[0]<=time) {
@@ -2092,6 +2514,7 @@ while (1) {
     &gl('STDIN') || next;
     &exit if $_ eq '';
     chop;
+    $logging && print LOG "<- " . $_ . "\n";
     &douserline($_) if $_ ne '';
   }
   if ($connected && (($leftover && $fh eq $S) || vec($rout, fileno($S), 1))) {
@@ -2102,9 +2525,11 @@ while (1) {
       delete $buffer{$S};
       $connected=0;
       &dohooks("disconnect");
+      &bindtoserver;
       next;
     }
     chop;
+    $logging && print LOG ">> " . $_ . "\n";
     $serverline=$_;
     $_=$server." ".$_ unless /^:/;
     ($who, $cmd, $args)=split(/ /, $_, 3);
@@ -2219,6 +2644,7 @@ while (1) {
     } elsif ($cmd eq 'JOIN') {
       &yetonearg;
       if (&eq($nick, $who)) {
+        $newarg =~ tr/A-Z/a-z/;
 	push(@channels, $newarg);
 	$talkchannel=$newarg;
 	&dohooks("join", $newarg);
@@ -2276,6 +2702,7 @@ while (1) {
     } elsif ($cmd eq 'SILENCE') {
       &tell("*** Silence $args");
     } elsif ($cmd eq 'PONG') {
+      &dohooks("pong", $args);
     } elsif ($cmd eq 'QUIT') {
       &dohooks("signoff", $args);
       &tell("~!all~*\cb<\cb* Signoff: $who$puh2 ($args)");   # MOD FOR KSIRC
