@@ -177,12 +177,12 @@ KSircProcess::KSircProcess( char *_server, QObject * parent, const char * name )
 
   // Create toplevel before iocontroller so it has somewhere to write stuff.
 
+  default_follow_focus = TRUE;
   running_window = TRUE;        // True so we do create the default
   new_toplevel("!no_channel");  //
   TopList.insert("!default", TopList["!no_channel"]);
 
   running_window = FALSE;       // set false so next changes the first name
-  default_follow_focus = TRUE;
 
   // Write default commands, and open default windows.
 

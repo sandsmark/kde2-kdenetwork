@@ -28,6 +28,7 @@ KSircListBox::KSircListBox(QWidget * parent, const char * name, WFlags f) : QLis
   waitForClear = FALSE;
   acceptFiles = false;
   setAcceptDrops( true );
+  selecting = false;
   connect(verticalScrollBar(), SIGNAL(valueChanged(int)), SLOT(slotScrollBarChanged(int)));
 }
 
