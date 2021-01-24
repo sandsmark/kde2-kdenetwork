@@ -786,10 +786,13 @@ void PukeController::insertPObject(int fd, int iWinId, WidgetS *obj){
   widgetId *pwi = new widgetId;
   pwi->fd = fd;
   pwi->iWinId = iWinId;
-  char key[keySize];
-  memset(key, 0, keySize);
-  sprintf(key, "%p", obj->pwidget);
+  char *key = NULL;
+  if (asprintf(&key, "%p", obj->pwidget) <= 0) {
+      perror("failed to print");
+      return;
+  }
   revWidgetList.insert(key, pwi);
+  free(key);
 
   // Now connect to the destroyed signal so we can remove the object from the lists
   // Once it is deleted
@@ -798,15 +801,17 @@ void PukeController::insertPObject(int fd, int iWinId, WidgetS *obj){
 }
 
 void PukeController::pobjectDestroyed(){
-
-  char key[keySize];
-  memset(key, 0, keySize);
-  sprintf(key, "%p", this->sender());
+  char *key = NULL;
+  if (asprintf(&key, "%p", this->sender()) <= 0) {
+      perror("failed to print");
+      return;
+  }
 
   widgetId *pwi = revWidgetList[key];
 
   if(pwi == NULL){
     kdDebug() << "Someone broke the rules for pwi: " << pwi->fd << ", " << pwi->iWinId << endl;
+    free(key);
     return;
   }
 
@@ -819,7 +824,7 @@ void PukeController::pobjectDestroyed(){
 
   pwi = 0x0; // remove deletes pwi
   revWidgetList.remove(key);
-
+  free(key);
 }
 
 void PukeController::messageHandler(int fd, PukeMessage *pm) { 

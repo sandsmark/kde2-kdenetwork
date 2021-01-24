@@ -147,7 +147,6 @@ private:
   QIntDict<QIntDict<WidgetS> > WidgetList;
   // I use a char * key that's the %p (hex address) of the pwidget
   QDict<widgetId> revWidgetList;
-  enum { keySize = 10 };
 
   // Funtions used to create new widget
   QIntDict<widgetCreate> widgetCF; // widgetCreatingFuntion List
